@@ -50,11 +50,18 @@ const MoraleInfo = PropTypes.shape({
   ships: PropTypes.arrayOf(ShipInfo).isRequired,
 })
 
+const STypeInfo = PropTypes.shape(allRequired({
+  name: PropTypes.string,
+  stype: PropTypes.number,
+}))
+
 const PTyp = {
   ...PropTypes,
 
   ShipInfo,
   MoraleInfo,
+
+  STypeInfo,
 }
 
 export { PTyp }

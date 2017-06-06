@@ -127,13 +127,21 @@ const moraleListSelector =
       return watchlist.map(buildFromWSubject)
     })
 
+const stypeInfoSelector =
+  createSelector(
+    constSelector,
+    ({$shipTypes}) =>
+      Object.entries($shipTypes).map(([stypeStr,typeInfo]) =>
+        ({ stype: parseInt(stypeStr,10), name: typeInfo.api_name })))
+
 const moraleMonitorSelector =
   createSelector(
     admiralIdSelector,
     shipsInfoSelector,
     moraleListSelector,
     presetDeckMaxSelector,
-    (admiralId, shipsInfo, moraleList, presetDeckMax) => {
+    stypeInfoSelector,
+    (admiralId, shipsInfo, moraleList, presetDeckMax, stypeInfo) => {
       // those missing in morale list
       const availableTargets = []
 
@@ -159,6 +167,9 @@ const moraleMonitorSelector =
         admiralId,
         moraleList,
         availableTargets,
+
+        stypeInfo,
+        shipsInfo,
       }
     }
   )

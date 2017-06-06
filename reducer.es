@@ -6,6 +6,10 @@ const initState = {
   saveAdmiralConfig: saveConfig(null),
   watchlist: [],
   presetDeck: null,
+  filterSType: 2,
+  filterMorale: 'all',
+  sortMethod: 'level',
+  sortReverse: false,
 }
 
 const reducer = (state = initState, action) => {
@@ -24,24 +28,18 @@ const reducer = (state = initState, action) => {
 
   if (action.type === '@poi-plugin-mo2@Init') {
     const { admiralId } = action
-    const { watchlist, presetDeck } = loadConfig(admiralId)
+    const config = loadConfig(admiralId)
 
     return {
       ...state,
       admiralId,
       saveAdmiralConfig: saveConfig(admiralId),
-      watchlist,
-      presetDeck,
+      ...config,
     }
   }
 
   if (action.type === '@poi-plugin-mo2@ModifyConfig') {
-    const {
-      watchlist,
-      presetDeck,
-      admiralId,
-      saveAdmiralConfig,
-    } = state
+    const { admiralId, saveAdmiralConfig, ...config } = state
 
     if (admiralId === null) {
       console.error("Trying to modify a config when admiral id is not available")
@@ -49,12 +47,7 @@ const reducer = (state = initState, action) => {
     }
 
     const { modifier } = action
-    const modifiedConfig = modifier({watchlist, presetDeck})
-    // to ensure that only fields we are interested in are stored.
-    const newConfig = {
-      watchlist: modifiedConfig.watchlist,
-      presetDeck: modifiedConfig.presetDeck,
-    }
+    const newConfig = modifier(config)
     saveAdmiralConfig(newConfig)
     return {
       ...state,

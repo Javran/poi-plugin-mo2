@@ -17,6 +17,8 @@ class MoraleMonitor extends Component {
     admiralId: PTyp.number,
     moraleList: PTyp.array.isRequired,
     availableTargets: PTyp.array.isRequired,
+    shipsInfo: PTyp.object.isRequired,
+    stypeInfo: PTyp.array.isRequired,
 
     onInitialize: PTyp.func.isRequired,
     onModifyConfig: PTyp.func.isRequired,
@@ -29,7 +31,7 @@ class MoraleMonitor extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      activeTab: 'fleet',
+      activeTab: 'ship',
     }
   }
 
@@ -42,7 +44,6 @@ class MoraleMonitor extends Component {
     this.setState({ activeTab })
 
   render() {
-    // - MoraleList => FleetMoraleList
     const { activeTab } = this.state
     return (
       <div
@@ -67,6 +68,8 @@ class MoraleMonitor extends Component {
         />
         <ShipMoraleList
             visible={activeTab === 'ship'}
+            shipsInfo={this.props.shipsInfo}
+            stypeInfo={this.props.stypeInfo}
         />
       </div>
     )

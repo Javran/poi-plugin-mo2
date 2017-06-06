@@ -6,6 +6,10 @@ const { APPDATA_PATH } = window
 const emptyConfig = {
   watchlist: [],
   presetDeck: null,
+  filterSType: 2, // DD
+  filterMorale: 'all',
+  sortMethod: 'level',
+  sortReverse: false,
 }
 
 // config file is located under directory "$APPDATA_PATH/morale-monitor"
