@@ -110,6 +110,7 @@ class MoraleList extends Component {
         >
           <ButtonGroup justified>
             <DropdownButton
+                style={{marginTop: 0}}
                 onSelect={this.handleAddNewTarget}
                 title="Add ..."
                 id="dropdown-add-new-target">
@@ -119,7 +120,9 @@ class MoraleList extends Component {
                       eventKey={ws}
                       key={WSubject.id(ws)}>
                     {
-                      JSON.stringify(ws)
+                      ws.type === 'fleet' ? `Fleet #${ws.fleetId}` :
+                        ws.type === 'preset' ? `Preset #${ws.presetNo}` :
+                        console.error(`Unexpected WSubject type: ${ws.type}`)
                     }
                   </MenuItem>
                 ))
