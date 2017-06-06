@@ -66,6 +66,24 @@ class MoraleList extends Component {
     })
   }
 
+  handleChangeItemName = moraleInfo => newName => {
+    const { onModifyConfig } = this.props
+    const { wSubject } = moraleInfo
+    const modifyRelated = ws => {
+      if (ws.type !== 'custom' ||
+          ws.id !== wSubject.id)
+        return ws
+      return {
+        ...ws,
+        name: newName,
+      }
+    }
+    onModifyConfig(config => ({
+      ...config,
+      watchlist: config.watchlist.map(modifyRelated),
+    }))
+  }
+
   render() {
     return (
       <ListGroup
@@ -80,6 +98,7 @@ class MoraleList extends Component {
                 moraleInfo={moraleInfo}
                 onRemoveItem={this.handleRemoveItem(moraleInfo)}
                 onCloneItem={this.handleCloneItem(moraleInfo)}
+                onChangeItemName={this.handleChangeItemName(moraleInfo)}
             />
           ))
         }

@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import {
   ListGroupItem,
   Button,
+  FormControl,
 } from 'react-bootstrap'
 
 import { PTyp } from '../ptyp'
@@ -17,7 +18,39 @@ class MoraleListItem extends Component {
 
     onRemoveItem: PTyp.func.isRequired,
     onCloneItem: PTyp.func.isRequired,
+    onChangeItemName: PTyp.func.isRequired,
   }
+
+  constructor(props) {
+    super(props)
+    this.state = {
+      editing: false,
+      nameText: "",
+    }
+  }
+
+  componentWillUpdate(nextProps, nextState) {
+    // start editing
+    if (! this.state.editing && nextState.editing) {
+      this.setState({nameText: this.props.moraleInfo.name})
+    }
+  }
+
+  handleToggleEditing = () => {
+    if (this.state.editing) {
+      const { onChangeItemName } = this.props
+      // finish editing
+      this.setState({editing: false})
+
+      onChangeItemName(this.state.nameText)
+    } else {
+      // start editing
+      this.setState({editing: true})
+    }
+  }
+
+  handleEditingName = e =>
+    this.setState({nameText: e.target.value})
 
   render() {
     const {
@@ -97,9 +130,9 @@ class MoraleListItem extends Component {
               style={{
                 paddingTop: 0,
               }}
-              onClick={onCloneItem}
+              onClick={isCustom ? this.handleToggleEditing : onCloneItem}
           >
-            <FontAwesome name={isCustom ? "pencil" : "save"} />
+            <FontAwesome name={isCustom ? (this.state.editing ? "check" : "pencil") : "save"} />
           </Button>
           <Button
               bsSize="xsmall"
@@ -128,13 +161,22 @@ class MoraleListItem extends Component {
                 paddingBottom: "2px",
               }}
           >
-            <div
-                style={{
-                  fontSize: "18px",
-                  fontWeight: "bold",
-                  marginBottom: "5px",
-                }}
-            >{name}</div>
+            {
+              this.state.editing ?
+              (<FormControl
+                   onChange={this.handleEditingName}
+                   value={this.state.nameText}
+               />) :
+              (<div
+                  style={{
+                    fontSize: "18px",
+                    fontWeight: "bold",
+                    marginBottom: "5px",
+                  }}
+              >
+                {name}
+              </div>)
+            }
             <div
                 style={{
                   display: "flex",
