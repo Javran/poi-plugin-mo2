@@ -1,5 +1,6 @@
 import { connect } from 'react-redux'
 import React, { Component } from 'react'
+import { Nav, NavItem } from 'react-bootstrap'
 
 import {
   reducer,
@@ -8,7 +9,8 @@ import {
 import { moraleMonitorSelector } from './selectors'
 
 import { PTyp } from './ptyp'
-import { MoraleList } from './ui/morale-list'
+import { FleetMoraleList } from './ui/fleet-morale-list'
+import { ShipMoraleList } from './ui/ship-morale-list'
 
 class MoraleMonitor extends Component {
   static propTypes = {
@@ -24,22 +26,47 @@ class MoraleMonitor extends Component {
     admiralId: null,
   }
 
+  constructor(props) {
+    super(props)
+    this.state = {
+      activeTab: 'fleet',
+    }
+  }
+
   componentWillMount() {
     const { onInitialize, admiralId } = this.props
     onInitialize(admiralId)
   }
 
+  handleTabSwitch = activeTab =>
+    this.setState({ activeTab })
+
   render() {
+    // - MoraleList => FleetMoraleList
+    const { activeTab } = this.state
     return (
       <div
           style={{
             margin: "8px",
           }}
       >
-        <MoraleList
+        <Nav
+            bsStyle="tabs"
+            activeKey={activeTab}
+            onSelect={this.handleTabSwitch}
+            style={{marginBottom: "6px"}}
+            justified className="main-nav">
+          <NavItem eventKey="fleet">Fleets</NavItem>
+          <NavItem eventKey="ship">Ships</NavItem>
+        </Nav>
+        <FleetMoraleList
+            visible={activeTab === 'fleet'}
             moraleList={this.props.moraleList}
             availableTargets={this.props.availableTargets}
             onModifyConfig={this.props.onModifyConfig}
+        />
+        <ShipMoraleList
+            visible={activeTab === 'ship'}
         />
       </div>
     )

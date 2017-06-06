@@ -12,7 +12,7 @@ import { WSubject } from '../structs'
 
 const { FontAwesome, isDarkTheme } = window
 
-class MoraleListItem extends Component {
+class FleetMoraleListItem extends Component {
   static propTypes = {
     moraleInfo: PTyp.MoraleInfo.isRequired,
 
@@ -64,7 +64,6 @@ class MoraleListItem extends Component {
       preset: presetNo => `Preset #${presetNo}`,
       custom: id => `Custom #${id}`,
     })(wSubject)
-
 
     const minMorale =
       ships.length > 0 ?
@@ -216,5 +215,5 @@ class MoraleListItem extends Component {
 }
 
 export {
-  MoraleListItem,
+  FleetMoraleListItem,
 }

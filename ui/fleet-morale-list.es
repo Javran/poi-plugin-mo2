@@ -10,12 +10,13 @@ import {
 import { PTyp } from '../ptyp'
 import { WSubject } from '../structs'
 
-import { MoraleListItem } from './morale-list-item'
+import { FleetMoraleListItem } from './fleet-morale-list-item'
 
-class MoraleList extends Component {
+class FleetMoraleList extends Component {
   static propTypes = {
     moraleList: PTyp.array.isRequired,
     availableTargets: PTyp.arrayOf(PTyp.WSubject).isRequired,
+    visible: PTyp.bool.isRequired,
 
     onModifyConfig: PTyp.func.isRequired,
   }
@@ -89,11 +90,12 @@ class MoraleList extends Component {
       <ListGroup
           style={{
             marginBottom: "30px",
+            ...(this.props.visible ? {} : {display: "none"} ),
           }}
       >
         {
           this.props.moraleList.map( moraleInfo => (
-            <MoraleListItem
+            <FleetMoraleListItem
                 key={WSubject.id(moraleInfo.wSubject)}
                 moraleInfo={moraleInfo}
                 onRemoveItem={this.handleRemoveItem(moraleInfo)}
@@ -136,5 +138,5 @@ class MoraleList extends Component {
 }
 
 export {
-  MoraleList,
+  FleetMoraleList,
 }
