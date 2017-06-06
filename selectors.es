@@ -9,6 +9,8 @@ import {
 } from 'views/utils/selectors'
 import { WSubject } from './structs'
 
+import { applyOptions } from './shiplist-ops'
+
 const extSelector = extensionSelectorFactory('poi-plugin-mo2')
 
 const presetDeckSelector =
@@ -61,9 +63,10 @@ const shipsInfoSelector =
           const stype = masterInfo.api_stype
           const stypeInfo = $shipTypes[stype]
           const typeName = stypeInfo.api_name
+          const sortNo = masterInfo.api_sortno
           shipsInfo[rstIdStr] = {
             rstId, mstId,
-            name, stype, typeName,
+            name, stype, typeName, sortNo,
             level, morale,
           }
         })
@@ -186,8 +189,8 @@ const shipMoraleListSelector =
         filterSType, filterMorale,
         sortMethod, sortReverse,
       } = listOptions
-      const shipList = Object.values(shipsInfo)
-
+      const shipList =
+        applyOptions(listOptions)(Object.values(shipsInfo))
       return {
         // TODO: apply options in selector.
         shipList,

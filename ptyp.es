@@ -19,6 +19,7 @@ const ShipInfo = PropTypes.shape(allRequired({
   typeName: PropTypes.string,
   level: PropTypes.number,
   morale: PropTypes.number,
+  sortNo: PropTypes.number,
 }))
 
 const WSubjectAlts = {
