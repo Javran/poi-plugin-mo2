@@ -1,0 +1,43 @@
+{
+  "name": "poi-plugin-mo2",
+  "version": "0.0.0",
+  "description": "Morale Monitor",
+  "main": "index.es",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Javran/poi-plugin-mo2.git"
+  },
+  "author": {
+    "name": "Javran",
+    "url": "https://github.com/Javran"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Javran/poi-plugin-mo2/issues"
+  },
+  "homepage": "https://github.com/Javran/poi-plugin-mo2#readme",
+  "poiPlugin": {
+    "title": "Morale Monitor",
+    "description": "Morale Monitor",
+    "priority": 20,
+    "icon": "smile-o"
+  },
+  "devDependencies": {
+    "babel-core": "^6.24.1",
+    "babel-eslint": "^7.2.3",
+    "babel-plugin-add-module-exports": "^0.2.1",
+    "babel-preset-es2015-node6": "^0.4.0",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
+    "eslint": "^3.19.0",
+    "eslint-config-airbnb": "^14.1.0",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-jsx-a11y": "^4.0.0",
+    "eslint-plugin-react": "^7.0.1",
+    "fs-extra": "^3.0.1",
+    "path-extra": "^4.1.0"
+  }
+}
