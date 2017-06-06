@@ -14,10 +14,17 @@ const { FontAwesome, isDarkTheme } = window
 class MoraleListItem extends Component {
   static propTypes = {
     moraleInfo: PTyp.MoraleInfo.isRequired,
+
+    onRemoveItem: PTyp.func.isRequired,
+    onCloneItem: PTyp.func.isRequired,
   }
 
   render() {
-    const { moraleInfo } = this.props
+    const {
+      moraleInfo,
+      onRemoveItem,
+      onCloneItem,
+    } = this.props
     const { wSubject, name, ships } = moraleInfo
     const title = WSubject.destruct({
       fleet: fleetId => `Fleet #${fleetId}`,
@@ -90,6 +97,7 @@ class MoraleListItem extends Component {
               style={{
                 paddingTop: 0,
               }}
+              onClick={onCloneItem}
           >
             <FontAwesome name={isCustom ? "pencil" : "save"} />
           </Button>
@@ -97,8 +105,9 @@ class MoraleListItem extends Component {
               bsSize="xsmall"
               style={{
                 paddingTop: 0,
-                marginLeft: "5px",
+                marginLeft: "20px",
               }}
+              onClick={onRemoveItem}
           >
             <FontAwesome name="close" />
           </Button>

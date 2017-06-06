@@ -28,6 +28,44 @@ class MoraleList extends Component {
     }))
   }
 
+  handleRemoveItem = moraleInfo => () => {
+    const ws = moraleInfo.wSubject
+    const id = WSubject.id(ws)
+    const { onModifyConfig } = this.props
+    onModifyConfig(config => ({
+      ...config,
+      watchlist:
+        config.watchlist.filter(w => WSubject.id(w) !== id),
+    }))
+  }
+
+  handleCloneItem = moraleInfo => () => {
+    const { name } = moraleInfo
+    const ships = moraleInfo.ships.map(s => s.rstId)
+    const { onModifyConfig } = this.props
+
+    onModifyConfig(config => {
+      const { watchlist } = config
+      const customIds = watchlist
+        .filter(w => w.type === 'custom')
+        .map(w => w.id)
+      const newId =
+        customIds.length === 0 ? 1 :
+        Math.max(...customIds) + 1
+
+      const newWS = {
+        type: 'custom',
+        id: newId,
+        name, ships,
+      }
+
+      return {
+        ...config,
+        watchlist: [...watchlist, newWS],
+      }
+    })
+  }
+
   render() {
     return (
       <ListGroup
@@ -40,6 +78,8 @@ class MoraleList extends Component {
             <MoraleListItem
                 key={WSubject.id(moraleInfo.wSubject)}
                 moraleInfo={moraleInfo}
+                onRemoveItem={this.handleRemoveItem(moraleInfo)}
+                onCloneItem={this.handleCloneItem(moraleInfo)}
             />
           ))
         }
