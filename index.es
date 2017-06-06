@@ -17,12 +17,13 @@ class MoraleMonitor extends Component {
     admiralId: PTyp.number,
     moraleList: PTyp.array.isRequired,
     availableTargets: PTyp.array.isRequired,
-    shipsInfo: PTyp.object.isRequired,
+    shipList: PTyp.array.isRequired,
     stypeInfo: PTyp.array.isRequired,
+    layout: PTyp.oneOf(['horizontal','vertical']).isRequired,
 
     filterSType: PTyp.number.isRequired,
     filterMorale: PTyp.string.isRequired,
-    sortMethod: PTyp.oneOf(['rid','name','type','level','morale']).isRequired,
+    sortMethod: PTyp.oneOf(['rid','name','stype','level','morale']).isRequired,
     sortReverse: PTyp.bool.isRequired,
 
     onInitialize: PTyp.func.isRequired,
@@ -73,8 +74,9 @@ class MoraleMonitor extends Component {
         />
         <ShipMoraleList
             visible={activeTab === 'ship'}
-            shipsInfo={this.props.shipsInfo}
+            layout={this.props.layout}
             stypeInfo={this.props.stypeInfo}
+            shipList={this.props.shipList}
             filterMorale={this.props.filterMorale}
             filterSType={this.props.filterSType}
             sortMethod={this.props.sortMethod}

@@ -1,5 +1,10 @@
 import React, { Component } from 'react'
-import { DropdownButton, MenuItem, ButtonGroup } from 'react-bootstrap'
+import {
+  DropdownButton,
+  MenuItem,
+  ButtonGroup,
+  Table,
+} from 'react-bootstrap'
 
 import { PTyp } from '../ptyp'
 
@@ -7,16 +12,30 @@ class ShipMoraleList extends Component {
   static propTypes = {
     visible: PTyp.bool.isRequired,
 
-    shipsInfo: PTyp.objectOf(PTyp.ShipInfo).isRequired,
+    shipList: PTyp.arrayOf(PTyp.ShipInfo).isRequired,
     stypeInfo: PTyp.arrayOf(PTyp.STypeInfo).isRequired,
+    layout: PTyp.oneOf(['horizontal','vertical']).isRequired,
 
     filterSType: PTyp.number.isRequired,
     filterMorale: PTyp.string.isRequired,
-    sortMethod: PTyp.oneOf(['rid','name','type','level','morale']).isRequired,
+    sortMethod: PTyp.oneOf(['rid','name','stype','level','morale']).isRequired,
     sortReverse: PTyp.bool.isRequired,
 
     onModifyConfig: PTyp.func.isRequired,
   }
+
+  static defineSortableHeader =
+    (name, method, asc = true /* whether it's ascending by default */) => ({
+      name, method, asc,
+    })
+
+  static headerSpecs = [
+    ShipMoraleList.defineSortableHeader('ID','rid'),
+    ShipMoraleList.defineSortableHeader('Type','stype'),
+    ShipMoraleList.defineSortableHeader('Name','name'),
+    ShipMoraleList.defineSortableHeader('Level','level',false),
+    ShipMoraleList.defineSortableHeader('Morale','morale'),
+  ]
 
   displayFilterSType = () => {
     const { filterSType } = this.props
@@ -53,9 +72,31 @@ class ShipMoraleList extends Component {
     }))
   }
 
+  handleClickHeader = method => () => {
+    const { onModifyConfig } = this.props
+    onModifyConfig(config => {
+      const { sortMethod } = config
+      if (sortMethod === method) {
+        return {
+          ...config,
+          sortReverse: !config.sortReverse,
+        }
+      } else {
+        return {
+          ...config,
+          sortMethod: method,
+          sortReverse: false,
+        }
+      }
+    })
+  }
+
   render() {
     const {
+      shipList,
       stypeInfo, visible,
+      layout,
+      sortMethod, sortReverse,
     } = this.props
 
     return (
@@ -87,7 +128,6 @@ class ShipMoraleList extends Component {
           <ButtonGroup
               style={{width: "49%"}}
               justified>
-
             <DropdownButton
                 onSelect={this.handleFilterMoraleChange}
                 title={this.displayFilterMorale()}
@@ -103,7 +143,59 @@ class ShipMoraleList extends Component {
             </DropdownButton>
           </ButtonGroup>
         </div>
-        <div>TableArea</div>
+        <div
+            style={{
+              marginTop: '8px',
+              height: layout === 'vertical' ? '48vh' : '85vh',
+              overflowY: 'scroll',
+            }}>
+          <Table
+              striped bordered condensed hover>
+            <thead
+            >
+              <tr>
+                {
+                  ShipMoraleList.headerSpecs.map( ({name, method, asc}) => {
+                    const isActive = sortMethod === method
+                    // using name instead of method, as some doesn't have the latter
+                    const key = name
+                    let content
+                    if (isActive) {
+                      const dir = sortReverse ? (asc ? '▼' : '▲') : (asc ? '▲' : '▼')
+                      content = `${name} ${dir}`
+                    } else {
+                      content = name
+                    }
+                    return (
+                      <th
+                          className={isActive ? "text-primary" : ""}
+                          onClick={this.handleClickHeader(method)}
+                          key={key}>
+                        {content}
+                      </th>
+                    )
+                  })
+                }
+              </tr>
+            </thead>
+            <tbody
+            >
+              {
+                shipList.map(ship => (
+                  <tr
+                      key={ship.rstId}
+                  >
+                    <td>{ship.rstId}</td>
+                    <td>{ship.typeName}</td>
+                    <td>{ship.name}</td>
+                    <td>{ship.level}</td>
+                    <td>{ship.morale}</td>
+                  </tr>
+                ))
+              }
+            </tbody>
+          </Table>
+        </div>
       </div>
     )
   }

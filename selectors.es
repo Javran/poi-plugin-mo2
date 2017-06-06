@@ -5,6 +5,7 @@ import {
   basicSelector,
   constSelector,
   fleetsSelector,
+  configLayoutSelector,
 } from 'views/utils/selectors'
 import { WSubject } from './structs'
 
@@ -179,18 +180,21 @@ const shipMoraleListSelector =
     shipsInfoSelector,
     stypeInfoSelector,
     shipListOptionsSelector,
-    (shipsInfo,stypeInfo,listOptions) => {
+    configLayoutSelector,
+    (shipsInfo,stypeInfo,listOptions, layout) => {
       const {
         filterSType, filterMorale,
         sortMethod, sortReverse,
       } = listOptions
+      const shipList = Object.values(shipsInfo)
 
       return {
         // TODO: apply options in selector.
-        shipsInfo,
+        shipList,
         stypeInfo,
         filterSType, filterMorale,
         sortMethod, sortReverse,
+        layout,
       }
     })
 
