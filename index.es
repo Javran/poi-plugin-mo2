@@ -70,6 +70,7 @@ class MoraleMonitor extends Component {
             visible={activeTab === 'ship'}
             shipsInfo={this.props.shipsInfo}
             stypeInfo={this.props.stypeInfo}
+            onModifyConfig={this.props.onModifyConfig}
         />
       </div>
     )

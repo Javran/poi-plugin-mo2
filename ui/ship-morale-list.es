@@ -9,6 +9,8 @@ class ShipMoraleList extends Component {
 
     shipsInfo: PTyp.objectOf(PTyp.ShipInfo).isRequired,
     stypeInfo: PTyp.arrayOf(PTyp.STypeInfo).isRequired,
+
+    onModifyConfig: PTyp.func.isRequired,
   }
 
   render() {

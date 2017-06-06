@@ -134,14 +134,12 @@ const stypeInfoSelector =
       Object.entries($shipTypes).map(([stypeStr,typeInfo]) =>
         ({ stype: parseInt(stypeStr,10), name: typeInfo.api_name })))
 
-const moraleMonitorSelector =
+const fleetMoraleListSelector =
   createSelector(
-    admiralIdSelector,
     shipsInfoSelector,
     moraleListSelector,
     presetDeckMaxSelector,
-    stypeInfoSelector,
-    (admiralId, shipsInfo, moraleList, presetDeckMax, stypeInfo) => {
+    (shipsInfo, moraleList, presetDeckMax) => {
       // those missing in morale list
       const availableTargets = []
 
@@ -149,7 +147,7 @@ const moraleMonitorSelector =
         if (
           moraleList.findIndex(m =>
             m.wSubject.type === 'fleet' &&
-            m.wSubject.fleetId === fleetId) === -1) {
+                                  m.wSubject.fleetId === fleetId) === -1) {
           availableTargets.push({type: 'fleet',fleetId})
         }
       }
@@ -158,20 +156,36 @@ const moraleMonitorSelector =
         if (
           moraleList.findIndex(m =>
             m.wSubject.type === 'preset' &&
-            m.wSubject.presetNo === presetNo) === -1) {
+                                  m.wSubject.presetNo === presetNo) === -1) {
           availableTargets.push({type: 'preset',presetNo})
         }
       }
 
       return {
-        admiralId,
         moraleList,
         availableTargets,
-
-        stypeInfo,
-        shipsInfo,
       }
     }
+  )
+
+const shipMoraleListSelector =
+  createSelector(
+    shipsInfoSelector,
+    stypeInfoSelector,
+    (shipsInfo, stypeInfo) => ({
+      shipsInfo, stypeInfo,
+    }))
+
+const moraleMonitorSelector =
+  createSelector(
+    admiralIdSelector,
+    fleetMoraleListSelector,
+    shipMoraleListSelector,
+    (admiralId, fleetMoraleListData, shipMoraleListData) => ({
+      admiralId,
+      ...fleetMoraleListData,
+      ...shipMoraleListData,
+    })
   )
 
 export {
