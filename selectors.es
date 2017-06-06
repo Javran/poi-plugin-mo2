@@ -22,6 +22,12 @@ const presetDeckMaxSelector =
       3 :
       s.presetDeck.api_max_num)
 
+const shipListOptionsSelector =
+  createSelector(
+    extSelector,
+    ({filterSType, filterMorale, sortMethod, sortReverse}) => ({
+      filterSType, filterMorale, sortMethod, sortReverse}))
+
 const watchlistSelector =
   createSelector(
     extSelector,
@@ -172,9 +178,21 @@ const shipMoraleListSelector =
   createSelector(
     shipsInfoSelector,
     stypeInfoSelector,
-    (shipsInfo, stypeInfo) => ({
-      shipsInfo, stypeInfo,
-    }))
+    shipListOptionsSelector,
+    (shipsInfo,stypeInfo,listOptions) => {
+      const {
+        filterSType, filterMorale,
+        sortMethod, sortReverse,
+      } = listOptions
+
+      return {
+        // TODO: apply options in selector.
+        shipsInfo,
+        stypeInfo,
+        filterSType, filterMorale,
+        sortMethod, sortReverse,
+      }
+    })
 
 const moraleMonitorSelector =
   createSelector(

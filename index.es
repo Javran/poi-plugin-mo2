@@ -20,6 +20,11 @@ class MoraleMonitor extends Component {
     shipsInfo: PTyp.object.isRequired,
     stypeInfo: PTyp.array.isRequired,
 
+    filterSType: PTyp.number.isRequired,
+    filterMorale: PTyp.string.isRequired,
+    sortMethod: PTyp.oneOf(['rid','name','type','level','morale']).isRequired,
+    sortReverse: PTyp.bool.isRequired,
+
     onInitialize: PTyp.func.isRequired,
     onModifyConfig: PTyp.func.isRequired,
   }
@@ -70,6 +75,10 @@ class MoraleMonitor extends Component {
             visible={activeTab === 'ship'}
             shipsInfo={this.props.shipsInfo}
             stypeInfo={this.props.stypeInfo}
+            filterMorale={this.props.filterMorale}
+            filterSType={this.props.filterSType}
+            sortMethod={this.props.sortMethod}
+            sortReverse={this.props.sortReverse}
             onModifyConfig={this.props.onModifyConfig}
         />
       </div>
