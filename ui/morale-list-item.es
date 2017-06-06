@@ -61,7 +61,7 @@ class MoraleListItem extends Component {
       <ListGroupItem
           style={{
             padding: 0,
-            marginBottom: "8px",
+            marginBottom: "5px",
             borderRadius: "5px",
             overflow: "hidden",
           }}
@@ -71,7 +71,9 @@ class MoraleListItem extends Component {
               display: "flex",
               alignItems: "center",
               width: "100%",
-              padding: "5px",
+              padding: "2px 4px 5px",
+              backgroundColor:
+                isDarkTheme ? "#424242" : "#f5f5f5",
             }}
         >
           <div
@@ -85,12 +87,16 @@ class MoraleListItem extends Component {
           </div>
           <Button
               bsSize="xsmall"
+              style={{
+                paddingTop: 0,
+              }}
           >
             <FontAwesome name={isCustom ? "pencil" : "save"} />
           </Button>
           <Button
               bsSize="xsmall"
               style={{
+                paddingTop: 0,
                 marginLeft: "5px",
               }}
           >
@@ -108,8 +114,9 @@ class MoraleListItem extends Component {
                 flex: 6,
                 display: "flex",
                 flexDirection: "column",
+                marginTop: "5px",
                 marginLeft: "5px",
-                paddingBottom: "6px",
+                paddingBottom: "2px",
               }}
           >
             <div
