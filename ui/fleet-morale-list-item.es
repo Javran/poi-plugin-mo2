@@ -8,6 +8,8 @@ import {
 import { PTyp } from '../ptyp'
 import { WSubject } from '../structs'
 
+import { DivMorale } from './div-morale'
+
 // import { genRandomMorale } from '../gen'
 
 const { FontAwesome, isDarkTheme } = window
@@ -69,33 +71,12 @@ class FleetMoraleListItem extends Component {
       ships.length > 0 ?
         Math.min(...ships.map(s => s.morale)) :
         null
-    // const minMorale = genRandomMorale()
-
-    const minMoraleText = minMorale === null ? '-' : String(minMorale)
-
-    const moraleStyle =
-      minMorale === null ? {} :
-        minMorale <= 48 ? {} :
-        minMorale === 49 ? {textShadow: "white 0 0 7px"} :
-        {textShadow: "#ffee00 0 0 7px"}
-
-    const moraleClasses =
-      minMorale === null ? "" :
-      minMorale <= 19 ? "poi-ship-cond-0" :
-      minMorale <= 29 ? "poi-ship-cond-20" :
-      minMorale <= 39 ? "poi-ship-cond-30" :
-      minMorale <= 48 ? "poi-ship-cond-40" :
-      minMorale === 49 ? "poi-ship-cond-49" :
-      minMorale <= 52 ? "poi-ship-cond-50" :
-      "poi-ship-cond-53"
 
     const fsDesc =
       ships.length > 0 ?
         `${ships[0].name} Lv.${ships[0].level} (${ships[0].rstId})` :
         "-"
-
     const isCustom = wSubject.type === 'custom'
-    const darkOrLight = isDarkTheme ? 'dark' : 'light'
     return (
       <ListGroupItem
           style={{
@@ -196,18 +177,11 @@ class FleetMoraleListItem extends Component {
               >Ship Count: {ships.length}</div>
             </div>
           </div>
-          <div
-              className={`${moraleClasses} ${darkOrLight}`}
-              style={{
-                flex: 1,
-                textAlign: "center",
-                ...moraleStyle,
-                fontSize: "20px",
-                fontWeight: "bold",
-              }}
-          >
-            {minMoraleText}
-          </div>
+          <DivMorale
+              morale={minMorale}
+              isDarkTheme={isDarkTheme}
+              style={{flex: 1}}
+          />
         </div>
       </ListGroupItem>
     )
