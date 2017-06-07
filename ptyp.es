@@ -56,6 +56,12 @@ const STypeInfo = PropTypes.shape(allRequired({
   stype: PropTypes.number,
 }))
 
+const SortMethod = PropTypes.oneOf([
+  'rid','name','stype','level','morale'])
+
+const Layout = PropTypes.oneOf([
+  'horizontal', 'vertical'])
+
 const PTyp = {
   ...PropTypes,
 
@@ -63,6 +69,9 @@ const PTyp = {
   MoraleInfo,
 
   STypeInfo,
+
+  SortMethod,
+  Layout,
 }
 
 export { PTyp }

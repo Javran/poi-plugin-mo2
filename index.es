@@ -19,11 +19,11 @@ class MoraleMonitor extends Component {
     availableTargets: PTyp.array.isRequired,
     shipList: PTyp.array.isRequired,
     stypeInfo: PTyp.array.isRequired,
-    layout: PTyp.oneOf(['horizontal','vertical']).isRequired,
+    layout: PTyp.Layout.isRequired,
 
     filterSType: PTyp.number.isRequired,
     filterMorale: PTyp.string.isRequired,
-    sortMethod: PTyp.oneOf(['rid','name','stype','level','morale']).isRequired,
+    sortMethod: PTyp.SortMethod.isRequired,
     sortReverse: PTyp.bool.isRequired,
 
     onInitialize: PTyp.func.isRequired,

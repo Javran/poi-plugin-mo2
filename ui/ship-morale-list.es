@@ -14,11 +14,11 @@ class ShipMoraleList extends Component {
 
     shipList: PTyp.arrayOf(PTyp.ShipInfo).isRequired,
     stypeInfo: PTyp.arrayOf(PTyp.STypeInfo).isRequired,
-    layout: PTyp.oneOf(['horizontal','vertical']).isRequired,
+    layout: PTyp.Layout.isRequired,
 
     filterSType: PTyp.number.isRequired,
     filterMorale: PTyp.string.isRequired,
-    sortMethod: PTyp.oneOf(['rid','name','stype','level','morale']).isRequired,
+    sortMethod: PTyp.SortMethod.isRequired,
     sortReverse: PTyp.bool.isRequired,
 
     onModifyConfig: PTyp.func.isRequired,
