@@ -192,7 +192,6 @@ const shipMoraleListSelector =
       const shipList =
         applyOptions(listOptions)(Object.values(shipsInfo))
       return {
-        // TODO: apply options in selector.
         shipList,
         stypeInfo,
         filterSType, filterMorale,
