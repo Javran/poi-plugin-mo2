@@ -133,6 +133,15 @@ const specialFilters = new Map()
   Object.freeze(specialFilters)
 }
 
+class ShipFilter {
+  static specialFilters = specialFilters
+  static prepareShipTypePredicate = x =>
+    typeof x === 'number' ? s => s.stype === x :
+    specialFilters.has(x) ? specialFilters.get(x).func :
+    console.error(`Unknown filter: ${x}`)
+}
+
 export {
   canEquipDLC,
+  ShipFilter,
 }
