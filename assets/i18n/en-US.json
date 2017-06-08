@@ -1,0 +1,39 @@
+{
+  "Package": {
+    "Title": "Morale Monitor",
+    "Desc": "Monitoring morale for your fleets and ships"
+  },
+
+  "Tab": {
+    "Fleet": "Fleets",
+    "Ship": "Ships"
+  },
+
+  "FleetList": {
+    "Fleet": "Fleet",
+    "Preset": "Preset",
+    "Custom": "Custom",
+    "Add": "Add...",
+    "Flagship": "Flagship",
+    "ShipCount": "Ship Count"
+  },
+
+  "ShipList": {
+    "Type": "Type",
+    "Name": "Name",
+    "Level": "Level",
+    "Morale": "Morale",
+    "All": "All"
+  },
+
+  "SpecialFilters": {
+    "dd-cl": "DD / CL",
+    "dlc": "DLC-capable",
+    "dlc-dd-cl": "DLC-capable (DD / CL only)",
+    "cv-cvl-av": "CV / CVL / AV",
+    "cv-cvl-cvb": "CV / CVL / CVB",
+    "battleship": "Battleships",
+    "sub": "Submarines",
+    "cl-clt-ct": "CL / CLT / CT"
+  }
+}

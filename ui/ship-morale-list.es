@@ -7,6 +7,7 @@ import {
 } from 'react-bootstrap'
 
 import { PTyp } from '../ptyp'
+import { __ } from '../tr'
 import { ShipFilter } from '../ship-filters'
 import { FleetMarker } from './fleet-marker'
 import { DivMorale } from './div-morale'
@@ -56,20 +57,20 @@ class ShipMoraleList extends Component {
 
   displayFilterSType = () => {
     const { filterSType, stypeInfo } = this.props
-    const text = ShipFilter.display(stypeInfo)(filterSType)
-    return `Type: ${text}`
+    const text = ShipFilter.display(stypeInfo,__)(filterSType)
+    return `${__('ShipList.Type')}: ${text}`
   }
 
   displayFilterMorale = () => {
     const { filterMorale } = this.props
     const moraleValueText = (() => {
       if (filterMorale === 'all')
-        return 'All'
+        return __('ShipList.All')
       const rawNum = /^lt-(\d+)$/.exec(filterMorale)[1]
       const num = parseInt(rawNum,10)
       return `< ${num}`
     })()
-    return `Morale: ${moraleValueText}`
+    return `${__('ShipList.Morale')}: ${moraleValueText}`
   }
 
   handleFilterSTypeChange = stype => {
@@ -115,7 +116,7 @@ class ShipMoraleList extends Component {
       sortMethod, sortReverse,
     } = this.props
 
-    const prepareSTypeText = ShipFilter.display(stypeInfo)
+    const prepareSTypeText = ShipFilter.display(stypeInfo,__)
 
     return (
       <div
@@ -162,7 +163,7 @@ class ShipMoraleList extends Component {
                 onSelect={this.handleFilterMoraleChange}
                 title={this.displayFilterMorale()}
                 id="dropdown-morale">
-              <MenuItem eventKey="all">All</MenuItem>
+              <MenuItem eventKey="all">{__('ShipList.All')}</MenuItem>
               {
                 [50,53,76,85,100].map( m => (
                   <MenuItem key={m} eventKey={`lt-${m}`}>
@@ -188,8 +189,7 @@ class ShipMoraleList extends Component {
                 {
                   ShipMoraleList.headerSpecs.map( ({name, method, width, asc}) => {
                     const isActive = sortMethod === method
-                    // using name instead of method, as some doesn't have the latter
-                    const key = name
+                    const key = method
                     let content
                     if (isActive) {
                       const dir = sortReverse ? (asc ? '▼' : '▲') : (asc ? '▲' : '▼')

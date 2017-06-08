@@ -1,0 +1,39 @@
+{
+  "Package": {
+    "Title": "士气速查",
+    "Desc": "舰队与舰娘士气值速查"
+  },
+
+  "Tab": {
+    "Fleet": "舰队",
+    "Ship": "舰娘"
+  },
+
+  "FleetList": {
+    "Fleet": "当前舰队",
+    "Preset": "编成记录",
+    "Custom": "定制舰队",
+    "Add": "添加…",
+    "Flagship": "旗舰",
+    "ShipCount": "舰娘数"
+  },
+
+  "ShipList": {
+    "Type": "舰种",
+    "Name": "舰名",
+    "Level": "等级",
+    "Morale": "士气",
+    "All": "全部"
+  },
+
+  "SpecialFilters": {
+    "dd-cl": "DD / CL",
+    "dlc": "可携带大发系装备",
+    "dlc-dd-cl": "可携带大发系装备 (仅 DD / CL)",
+    "cv-cvl-av": "CV / CVL / AV",
+    "cv-cvl-cvb": "CV / CVL / CVB",
+    "battleship": "战舰系",
+    "sub": "潜艇系",
+    "cl-clt-ct": "CL / CLT / CT"
+  }
+}

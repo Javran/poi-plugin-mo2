@@ -140,12 +140,23 @@ class ShipFilter {
     specialFilters.has(x) ? specialFilters.get(x).func :
     console.error(`Unknown filter: ${x}`)
 
-  static display = (stypeInfo=[]) => filterSType => {
-    const typeInfo =
-      stypeInfo.find(x => x.stype === filterSType)
-    return typeof typeInfo !== 'undefined' ?
-      `${typeInfo.name} (${filterSType})` :
-      specialFilters.get(filterSType).desc
+  static display = (stypeInfo=[],__=null) => filterSType => {
+    if (typeof filterSType === 'number') {
+      const typeInfo =
+        stypeInfo.find(x => x.stype === filterSType)
+      if (typeInfo !== 'undefined') {
+        return `${typeInfo.name} (${filterSType})`
+      } else {
+        return String(filterSType)
+      }
+    } else {
+      const filterInfo = specialFilters.get(filterSType)
+      if (typeof __ === 'function') {
+        return __(`SpecialFilters.${filterInfo.id}`)
+      } else {
+        return filterInfo.desc
+      }
+    }
   }
 }
 

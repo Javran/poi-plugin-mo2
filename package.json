@@ -1,7 +1,7 @@
 {
   "name": "poi-plugin-mo2",
   "version": "0.0.1",
-  "description": "Morale Monitor",
+  "description": "Monitoring morale for your fleets and ships",
   "main": "index.es",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -20,8 +20,8 @@
   },
   "homepage": "https://github.com/Javran/poi-plugin-mo2#readme",
   "poiPlugin": {
-    "title": "Morale Monitor",
-    "description": "Morale Monitor",
+    "title": "Package.Title",
+    "description": "Package.Desc",
     "priority": 20,
     "icon": "smile-o"
   },

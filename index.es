@@ -9,6 +9,7 @@ import {
 import { moraleMonitorSelector } from './selectors'
 
 import { PTyp } from './ptyp'
+import { __ } from './tr'
 import { FleetMoraleList } from './ui/fleet-morale-list'
 import { ShipMoraleList } from './ui/ship-morale-list'
 
@@ -63,8 +64,8 @@ class MoraleMonitor extends Component {
             onSelect={this.handleTabSwitch}
             style={{marginBottom: "6px"}}
             justified className="main-nav">
-          <NavItem eventKey="fleet">Fleets</NavItem>
-          <NavItem eventKey="ship">Ships</NavItem>
+          <NavItem eventKey="fleet">{__('Tab.Fleet')}</NavItem>
+          <NavItem eventKey="ship">{__('Tab.Ship')}</NavItem>
         </Nav>
         <FleetMoraleList
             visible={activeTab === 'fleet'}
@@ -93,15 +94,7 @@ const reactClass = connect(
   mapDispatchToProps,
 )(MoraleMonitor)
 
-const switchPluginPath = [
-  {
-    path: "/kcsapi/api_get_member/preset_deck",
-    valid: () => true,
-  },
-]
-
 export {
   reactClass,
-  // switchPluginPath,
   reducer,
 }

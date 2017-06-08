@@ -8,6 +8,8 @@ import {
 } from 'react-bootstrap'
 
 import { PTyp } from '../ptyp'
+import { __ } from '../tr'
+
 import { WSubject } from '../structs'
 
 import { DivMorale } from './div-morale'
@@ -89,9 +91,9 @@ class FleetMoraleListItem extends Component {
     } = this.props
     const { wSubject, name, ships } = moraleInfo
     const title = WSubject.destruct({
-      fleet: fleetId => `Fleet #${fleetId}`,
-      preset: presetNo => `Preset #${presetNo}`,
-      custom: id => `Custom #${id}`,
+      fleet: fleetId => `${__('FleetList.Fleet')} #${fleetId}`,
+      preset: presetNo => `${__('FleetList.Preset')} #${presetNo}`,
+      custom: id => `${__('FleetList.Custom')} #${id}`,
     })(wSubject)
 
     const minMorale =
@@ -197,13 +199,13 @@ class FleetMoraleListItem extends Component {
                     flex: 3,
                     fontSize: "15px",
                   }}
-              >Flagship: {fsDesc}</div>
+              >{__('FleetList.Flagship')}: {fsDesc}</div>
               <div
                   style={{
                     flex: 2,
                     fontSize: "15px",
                   }}
-              >Ship Count: {ships.length}</div>
+              >{__('FleetList.ShipCount')}: {ships.length}</div>
             </div>
           </div>
           {

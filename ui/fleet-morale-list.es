@@ -8,6 +8,7 @@ import {
 } from 'react-bootstrap'
 
 import { PTyp } from '../ptyp'
+import { __ } from '../tr'
 import { WSubject } from '../structs'
 
 import { FleetMoraleListItem } from './fleet-morale-list-item'
@@ -87,16 +88,16 @@ class FleetMoraleList extends Component {
 
   renderMenuItemContent = ws => {
     const basicText =
-      ws.type === 'fleet' ? `Fleet #${ws.fleetId}` :
-      ws.type === 'preset' ? `Preset #${ws.presetNo}` :
+      ws.type === 'fleet' ? `${__('FleetList.Fleet')} #${ws.fleetId}` :
+      ws.type === 'preset' ? `${__('FleetList.Preset')} #${ws.presetNo}` :
       console.error(`Unexpected WSubject type: ${ws.type}`)
 
     const { fsName, shipCount } = ws
     if (typeof fsName !== 'undefined' && typeof shipCount !== 'undefined') {
       return [
         basicText,
-        `Flagship: ${fsName}`,
-        `Ship Count: ${shipCount}`,
+        `${__('FleetList.Flagship')}: ${fsName}`,
+        `${__('FleetList.Preset')}: ${shipCount}`,
       ].join(', ')
     } else {
       return basicText
@@ -132,7 +133,7 @@ class FleetMoraleList extends Component {
             <DropdownButton
                 style={{marginTop: 0}}
                 onSelect={this.handleAddNewTarget}
-                title="Add ..."
+                title={__("FleetList.Add")}
                 id="dropdown-add-new-target">
               {
                 this.props.availableTargets.map( ws => (
