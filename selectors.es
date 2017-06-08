@@ -43,7 +43,6 @@ const admiralIdSelector =
 
 // like shipsSelector but with data fields trimed and renamed
 // for the purpose of this plugin.
-// - also only locked ships are kept.
 const shipsInfoSelector =
   createSelector(
     shipsSelector,
@@ -53,8 +52,6 @@ const shipsInfoSelector =
       const shipsInfo = {}
       Object.entries(ships)
         .map(([rstIdStr, ship]) => {
-          if (ship.api_locked !== 1)
-            return
           const rstId = parseInt(rstIdStr,10)
           const mstId = ship.api_ship_id
           const level = ship.api_lv
@@ -67,10 +64,11 @@ const shipsInfoSelector =
           const sortNo = masterInfo.api_sortno
           const fleetInd = fleets.findIndex(fleet => fleet.api_ship.indexOf(rstId) !== -1)
           const fleet = fleetInd === -1 ? null : fleets[fleetInd].api_id
+          const locked = ship.api_locked === 1
           shipsInfo[rstIdStr] = {
             rstId, mstId,
             name, stype, typeName, sortNo,
-            level, morale, fleet,
+            level, morale, fleet, locked,
           }
         })
       return shipsInfo
@@ -152,7 +150,11 @@ const fleetMoraleListSelector =
     shipsInfoSelector,
     moraleListSelector,
     presetDeckMaxSelector,
-    (shipsInfo, moraleList, presetDeckMax) => {
+    presetDeckSelector,
+    fleetsSelector,
+    (
+      shipsInfo, moraleList, presetDeckMax,
+      presetDeck,fleets) => {
       // those missing in morale list
       const availableTargets = []
 

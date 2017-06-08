@@ -39,11 +39,13 @@ const inGameShipTypeComparator =
     flipComparator(getter2Comparator(x => x.level)),
     rosterIdComparator)
 
-const applyOptions = options => {
+const applyOptions = (options,removeUnlocked=true) => {
   const {
     filterSType, filterMorale,
     sortMethod, sortReverse,
   } = options
+
+  const lockFilter = removeUnlocked ? xs => xs.filter(s => s.locked) : xs => xs
 
   const stypeFilter = xs => xs.filter(
     ShipFilter.prepareShipTypePredicate(filterSType))
@@ -76,6 +78,7 @@ const applyOptions = options => {
     sortReverse ? xs => [...xs].reverse() : xs => xs
 
   return _.flow([
+    lockFilter,
     stypeFilter,
     moraleFilter,
     sort,
