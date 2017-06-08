@@ -49,10 +49,10 @@ class ShipMoraleList extends Component {
 
   static headerSpecs = [
     ShipMoraleList.defineHeader('ID','rid','14%'),
-    ShipMoraleList.defineHeader('Type','stype','20%'),
-    ShipMoraleList.defineHeader('Name','name','auto'),
-    ShipMoraleList.defineHeader('Level','level','14%',false),
-    ShipMoraleList.defineHeader('Morale','morale',`14%`),
+    ShipMoraleList.defineHeader(__('ShipList.Type'),'stype','20%'),
+    ShipMoraleList.defineHeader(__('ShipList.Name'),'name','auto'),
+    ShipMoraleList.defineHeader(__('ShipList.Level'),'level','14%',false),
+    ShipMoraleList.defineHeader(__('ShipList.Morale'),'morale',`14%`),
   ]
 
   displayFilterSType = () => {
