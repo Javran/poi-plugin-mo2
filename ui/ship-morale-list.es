@@ -13,6 +13,18 @@ import { DivMorale } from './div-morale'
 
 const { isDarkTheme } = window
 
+const WrappedTd = ({content}) => (
+  <td>
+    <div style={{
+      width: '100%',
+      textOverflow: 'ellipsis',
+      whiteSpace: 'nowrap',
+      overflow: 'hidden'}}>
+      {content}
+    </div>
+  </td>)
+WrappedTd.propTypes = PTyp.node.isRequired
+
 class ShipMoraleList extends Component {
   static propTypes = {
     visible: PTyp.bool.isRequired,
@@ -29,17 +41,17 @@ class ShipMoraleList extends Component {
     onModifyConfig: PTyp.func.isRequired,
   }
 
-  static defineSortableHeader =
-    (name, method, asc = true /* whether it's ascending by default */) => ({
-      name, method, asc,
+  static defineHeader =
+    (name, method, width, asc = true /* whether it's ascending by default */) => ({
+      name, method, width, asc,
     })
 
   static headerSpecs = [
-    ShipMoraleList.defineSortableHeader('ID','rid'),
-    ShipMoraleList.defineSortableHeader('Type','stype'),
-    ShipMoraleList.defineSortableHeader('Name','name'),
-    ShipMoraleList.defineSortableHeader('Level','level',false),
-    ShipMoraleList.defineSortableHeader('Morale','morale'),
+    ShipMoraleList.defineHeader('ID','rid','14%'),
+    ShipMoraleList.defineHeader('Type','stype','20%'),
+    ShipMoraleList.defineHeader('Name','name','auto'),
+    ShipMoraleList.defineHeader('Level','level','14%',false),
+    ShipMoraleList.defineHeader('Morale','morale',`14%`),
   ]
 
   displayFilterSType = () => {
@@ -168,12 +180,13 @@ class ShipMoraleList extends Component {
               overflowY: 'scroll',
             }}>
           <Table
-              striped bordered condensed hover>
+            style={{tableLayout: 'fixed'}}
+            striped bordered condensed hover>
             <thead
             >
               <tr>
                 {
-                  ShipMoraleList.headerSpecs.map( ({name, method, asc}) => {
+                  ShipMoraleList.headerSpecs.map( ({name, method, width, asc}) => {
                     const isActive = sortMethod === method
                     // using name instead of method, as some doesn't have the latter
                     const key = name
@@ -186,9 +199,10 @@ class ShipMoraleList extends Component {
                     }
                     return (
                       <th
-                          className={isActive ? "text-primary" : ""}
-                          onClick={this.handleClickHeader(method)}
-                          key={key}>
+                        className={isActive ? "text-primary" : ""}
+                        style={{width}}
+                        onClick={this.handleClickHeader(method)}
+                        key={key}>
                         {content}
                       </th>
                     )
@@ -203,17 +217,20 @@ class ShipMoraleList extends Component {
                   <tr
                       key={ship.rstId}
                   >
-                    <td>{ship.rstId}</td>
-                    <td>{ship.typeName}</td>
-                    <td>
-                      {ship.name}
-                      <FleetMarker
-                        style={{marginLeft: 5}}
-                        fleet={ship.fleet}
-                        formatter={x => `/${x}`}
-                      />
-                    </td>
-                    <td>{ship.level}</td>
+                    <WrappedTd content={ship.rstId} />
+                    <WrappedTd content={ship.typeName} />
+                    <WrappedTd content={
+                      <span>
+                        {ship.name}
+                        <FleetMarker
+                          style={{marginLeft: 5}}
+                          fleet={ship.fleet}
+                          formatter={x => `/${x}`}
+                        />
+                      </span>
+                    } />
+
+                    <WrappedTd content={ship.level} />
                     <td>
                       <DivMorale
                         style={{
