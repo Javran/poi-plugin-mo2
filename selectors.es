@@ -160,7 +160,7 @@ const fleetMoraleListSelector =
         if (
           moraleList.findIndex(m =>
             m.wSubject.type === 'fleet' &&
-                                  m.wSubject.fleetId === fleetId) === -1) {
+            m.wSubject.fleetId === fleetId) === -1) {
           availableTargets.push({type: 'fleet',fleetId})
         }
       }
@@ -169,7 +169,7 @@ const fleetMoraleListSelector =
         if (
           moraleList.findIndex(m =>
             m.wSubject.type === 'preset' &&
-                                  m.wSubject.presetNo === presetNo) === -1) {
+            m.wSubject.presetNo === presetNo) === -1) {
           availableTargets.push({type: 'preset',presetNo})
         }
       }
