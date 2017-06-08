@@ -17,7 +17,7 @@ class ShipMoraleList extends Component {
     stypeInfo: PTyp.arrayOf(PTyp.STypeInfo).isRequired,
     layout: PTyp.Layout.isRequired,
 
-    filterSType: PTyp.number.isRequired,
+    filterSType: PTyp.FilterSType.isRequired,
     filterMorale: PTyp.string.isRequired,
     sortMethod: PTyp.SortMethod.isRequired,
     sortReverse: PTyp.bool.isRequired,

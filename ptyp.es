@@ -1,5 +1,7 @@
 import { PropTypes } from 'prop-types'
 
+import { ShipFilter } from './ship-filters'
+
 const allRequired = shapeObj => {
   const ret = {}
   Object.keys(shapeObj).map(k => {
@@ -62,6 +64,12 @@ const STypeInfo = PropTypes.shape(allRequired({
 const SortMethod = PropTypes.oneOf([
   'rid','name','stype','level','morale'])
 
+const FilterSType = PropTypes.oneOfType([
+  PropTypes.number,
+  PropTypes.oneOf(
+    [...ShipFilter.specialFilters.keys()]),
+])
+
 const Layout = PropTypes.oneOf([
   'horizontal', 'vertical'])
 
@@ -74,6 +82,7 @@ const PTyp = {
   STypeInfo,
 
   SortMethod,
+  FilterSType,
   Layout,
 }
 

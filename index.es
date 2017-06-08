@@ -21,7 +21,7 @@ class MoraleMonitor extends Component {
     stypeInfo: PTyp.array.isRequired,
     layout: PTyp.Layout.isRequired,
 
-    filterSType: PTyp.number.isRequired,
+    filterSType: PTyp.FilterSType.isRequired,
     filterMorale: PTyp.string.isRequired,
     sortMethod: PTyp.SortMethod.isRequired,
     sortReverse: PTyp.bool.isRequired,

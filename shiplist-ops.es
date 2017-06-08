@@ -1,3 +1,5 @@
+import { ShipFilter } from './ship-filters'
+
 const _ = require('lodash')
 
 // composing multiple comparators into one by
@@ -43,7 +45,9 @@ const applyOptions = options => {
     sortMethod, sortReverse,
   } = options
 
-  const stypeFilter = xs => xs.filter(x => x.stype === filterSType)
+  const stypeFilter = xs => xs.filter(
+    ShipFilter.prepareShipTypePredicate(filterSType))
+
   const moraleFilter = (() => {
     if (filterMorale === 'all')
       return xs => xs
