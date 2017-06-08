@@ -7,7 +7,11 @@ import {
 } from 'react-bootstrap'
 
 import { PTyp } from '../ptyp'
+import { ShipFilter } from '../ship-filters'
 import { FleetMarker } from './fleet-marker'
+import { DivMorale } from './div-morale'
+
+const { isDarkTheme } = window
 
 class ShipMoraleList extends Component {
   static propTypes = {
@@ -39,10 +43,9 @@ class ShipMoraleList extends Component {
   ]
 
   displayFilterSType = () => {
-    const { filterSType } = this.props
-    const typeInfo =
-      this.props.stypeInfo.find(x => x.stype === filterSType)
-    return `Type: ${typeInfo.name} (${filterSType})`
+    const { filterSType, stypeInfo } = this.props
+    const text = ShipFilter.display(stypeInfo)(filterSType)
+    return `Type: ${text}`
   }
 
   displayFilterMorale = () => {
@@ -100,6 +103,8 @@ class ShipMoraleList extends Component {
       sortMethod, sortReverse,
     } = this.props
 
+    const prepareSTypeText = ShipFilter.display(stypeInfo)
+
     return (
       <div
           style={visible ? {} : {display: "none"}}
@@ -118,9 +123,21 @@ class ShipMoraleList extends Component {
                 onSelect={this.handleFilterSTypeChange}
                 title={this.displayFilterSType()} id="dropdown-stype">
               {
-                stypeInfo.map( ({stype, name}) => (
+                [...ShipFilter.specialFilters.entries()].map( ([id]) =>
+                  (
+                    <MenuItem key={id} eventKey={id}>
+                      {
+                        prepareSTypeText(id)
+                      }
+                    </MenuItem>
+                  ))
+              }
+              {
+                stypeInfo.map( ({stype}) => (
                   <MenuItem key={stype} eventKey={stype}>
-                    {`${name} (${stype})`}
+                    {
+                      prepareSTypeText(stype)
+                    }
                   </MenuItem>
                 ))
               }
@@ -197,7 +214,15 @@ class ShipMoraleList extends Component {
                       />
                     </td>
                     <td>{ship.level}</td>
-                    <td>{ship.morale}</td>
+                    <td>
+                      <DivMorale
+                        style={{
+                          fontSize: 14,
+                        }}
+                        morale={ship.morale}
+                        isDarkTheme={isDarkTheme}
+                        />
+                    </td>
                   </tr>
                 ))
               }
