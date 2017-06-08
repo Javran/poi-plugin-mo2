@@ -11,16 +11,19 @@ const allRequired = shapeObj => {
   return ret
 }
 
-const ShipInfo = PropTypes.shape(allRequired({
-  rstId: PropTypes.number,
-  mstId: PropTypes.number,
-  name: PropTypes.string,
-  stype: PropTypes.number,
-  typeName: PropTypes.string,
-  level: PropTypes.number,
-  morale: PropTypes.number,
-  sortNo: PropTypes.number,
-}))
+const ShipInfo = PropTypes.shape({
+  ...allRequired({
+    rstId: PropTypes.number,
+    mstId: PropTypes.number,
+    name: PropTypes.string,
+    stype: PropTypes.number,
+    typeName: PropTypes.string,
+    level: PropTypes.number,
+    morale: PropTypes.number,
+    sortNo: PropTypes.number,
+  }),
+  fleet: PropTypes.number,
+})
 
 const WSubjectAlts = {
   Fleet: PropTypes.shape(allRequired({

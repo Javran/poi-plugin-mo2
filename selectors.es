@@ -48,7 +48,8 @@ const shipsInfoSelector =
   createSelector(
     shipsSelector,
     constSelector,
-    (ships, {$ships, $shipTypes}) => {
+    fleetsSelector,
+    (ships, {$ships, $shipTypes},fleets) => {
       const shipsInfo = {}
       Object.entries(ships)
         .map(([rstIdStr, ship]) => {
@@ -64,10 +65,12 @@ const shipsInfoSelector =
           const stypeInfo = $shipTypes[stype]
           const typeName = stypeInfo.api_name
           const sortNo = masterInfo.api_sortno
+          const fleetInd = fleets.findIndex(fleet => fleet.api_ship.indexOf(rstId) !== -1)
+          const fleet = fleetInd === -1 ? null : fleets[fleetInd].api_id
           shipsInfo[rstIdStr] = {
             rstId, mstId,
             name, stype, typeName, sortNo,
-            level, morale,
+            level, morale, fleet,
           }
         })
       return shipsInfo

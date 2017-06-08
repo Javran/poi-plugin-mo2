@@ -7,6 +7,7 @@ import {
 } from 'react-bootstrap'
 
 import { PTyp } from '../ptyp'
+import { FleetMarker } from './fleet-marker'
 
 class ShipMoraleList extends Component {
   static propTypes = {
@@ -187,7 +188,14 @@ class ShipMoraleList extends Component {
                   >
                     <td>{ship.rstId}</td>
                     <td>{ship.typeName}</td>
-                    <td>{ship.name}</td>
+                    <td>
+                      {ship.name}
+                      <FleetMarker
+                        style={{marginLeft: 5}}
+                        fleet={ship.fleet}
+                        formatter={x => `/${x}`}
+                      />
+                    </td>
                     <td>{ship.level}</td>
                     <td>{ship.morale}</td>
                   </tr>
