@@ -137,9 +137,11 @@ class FleetMoraleListItem extends Component {
               style={{
                 paddingTop: 0,
               }}
+              disabled={moraleInfo.ships.length === 0}
               onClick={isCustom ? this.handleToggleEditing : onCloneItem}
           >
-            <FontAwesome name={isCustom ? (this.state.editing ? "check" : "pencil") : "save"} />
+            <FontAwesome
+              name={isCustom ? (this.state.editing ? "check" : "pencil") : "save"} />
           </Button>
           <Button
               bsSize="xsmall"
