@@ -74,6 +74,20 @@ const shipsInfoSelector =
       return shipsInfo
     })
 
+
+const rstIdArrayToShipsWith = shipsInfo => rstIdArr => {
+  const ships = []
+  rstIdArr.map(rstId => {
+    if (typeof rstId !== 'number' || rstId <= 0)
+      return
+    const ship = shipsInfo[rstId]
+    if (typeof ship !== 'undefined')
+      ships.push(ship)
+  })
+  return ships
+}
+
+
 // putting info together for displaying the monitor part
 const moraleListSelector =
   createSelector(
@@ -87,17 +101,7 @@ const moraleListSelector =
       const unavailable = wSubject => ({
         wSubject, name: null, ships: []})
 
-      const rstIdArrayToShips = rstIdArr => {
-        const ships = []
-        rstIdArr.map(rstId => {
-          if (typeof rstId !== 'number' || rstId <= 0)
-            return
-          const ship = shipsInfo[rstId]
-          if (typeof ship !== 'undefined')
-            ships.push(ship)
-        })
-        return ships
-      }
+      const rstIdArrayToShips = rstIdArrayToShipsWith(shipsInfo)
 
       const buildFromWSubject = WSubject.destruct({
         fleet: (fleetId, wSubject) => {
@@ -154,10 +158,11 @@ const fleetMoraleListSelector =
     fleetsSelector,
     (
       shipsInfo, moraleList, presetDeckMax,
-      presetDeck,fleets) => {
+      presetDeck,fleets
+    ) => {
       // those missing in morale list
       const availableTargets = []
-
+      const rstIdArrayToShips = rstIdArrayToShipsWith(shipsInfo)
       for (let fleetId = 1; fleetId <= 4; ++fleetId) {
         if (
           moraleList.findIndex(m =>
@@ -176,9 +181,43 @@ const fleetMoraleListSelector =
         }
       }
 
+      // try filling some extra info for a target if possible.
+      const fillInfo = target => {
+        if (target.type === 'fleet') {
+          const fleet = fleets[target.fleetId-1]
+          if (typeof fleet === 'undefined')
+            return target
+          const ships = rstIdArrayToShips(fleet.api_ship)
+          return ships.length === 0 ?
+            target :
+            ({
+              ...target,
+              shipCount: ships.length,
+              fsName: ships[0].name,
+            })
+        }
+
+        if (target.type === 'preset') {
+          if (presetDeck === null)
+            return target
+          const deck = presetDeck.api_deck[target.presetNo]
+          if (typeof deck === 'undefined')
+            return target
+          const ships = rstIdArrayToShips(deck.api_ship)
+          return ships.length === 0 ?
+            target :
+            ({
+              ...target,
+              shipCount: ships.length,
+              fsName: ships[0].name,
+            })
+        }
+        return target
+      }
+
       return {
         moraleList,
-        availableTargets,
+        availableTargets: availableTargets.map(fillInfo),
       }
     }
   )

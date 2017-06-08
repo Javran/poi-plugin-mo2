@@ -85,6 +85,24 @@ class FleetMoraleList extends Component {
     }))
   }
 
+  renderMenuItemContent = ws => {
+    const basicText =
+      ws.type === 'fleet' ? `Fleet #${ws.fleetId}` :
+      ws.type === 'preset' ? `Preset #${ws.presetNo}` :
+      console.error(`Unexpected WSubject type: ${ws.type}`)
+
+    const { fsName, shipCount } = ws
+    if (typeof fsName !== 'undefined' && typeof shipCount !== 'undefined') {
+      return [
+        basicText,
+        `Flagship: ${fsName}`,
+        `Ship Count: ${shipCount}`,
+      ].join(', ')
+    } else {
+      return basicText
+    }
+  }
+
   render() {
     return (
       <ListGroup
@@ -122,9 +140,7 @@ class FleetMoraleList extends Component {
                       eventKey={ws}
                       key={WSubject.id(ws)}>
                     {
-                      ws.type === 'fleet' ? `Fleet #${ws.fleetId}` :
-                        ws.type === 'preset' ? `Preset #${ws.presetNo}` :
-                        console.error(`Unexpected WSubject type: ${ws.type}`)
+                      this.renderMenuItemContent(ws)
                     }
                   </MenuItem>
                 ))
