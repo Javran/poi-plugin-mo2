@@ -127,7 +127,7 @@ const moraleListSelector =
             ships,
           }
         },
-        custom: (id, name, rstIds, wSubject) => {
+        custom: (_id, name, rstIds, wSubject) => {
           const ships = rstIdArrayToShips(rstIds)
           return {
             wSubject,

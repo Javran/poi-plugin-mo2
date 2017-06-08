@@ -37,7 +37,7 @@ class MoraleMonitor extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      activeTab: 'ship',
+      activeTab: 'fleet',
     }
   }
 
@@ -93,7 +93,15 @@ const reactClass = connect(
   mapDispatchToProps,
 )(MoraleMonitor)
 
+const switchPluginPath = [
+  {
+    path: "/kcsapi/api_get_member/preset_deck",
+    valid: () => true,
+  },
+]
+
 export {
   reactClass,
+  // switchPluginPath,
   reducer,
 }

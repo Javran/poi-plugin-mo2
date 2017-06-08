@@ -31,7 +31,7 @@ class FleetMoraleListItem extends Component {
     }
   }
 
-  componentWillUpdate(nextProps, nextState) {
+  componentWillUpdate(_nextProps, nextState) {
     // start editing
     if (! this.state.editing && nextState.editing) {
       this.setState({nameText: this.props.moraleInfo.name})
