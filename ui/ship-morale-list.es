@@ -152,7 +152,7 @@ class ShipMoraleList extends Component {
                 id="dropdown-morale">
               <MenuItem eventKey="all">All</MenuItem>
               {
-                [50,53,85,100].map( m => (
+                [50,53,76,85,100].map( m => (
                   <MenuItem key={m} eventKey={`lt-${m}`}>
                     {`< ${m}`}
                   </MenuItem>
