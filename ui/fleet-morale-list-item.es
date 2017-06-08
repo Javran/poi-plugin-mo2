@@ -3,6 +3,8 @@ import {
   ListGroupItem,
   Button,
   FormControl,
+  Tooltip,
+  OverlayTrigger,
 } from 'react-bootstrap'
 
 import { PTyp } from '../ptyp'
@@ -53,6 +55,31 @@ class FleetMoraleListItem extends Component {
 
   handleEditingName = e =>
     this.setState({nameText: e.target.value})
+
+  makeTooltip = () => {
+    const { moraleInfo } = this.props
+    const ttId = `tooltip-mo2-${WSubject.id(moraleInfo.wSubject)}`
+    return (
+      <Tooltip id={ttId}>
+        {
+          moraleInfo.ships.map(({rstId,name,level,morale}) => (
+            <div key={rstId} style={{display: 'flex'}}>
+              <div style={{flex: 1, marginRight: 4}}>
+                {
+                  `${name} Lv.${level}`
+                }
+              </div>
+              <DivMorale
+                style={{fontSize: 'auto'}}
+                morale={morale}
+                isDarkTheme={isDarkTheme}
+              />
+            </div>
+          ))
+        }
+      </Tooltip>
+    )
+  }
 
   render() {
     const {
@@ -177,11 +204,22 @@ class FleetMoraleListItem extends Component {
               >Ship Count: {ships.length}</div>
             </div>
           </div>
-          <DivMorale
-              morale={minMorale}
-              isDarkTheme={isDarkTheme}
-              style={{flex: 1}}
-          />
+          {
+            moraleInfo.ships.length > 0 ?
+            (<OverlayTrigger placement="left" overlay={this.makeTooltip()}>
+              <div style={{flex: 1}} >
+                <DivMorale
+                  morale={minMorale}
+                  isDarkTheme={isDarkTheme}
+                />
+              </div>
+            </OverlayTrigger>) :
+            (<DivMorale
+               style={{flex: 1}}
+               morale={minMorale}
+               isDarkTheme={isDarkTheme}
+            />)
+          }
         </div>
       </ListGroupItem>
     )
