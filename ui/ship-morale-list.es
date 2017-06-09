@@ -9,10 +9,7 @@ import {
 import { PTyp } from '../ptyp'
 import { __ } from '../tr'
 import { ShipFilter } from '../ship-filters'
-import { FleetMarker } from './fleet-marker'
-import { Morale } from './morale'
-
-const { isDarkTheme } = window
+import { ShipMoraleListItem } from './ship-morale-list-item'
 
 const WrappedTd = ({content}) => (
   <td>
@@ -214,33 +211,7 @@ class ShipMoraleList extends Component {
             >
               {
                 shipList.map(ship => (
-                  <tr
-                      key={ship.rstId}
-                  >
-                    <WrappedTd content={ship.rstId} />
-                    <WrappedTd content={ship.typeName} />
-                    <WrappedTd content={
-                      <span>
-                        {ship.name}
-                        <FleetMarker
-                          style={{marginLeft: 5}}
-                          fleet={ship.fleet}
-                          formatter={x => `/${x}`}
-                        />
-                      </span>
-                    } />
-
-                    <WrappedTd content={ship.level} />
-                    <td>
-                      <Morale
-                        style={{
-                          fontSize: 14,
-                        }}
-                        morale={ship.morale}
-                        isDarkTheme={isDarkTheme}
-                        />
-                    </td>
-                  </tr>
+                  <ShipMoraleListItem ship={ship} />
                 ))
               }
             </tbody>
