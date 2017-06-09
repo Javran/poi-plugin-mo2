@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 
 import { PTyp } from '../ptyp'
 
-class DivMorale extends Component {
+class Morale extends Component {
   static propTypes = {
     morale: PTyp.number,
     isDarkTheme: PTyp.bool,
@@ -54,4 +54,4 @@ class DivMorale extends Component {
   }
 }
 
-export { DivMorale }
+export { Morale }

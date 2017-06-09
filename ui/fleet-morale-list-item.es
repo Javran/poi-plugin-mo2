@@ -12,7 +12,7 @@ import { __ } from '../tr'
 
 import { WSubject } from '../structs'
 
-import { DivMorale } from './div-morale'
+import { Morale } from './morale'
 
 // import { genRandomMorale } from '../gen'
 
@@ -71,7 +71,7 @@ class FleetMoraleListItem extends Component {
                   `${name} Lv.${level}`
                 }
               </div>
-              <DivMorale
+              <Morale
                 style={{fontSize: 'auto'}}
                 morale={morale}
                 isDarkTheme={isDarkTheme}
@@ -212,13 +212,13 @@ class FleetMoraleListItem extends Component {
             moraleInfo.ships.length > 0 ?
             (<OverlayTrigger placement="left" overlay={this.makeTooltip()}>
               <div style={{flex: 1}} >
-                <DivMorale
+                <Morale
                   morale={minMorale}
                   isDarkTheme={isDarkTheme}
                 />
               </div>
             </OverlayTrigger>) :
-            (<DivMorale
+            (<Morale
                style={{flex: 1}}
                morale={minMorale}
                isDarkTheme={isDarkTheme}

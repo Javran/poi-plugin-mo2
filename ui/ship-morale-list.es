@@ -10,7 +10,7 @@ import { PTyp } from '../ptyp'
 import { __ } from '../tr'
 import { ShipFilter } from '../ship-filters'
 import { FleetMarker } from './fleet-marker'
-import { DivMorale } from './div-morale'
+import { Morale } from './morale'
 
 const { isDarkTheme } = window
 
@@ -232,7 +232,7 @@ class ShipMoraleList extends Component {
 
                     <WrappedTd content={ship.level} />
                     <td>
-                      <DivMorale
+                      <Morale
                         style={{
                           fontSize: 14,
                         }}
