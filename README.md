@@ -8,6 +8,8 @@ designed for getting morale status for your fleets and ships quickly.
 ### 0.1.2
 
 - Fix missing translation for JP an KR.
+- Introduce new ship filter: DLC-capable (DD only)
+- Hide some useless ship type filters
 
 ### 0.1.1
 

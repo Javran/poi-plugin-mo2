@@ -8,7 +8,7 @@ import {
 
 import { PTyp } from '../ptyp'
 import { __ } from '../tr'
-import { ShipFilter } from '../ship-filters'
+import { SType, ShipFilter } from '../ship-filters'
 import { ShipMoraleListItem } from './ship-morale-list-item'
 
 const WrappedTd = ({content}) => (
@@ -149,13 +149,20 @@ class ShipMoraleList extends Component {
                   ))
               }
               {
-                stypeInfo.map( ({stype}) => (
+                stypeInfo.map( ({stype}) =>
+                  // hiding some ship types:
+                  // - XBB: no ship of this type is ever implemented
+                  // - AP: only used by abyssal ships, plus there's AO
+                  //     which shares the same ship type name, we'd better hide AP
+                  //     to avoid confusion.
+                  [SType.XBB, SType.AP].indexOf(stype) === -1 &&
+                  (
                   <MenuItem key={stype} eventKey={stype}>
                     {
                       prepareSTypeText(stype)
                     }
                   </MenuItem>
-                ))
+                  ))
               }
             </DropdownButton>
           </ButtonGroup>
