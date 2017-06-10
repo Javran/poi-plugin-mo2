@@ -130,8 +130,14 @@ class ShipMoraleList extends Component {
               style={{width: "49%"}}
               justified>
             <DropdownButton
-                onSelect={this.handleFilterSTypeChange}
-                title={this.displayFilterSType()} id="dropdown-stype">
+              onSelect={this.handleFilterSTypeChange}
+              style={{
+                textOverflow: 'ellipsis',
+                overflow: 'hidden',
+                whiteSpace: 'nowrap',
+                maxWidth: 300,
+              }}
+              title={this.displayFilterSType()} id="dropdown-stype">
               {
                 [...ShipFilter.specialFilters.entries()].map( ([id]) =>
                   (
