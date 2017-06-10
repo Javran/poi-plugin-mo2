@@ -99,17 +99,6 @@ const specialFilters = new Map()
     'dd-cl', 'DD / CL',
     isOneOfSType(DD,CL))
 
-  const canShipEquipDLC = ({stype, mstId}) =>
-    canEquipDLC(stype, mstId)
-
-  defineSpecialFilter(
-    'dlc', 'DLC-capable',
-    canShipEquipDLC)
-
-  defineSpecialFilter(
-    'dlc-dd-cl', 'DLC-capable (DD / CL only)',
-    predAnd(isOneOfSType(DD,CL), canShipEquipDLC))
-
   defineSpecialFilter(
     'cv-cvl-av', 'CV / CVL / AV',
     isOneOfSType(CV,CVL,AV))
