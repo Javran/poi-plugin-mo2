@@ -107,6 +107,10 @@ const specialFilters = new Map()
     canShipEquipDLC)
 
   defineSpecialFilter(
+    'dlc-dd', 'DLC-capable (DD only)',
+    predAnd(s => s.stype === DD , canShipEquipDLC))
+
+  defineSpecialFilter(
     'dlc-dd-cl', 'DLC-capable (DD / CL only)',
     predAnd(isOneOfSType(DD,CL), canShipEquipDLC))
 
@@ -163,4 +167,5 @@ class ShipFilter {
 export {
   canEquipDLC,
   ShipFilter,
+  SType,
 }

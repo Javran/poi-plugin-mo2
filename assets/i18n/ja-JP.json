@@ -30,6 +30,7 @@
     "dd-cl": "DD / CL",
     "dlc": "DLC-capable",
     "dlc-dd-cl": "DLC-capable (DD / CL only)",
+    "dlc-dd": "DLC-capable (DD only)",
     "cv-cvl-av": "CV / CVL / AV",
     "cv-cvl-cvb": "CV / CVL / CVB",
     "battleship": "Battleships",
