@@ -5,6 +5,10 @@ designed for getting morale status for your fleets and ships quickly.
 
 ## Changelog
 
+### 0.1.2
+
+- Fix missing translation for JP an KR.
+
 ### 0.1.1
 
 - Translate ship list headers properly
