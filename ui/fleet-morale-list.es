@@ -97,7 +97,7 @@ class FleetMoraleList extends Component {
       return [
         basicText,
         `${__('FleetList.Flagship')}: ${fsName}`,
-        `${__('FleetList.Preset')}: ${shipCount}`,
+        `${__('FleetList.ShipCount')}: ${shipCount}`,
       ].join(', ')
     } else {
       return basicText
