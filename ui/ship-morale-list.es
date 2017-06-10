@@ -127,11 +127,17 @@ class ShipMoraleList extends Component {
             }}
         >
           <ButtonGroup
-              style={{width: "49%"}}
+              style={{width: "32%"}}
               justified>
             <DropdownButton
-                onSelect={this.handleFilterSTypeChange}
-                title={this.displayFilterSType()} id="dropdown-stype">
+              style={{
+                textOverflow: 'ellipsis',
+                overflow: 'hidden',
+                whiteSpace: 'nowrap',
+                maxWidth: 200,
+              }}
+              onSelect={this.handleFilterSTypeChange}
+              title={this.displayFilterSType()} id="dropdown-stype">
               {
                 [...ShipFilter.specialFilters.entries()].map( ([id]) =>
                   (
@@ -154,7 +160,7 @@ class ShipMoraleList extends Component {
             </DropdownButton>
           </ButtonGroup>
           <ButtonGroup
-              style={{width: "49%"}}
+              style={{width: "32%"}}
               justified>
             <DropdownButton
                 onSelect={this.handleFilterMoraleChange}
@@ -168,6 +174,17 @@ class ShipMoraleList extends Component {
                   </MenuItem>
                 ))
               }
+            </DropdownButton>
+          </ButtonGroup>
+          <ButtonGroup
+              style={{width: "32%"}}
+              justified>
+            <DropdownButton
+                title="DLC: All"
+                id="dropdown-dlc">
+              <MenuItem eventKey="all">{__('ShipList.All')}</MenuItem>
+              <MenuItem eventKey={true}>Can Equip</MenuItem>
+              <MenuItem eventKey={false}>Cannot Equip</MenuItem>
             </DropdownButton>
           </ButtonGroup>
         </div>
