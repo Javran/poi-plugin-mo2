@@ -68,6 +68,25 @@ class FleetMoraleList extends Component {
     })
   }
 
+  handleSwapItem = (ind1, ind2) => () => {
+    const { onModifyConfig } = this.props
+    onModifyConfig(config => {
+      const { watchlist } = config
+
+      const item1 = watchlist[ind1]
+      const item2 = watchlist[ind2]
+
+      const newWatchlist = [...watchlist]
+      newWatchlist[ind1] = item2
+      newWatchlist[ind2] = item1
+
+      return {
+        ...config,
+        watchlist: newWatchlist,
+      }
+    })
+  }
+
   handleChangeItemName = moraleInfo => newName => {
     const { onModifyConfig } = this.props
     const { wSubject } = moraleInfo
@@ -105,6 +124,7 @@ class FleetMoraleList extends Component {
   }
 
   render() {
+    const { moraleList } = this.props
     return (
       <ListGroup
           style={{
@@ -113,15 +133,27 @@ class FleetMoraleList extends Component {
           }}
       >
         {
-          this.props.moraleList.map( moraleInfo => (
-            <FleetMoraleListItem
+          moraleList.map( (moraleInfo,ind) => {
+            // only swapping custom items are allowed
+            const canMoveUp =
+              ind-1 >= 0 &&
+              moraleList[ind-1].wSubject.type === 'custom'
+
+            const canMoveDown =
+              ind+1 < moraleList.length
+
+            return (
+              <FleetMoraleListItem
                 key={WSubject.id(moraleInfo.wSubject)}
                 moraleInfo={moraleInfo}
+                onMoveUp={canMoveUp ? this.handleSwapItem(ind,ind-1) : null}
+                onMoveDown={canMoveDown ? this.handleSwapItem(ind,ind+1) : null}
                 onRemoveItem={this.handleRemoveItem(moraleInfo)}
                 onCloneItem={this.handleCloneItem(moraleInfo)}
                 onChangeItemName={this.handleChangeItemName(moraleInfo)}
-            />
-          ))
+              />
+            )
+          })
         }
         <ListGroupItem
             style={{

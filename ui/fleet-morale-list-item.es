@@ -25,6 +25,13 @@ class FleetMoraleListItem extends Component {
     onRemoveItem: PTyp.func.isRequired,
     onCloneItem: PTyp.func.isRequired,
     onChangeItemName: PTyp.func.isRequired,
+    onMoveUp: PTyp.func,
+    onMoveDown: PTyp.func,
+  }
+
+  static defaultProps = {
+    onMoveUp: null,
+    onMoveDown: null,
   }
 
   constructor(props) {
@@ -88,6 +95,8 @@ class FleetMoraleListItem extends Component {
       moraleInfo,
       onRemoveItem,
       onCloneItem,
+      onMoveUp,
+      onMoveDown,
     } = this.props
     const { wSubject, name, ships } = moraleInfo
     const title = WSubject.destruct({
@@ -106,6 +115,10 @@ class FleetMoraleListItem extends Component {
         `${ships[0].name} Lv.${ships[0].level} (${ships[0].rstId})` :
         "-"
     const isCustom = wSubject.type === 'custom'
+    const xButtonStyle = {
+      paddingTop: 0,
+      marginLeft: 16,
+    }
     return (
       <ListGroupItem
           style={{
@@ -134,11 +147,35 @@ class FleetMoraleListItem extends Component {
           >
             {title}
           </div>
+          {
+            isCustom && (
+              <Button
+                bsSize="xsmall"
+                disabled={typeof onMoveUp !== 'function'}
+                style={xButtonStyle}
+                onClick={onMoveUp}
+                >
+                <FontAwesome
+                  name="arrow-up" />
+              </Button>
+            )
+          }
+          {
+            isCustom && (
+              <Button
+                bsSize="xsmall"
+                disabled={typeof onMoveDown !== 'function'}
+                style={xButtonStyle}
+                onClick={onMoveDown}
+                >
+                <FontAwesome
+                  name="arrow-down" />
+              </Button>
+            )
+          }
           <Button
               bsSize="xsmall"
-              style={{
-                paddingTop: 0,
-              }}
+              style={xButtonStyle}
               disabled={moraleInfo.ships.length === 0}
               onClick={isCustom ? this.handleToggleEditing : onCloneItem}
           >
@@ -147,10 +184,7 @@ class FleetMoraleListItem extends Component {
           </Button>
           <Button
               bsSize="xsmall"
-              style={{
-                paddingTop: 0,
-                marginLeft: "20px",
-              }}
+              style={xButtonStyle}
               onClick={onRemoveItem}
           >
             <FontAwesome name="close" />

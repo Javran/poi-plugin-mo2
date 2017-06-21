@@ -5,6 +5,10 @@ designed for getting morale status for your fleets and ships quickly.
 
 ## Changelog
 
+### 0.3.0
+
+- Allow moving custom fleets up and down
+
 ### 0.2.0
 
 - Fix missing translation for JP an KR.
