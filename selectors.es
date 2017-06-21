@@ -1,4 +1,5 @@
 import { createSelector } from 'reselect'
+import { _ } from 'lodash'
 import {
   extensionSelectorFactory,
   shipsSelector,
@@ -7,11 +8,14 @@ import {
   fleetsSelector,
   configLayoutSelector,
 } from 'views/utils/selectors'
-import { WSubject } from './structs'
 
+import { WSubject } from './structs'
+import { emptyConfig } from './config'
 import { applyOptions } from './shiplist-ops'
 
-const extSelector = extensionSelectorFactory('poi-plugin-mo2')
+const extSelector = createSelector(
+  extensionSelectorFactory('poi-plugin-mo2'),
+  extStore => _.isEmpty(extStore) ? emptyConfig : extStore)
 
 const presetDeckSelector =
   createSelector(

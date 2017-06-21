@@ -54,4 +54,5 @@ const saveConfig = admiralId => {
 export {
   loadConfig,
   saveConfig,
+  emptyConfig,
 }
