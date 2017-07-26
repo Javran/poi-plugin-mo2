@@ -4,7 +4,8 @@
   "description": "Monitoring morale for your fleets and ships",
   "main": "index.es",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint '*.es' 'structs/**.es' 'ui/**.es'"
   },
   "repository": {
     "type": "git",
