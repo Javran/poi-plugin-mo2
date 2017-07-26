@@ -29,6 +29,10 @@ const presetDeckMaxSelector = createSelector(
   presetDeckSelector,
   presetDeck => presetDeck.api_max_num)
 
+const tabSelector = createSelector(
+  extSelector,
+  ext => ext.tab)
+
 const shipListOptionsSelector = createSelector(
   extSelector,
   ({ships}) => {
@@ -275,6 +279,7 @@ const moraleMonitorSelector =
 
 export {
   extSelector,
+  tabSelector,
   moraleMonitorSelector,
   admiralIdSelector,
 }

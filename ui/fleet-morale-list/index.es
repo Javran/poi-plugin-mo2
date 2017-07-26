@@ -20,7 +20,6 @@ class FleetMoraleListImpl extends Component {
   static propTypes = {
     moraleList: PTyp.array.isRequired,
     availableTargets: PTyp.arrayOf(PTyp.WSubject).isRequired,
-    visible: PTyp.bool.isRequired,
 
     configModify: PTyp.func.isRequired,
   }
@@ -116,7 +115,6 @@ class FleetMoraleListImpl extends Component {
       <ListGroup
           style={{
             marginBottom: "30px",
-            ...(this.props.visible ? {} : {display: "none"} ),
           }}
       >
         {

@@ -1,11 +1,15 @@
+import { join } from 'path-extra'
 import { connect } from 'react-redux'
 import React, { Component } from 'react'
-import { Nav, NavItem } from 'react-bootstrap'
-
+import { Tabs, Tab } from 'react-bootstrap'
+import { modifyObject } from 'subtender'
 import {
   mapDispatchToProps,
 } from '../store'
-import { moraleMonitorSelector } from '../selectors'
+import {
+  tabSelector,
+  moraleMonitorSelector,
+} from '../selectors'
 
 import { PTyp } from '../ptyp'
 import { __ } from '../tr'
@@ -19,62 +23,66 @@ class MoraleMonitorImpl extends Component {
     shipList: PTyp.array.isRequired,
     stypeInfo: PTyp.array.isRequired,
     layout: PTyp.Layout.isRequired,
+    tab: PTyp.Tab.isRequired,
 
     filterSType: PTyp.FilterSType.isRequired,
     filterMorale: PTyp.string.isRequired,
     sortMethod: PTyp.SortMethod.isRequired,
     sortReverse: PTyp.bool.isRequired,
+
+    configModify: PTyp.func.isRequired,
   }
 
-  constructor(props) {
-    super(props)
-    this.state = {
-      activeTab: 'fleet',
-    }
-  }
-
-  handleTabSwitch = activeTab =>
-    this.setState({ activeTab })
+  handleSelectTab = tab =>
+    this.props.configModify(
+      modifyObject('tab', () => tab))
 
   render() {
-    const { activeTab } = this.state
+    const { tab } = this.props
     return (
       <div
-          style={{
-            margin: "8px",
-          }}
+          style={{margin: 8}}
       >
-        <Nav
-            bsStyle="tabs"
-            activeKey={activeTab}
-            onSelect={this.handleTabSwitch}
-            style={{marginBottom: "6px"}}
-            justified className="main-nav">
-          <NavItem eventKey="fleet">{__('Tab.Fleet')}</NavItem>
-          <NavItem eventKey="ship">{__('Tab.Ship')}</NavItem>
-        </Nav>
-        <FleetMoraleList
-            visible={activeTab === 'fleet'}
-            moraleList={this.props.moraleList}
-            availableTargets={this.props.availableTargets}
+        <link
+          rel="stylesheet"
+          href={join(__dirname, '..', 'assets', 'mo2.css')}
         />
-        <ShipMoraleList
-            visible={activeTab === 'ship'}
-            layout={this.props.layout}
-            stypeInfo={this.props.stypeInfo}
-            shipList={this.props.shipList}
-            filterMorale={this.props.filterMorale}
-            filterSType={this.props.filterSType}
-            sortMethod={this.props.sortMethod}
-            sortReverse={this.props.sortReverse}
-        />
+        <Tabs
+          activeKey={tab}
+          onSelect={this.handleSelectTab}
+          animation={false}
+          id="mo2-tabs">
+          <Tab eventKey="fleet" title={__('Tab.Fleet')}>
+            <FleetMoraleList
+              moraleList={this.props.moraleList}
+              availableTargets={this.props.availableTargets}
+            />
+          </Tab>
+          <Tab eventKey="ship" title={__('Tab.Ship')}>
+            <ShipMoraleList
+              layout={this.props.layout}
+              stypeInfo={this.props.stypeInfo}
+              shipList={this.props.shipList}
+              filterMorale={this.props.filterMorale}
+              filterSType={this.props.filterSType}
+              sortMethod={this.props.sortMethod}
+              sortReverse={this.props.sortReverse} />
+          </Tab>
+        </Tabs>
       </div>
     )
   }
 }
 
 const MoraleMonitor = connect(
-  moraleMonitorSelector,
+  state => {
+    const props = moraleMonitorSelector(state)
+    const tab = tabSelector(state)
+    return {
+      ...props,
+      tab,
+    }
+  },
   mapDispatchToProps,
 )(MoraleMonitorImpl)
 

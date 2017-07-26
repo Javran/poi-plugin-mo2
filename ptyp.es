@@ -73,6 +73,8 @@ const FilterSType = PropTypes.oneOfType([
 const Layout = PropTypes.oneOf([
   'horizontal', 'vertical'])
 
+const Tab = PropTypes.oneOf(['fleet', 'ship'])
+
 const PTyp = {
   ...PropTypes,
 
@@ -84,6 +86,7 @@ const PTyp = {
   SortMethod,
   FilterSType,
   Layout,
+  Tab,
 }
 
 export { PTyp }

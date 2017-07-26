@@ -28,8 +28,6 @@ WrappedTd.propTypes = PTyp.node.isRequired
 
 class ShipMoraleListImpl extends Component {
   static propTypes = {
-    visible: PTyp.bool.isRequired,
-
     shipList: PTyp.arrayOf(PTyp.ShipInfo).isRequired,
     stypeInfo: PTyp.arrayOf(PTyp.STypeInfo).isRequired,
     layout: PTyp.Layout.isRequired,
@@ -113,7 +111,7 @@ class ShipMoraleListImpl extends Component {
   render() {
     const {
       shipList,
-      stypeInfo, visible,
+      stypeInfo,
       layout,
       sortMethod, sortReverse,
     } = this.props
@@ -121,9 +119,7 @@ class ShipMoraleListImpl extends Component {
     const prepareSTypeText = ShipFilter.display(stypeInfo,__)
 
     return (
-      <div
-          style={visible ? {} : {display: "none"}}
-      >
+      <div>
         <div
             style={{
               display: 'flex',
