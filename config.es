@@ -5,7 +5,6 @@ import { join } from 'path-extra'
 
 const { APPDATA_PATH } = window
 
-// TODO
 const emptyConfig = {
   fleets: {
     watchlist: [
@@ -36,6 +35,24 @@ const emptyConfig = {
   },
   tab: 'fleet', // fleet / ship
   configVersion: '0.4.0',
+}
+
+// config file is located under directory "$APPDATA_PATH/morale-monitor"
+// with admiral id being the name and ".json" extension.
+const getConfigFilePath = admiralId => {
+  const configPath = join(APPDATA_PATH,'morale-monitor')
+  ensureDirSync(configPath)
+  return join(configPath,`${admiralId}.json`)
+}
+
+// saveConfig(admiralId,config) saves the config
+const saveConfig = (admiralId, config) => {
+  const path = getConfigFilePath(admiralId)
+  try {
+    writeJsonSync(path,config)
+  } catch (err) {
+    console.error('Error while writing to config file', err)
+  }
 }
 
 const updateConfig = (admiralId, oldConfig) => {
@@ -87,19 +104,14 @@ const updateConfig = (admiralId, oldConfig) => {
         ])
       ),
     ])(emptyConfig)
-    // TODO: save
+    setTimeout(() => saveConfig(admiralId,config))
     return config
   }
 
-  throw new Error(`cannot update current config`)
-}
+  if (oldConfig.configVersion === emptyConfig.configVersion)
+    return oldConfig
 
-// config file is located under directory "$APPDATA_PATH/morale-monitor"
-// with admiral id being the name and ".json" extension.
-const getConfigFilePath = admiralId => {
-  const configPath = join(APPDATA_PATH,'morale-monitor')
-  ensureDirSync(configPath)
-  return join(configPath,`${admiralId}.json`)
+  throw new Error(`cannot update current config`)
 }
 
 // loadConfig(admiralId) loads the corresponding config
@@ -124,16 +136,6 @@ const extStateToConfig = state => {
       key,
       _.get(state, key, emptyConfig[key]),
     ]))
-}
-
-// saveConfig(admiralId,config) saves the config
-const saveConfig = (admiralId, config) => {
-  const path = getConfigFilePath(admiralId)
-  try {
-    writeJsonSync(path,config)
-  } catch (err) {
-    console.error('Error while writing to config file', err)
-  }
 }
 
 export {

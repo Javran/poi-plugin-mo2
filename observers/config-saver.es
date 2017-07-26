@@ -1,3 +1,4 @@
+import _ from 'lodash'
 import {
   createSelector,
   createStructuredSelector,
@@ -16,6 +17,11 @@ const extReadySelector = createSelector(
   extSelector,
   ext => ext.ready)
 
+const debouncedSaveConfig = _.debounce(
+  (admiralId, config) => setTimeout(() =>
+    saveConfig(admiralId, config)),
+  500)
+
 const configSaver = observer(
   createStructuredSelector({
     admiralId: admiralIdSelector,
@@ -33,9 +39,7 @@ const configSaver = observer(
       ! shallowEqual(cur.config,prev.config)
     ) {
       const {admiralId, config} = cur
-      setTimeout(() => {
-        saveConfig(admiralId, config)
-      })
+      debouncedSaveConfig(admiralId, config)
     }
   }
 )

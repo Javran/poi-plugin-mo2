@@ -6,8 +6,7 @@ import { configSaver } from './config-saver'
 const observeAll = () =>
   observe(store, [
     configLoader,
-    // TODO
-    // configSaver,
+    configSaver,
   ])
 
 export { observeAll }
