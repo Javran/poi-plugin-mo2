@@ -24,8 +24,6 @@ class MoraleMonitorImpl extends Component {
     filterMorale: PTyp.string.isRequired,
     sortMethod: PTyp.SortMethod.isRequired,
     sortReverse: PTyp.bool.isRequired,
-
-    configModify: PTyp.func.isRequired,
   }
 
   static defaultProps = {
@@ -63,7 +61,6 @@ class MoraleMonitorImpl extends Component {
             visible={activeTab === 'fleet'}
             moraleList={this.props.moraleList}
             availableTargets={this.props.availableTargets}
-            configModify={this.props.configModify}
         />
         <ShipMoraleList
             visible={activeTab === 'ship'}
@@ -74,7 +71,6 @@ class MoraleMonitorImpl extends Component {
             filterSType={this.props.filterSType}
             sortMethod={this.props.sortMethod}
             sortReverse={this.props.sortReverse}
-            configModify={this.props.configModify}
         />
       </div>
     )

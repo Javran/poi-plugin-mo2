@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import {
   ListGroup,
   ListGroupItem,
@@ -6,14 +7,16 @@ import {
   DropdownButton,
   MenuItem,
 } from 'react-bootstrap'
+import { modifyObject } from 'subtender'
 
 import { PTyp } from '../ptyp'
 import { __ } from '../tr'
 import { WSubject } from '../structs'
+import { mapDispatchToProps } from '../store'
 
 import { FleetMoraleListItem } from './fleet-morale-list-item'
 
-class FleetMoraleList extends Component {
+class FleetMoraleListImpl extends Component {
   static propTypes = {
     moraleList: PTyp.array.isRequired,
     availableTargets: PTyp.arrayOf(PTyp.WSubject).isRequired,
@@ -22,32 +25,29 @@ class FleetMoraleList extends Component {
     configModify: PTyp.func.isRequired,
   }
 
-  handleAddNewTarget = ws => {
-    const { configModify } = this.props
-    configModify( config => ({
-      ...config,
-      watchlist: [...config.watchlist, ws],
-    }))
-  }
+  modifyWatchlist = modifier => this.props.configModify(
+    modifyObject(
+      'fleets',
+      modifyObject('watchlist', modifier)
+    )
+  )
+
+  handleAddNewTarget = ws =>
+    this.modifyWatchlist(watchlist =>
+      [...watchlist, ws])
 
   handleRemoveItem = moraleInfo => () => {
     const ws = moraleInfo.wSubject
     const id = WSubject.id(ws)
-    const { configModify } = this.props
-    configModify(config => ({
-      ...config,
-      watchlist:
-        config.watchlist.filter(w => WSubject.id(w) !== id),
-    }))
+    this.modifyWatchlist(watchlist =>
+      watchlist.filter(w => WSubject.id(w) !== id)
+    )
   }
 
   handleCloneItem = moraleInfo => () => {
     const { name } = moraleInfo
     const ships = moraleInfo.ships.map(s => s.rstId)
-    const { configModify } = this.props
-
-    configModify(config => {
-      const { watchlist } = config
+    this.modifyWatchlist(watchlist => {
       const customIds = watchlist
         .filter(w => w.type === 'custom')
         .map(w => w.id)
@@ -61,18 +61,12 @@ class FleetMoraleList extends Component {
         name, ships,
       }
 
-      return {
-        ...config,
-        watchlist: [...watchlist, newWS],
-      }
+      return [...watchlist, newWS]
     })
   }
 
-  handleSwapItem = (ind1, ind2) => () => {
-    const { configModify } = this.props
-    configModify(config => {
-      const { watchlist } = config
-
+  handleSwapItem = (ind1, ind2) => () =>
+    this.modifyWatchlist(watchlist => {
       const item1 = watchlist[ind1]
       const item2 = watchlist[ind2]
 
@@ -80,15 +74,10 @@ class FleetMoraleList extends Component {
       newWatchlist[ind1] = item2
       newWatchlist[ind2] = item1
 
-      return {
-        ...config,
-        watchlist: newWatchlist,
-      }
+      return newWatchlist
     })
-  }
 
   handleChangeItemName = moraleInfo => newName => {
-    const { configModify } = this.props
     const { wSubject } = moraleInfo
     const modifyRelated = ws => {
       if (ws.type !== 'custom' ||
@@ -99,10 +88,8 @@ class FleetMoraleList extends Component {
         name: newName,
       }
     }
-    configModify(config => ({
-      ...config,
-      watchlist: config.watchlist.map(modifyRelated),
-    }))
+    this.modifyWatchlist(watchlist =>
+      watchlist.map(modifyRelated))
   }
 
   renderMenuItemContent = ws => {
@@ -185,6 +172,8 @@ class FleetMoraleList extends Component {
     )
   }
 }
+
+const FleetMoraleList = connect(null, mapDispatchToProps)(FleetMoraleListImpl)
 
 export {
   FleetMoraleList,
