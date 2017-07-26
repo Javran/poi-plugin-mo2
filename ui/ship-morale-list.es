@@ -1,15 +1,18 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import {
   DropdownButton,
   MenuItem,
   ButtonGroup,
   Table,
 } from 'react-bootstrap'
+import { modifyObject } from 'subtender'
 
 import { PTyp } from '../ptyp'
 import { __ } from '../tr'
 import { SType, ShipFilter } from '../ship-filters'
 import { ShipMoraleListItem } from './ship-morale-list-item'
+import { mapDispatchToProps } from '../store'
 
 const WrappedTd = ({content}) => (
   <td>
@@ -23,7 +26,7 @@ const WrappedTd = ({content}) => (
   </td>)
 WrappedTd.propTypes = PTyp.node.isRequired
 
-class ShipMoraleList extends Component {
+class ShipMoraleListImpl extends Component {
   static propTypes = {
     visible: PTyp.bool.isRequired,
 
@@ -45,12 +48,16 @@ class ShipMoraleList extends Component {
     })
 
   static headerSpecs = [
-    ShipMoraleList.defineHeader('ID','rid','14%'),
-    ShipMoraleList.defineHeader(__('ShipList.Type'),'stype','20%'),
-    ShipMoraleList.defineHeader(__('ShipList.Name'),'name','auto'),
-    ShipMoraleList.defineHeader(__('ShipList.Level'),'level','14%',false),
-    ShipMoraleList.defineHeader(__('ShipList.Morale'),'morale',`14%`),
+    ShipMoraleListImpl.defineHeader('ID','rid','14%'),
+    ShipMoraleListImpl.defineHeader(__('ShipList.Type'),'stype','20%'),
+    ShipMoraleListImpl.defineHeader(__('ShipList.Name'),'name','auto'),
+    ShipMoraleListImpl.defineHeader(__('ShipList.Level'),'level','14%',false),
+    ShipMoraleListImpl.defineHeader(__('ShipList.Morale'),'morale',`14%`),
   ]
+
+  modifyShipsConfig = modifier => this.props.configModify(
+    modifyObject('ships', modifier)
+  )
 
   displayFilterSType = () => {
     const { filterSType, stypeInfo } = this.props
@@ -70,40 +77,38 @@ class ShipMoraleList extends Component {
     return `${__('ShipList.Morale')}: ${moraleValueText}`
   }
 
-  handleFilterSTypeChange = stype => {
-    const { configModify } = this.props
-    configModify(config => ({
-      ...config,
-      filterSType: stype,
-    }))
-  }
+  handleFilterSTypeChange = stypeExt =>
+    this.modifyShipsConfig(modifyObject(
+      'filter',
+      modifyObject('stypeExt', () => stypeExt))
+    )
 
-  handleFilterMoraleChange = morale => {
-    const { configModify } = this.props
-    configModify(config => ({
-      ...config,
-      filterMorale: morale,
-    }))
-  }
+  handleFilterMoraleChange = morale =>
+    this.modifyShipsConfig(modifyObject(
+      'filter',
+      filterConfig => modifyObject(
+        'moraleFilters',
+        modifyObject(
+          filterConfig.stypeExt,
+          () => morale)
+      )(filterConfig)))
 
-  handleClickHeader = method => () => {
-    const { configModify } = this.props
-    configModify(config => {
-      const { sortMethod } = config
-      if (sortMethod === method) {
+  handleClickHeader = method => () => this.modifyShipsConfig(
+    modifyObject('sort', sortConfig => {
+      if (sortConfig.method === method) {
         return {
-          ...config,
-          sortReverse: !config.sortReverse,
+          ...sortConfig,
+          reversed: !sortConfig.reversed,
         }
       } else {
         return {
-          ...config,
-          sortMethod: method,
-          sortReverse: false,
+          ...sortConfig,
+          method,
+          reversed: false,
         }
       }
     })
-  }
+  )
 
   render() {
     const {
@@ -157,7 +162,7 @@ class ShipMoraleList extends Component {
                   //     to avoid confusion.
                   [SType.XBB, SType.AP].indexOf(stype) === -1 &&
                   (
-                  <MenuItem key={stype} eventKey={stype}>
+                  <MenuItem key={stype} eventKey={`stype-${stype}`}>
                     {
                       prepareSTypeText(stype)
                     }
@@ -197,7 +202,7 @@ class ShipMoraleList extends Component {
             >
               <tr>
                 {
-                  ShipMoraleList.headerSpecs.map( ({name, method, width, asc}) => {
+                  ShipMoraleListImpl.headerSpecs.map( ({name, method, width, asc}) => {
                     const isActive = sortMethod === method
                     const key = method
                     let content
@@ -234,6 +239,8 @@ class ShipMoraleList extends Component {
     )
   }
 }
+
+const ShipMoraleList = connect(null, mapDispatchToProps)(ShipMoraleListImpl)
 
 export {
   ShipMoraleList,
