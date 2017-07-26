@@ -29,16 +29,28 @@ const presetDeckMaxSelector = createSelector(
   presetDeckSelector,
   presetDeck => presetDeck.api_max_num)
 
-const shipListOptionsSelector =
-  createSelector(
-    extSelector,
-    ({filterSType, filterMorale, sortMethod, sortReverse}) => ({
-      filterSType, filterMorale, sortMethod, sortReverse}))
+const shipListOptionsSelector = createSelector(
+  extSelector,
+  ({ships}) => {
+    const {stypeExt, moraleFilters} = ships.filter
+    const maybeSType = /^stype-(\d+)$/.exec(stypeExt)
+    const filterSType = maybeSType ? Number(maybeSType[1]) : stypeExt
+    const filterMorale = moraleFilters[stypeExt] || 'all'
+    const sortMethod = ships.sort.method
+    const sortReverse = ships.sort.reversed
+    return {
+      filterSType,
+      filterMorale,
+      sortMethod,
+      sortReverse,
+    }
+  }
+)
 
 const watchlistSelector =
   createSelector(
     extSelector,
-    s => s.watchlist)
+    s => s.fleets.watchlist)
 
 const admiralIdSelector = createSelector(
   basicSelector,

@@ -22,8 +22,9 @@ const reducer = (state = initState, action) => {
     return state
 
   if (action.type === '@poi-plugin-mo2@ConfigModify') {
-    const {modifier} = action
-    return modifier(state)
+    // const {modifier} = action
+    // return modifier(state)
+    return state
 
     /* TODO rework saving
     const { admiralId, saveAdmiralConfig, ...config } = state

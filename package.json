@@ -45,6 +45,7 @@
     "path-extra": "^4.1.0"
   },
   "dependencies": {
-    "shallowequal": "^1.0.2"
+    "shallowequal": "^1.0.2",
+    "subtender": "^0.7.0"
   }
 }
