@@ -13,6 +13,7 @@ import { PTyp } from '../../ptyp'
 import { __ } from '../../tr'
 import { WSubject } from '../../structs'
 import { mapDispatchToProps } from '../../store'
+import { fleetMoraleListSelector } from '../../selectors'
 
 import { ListItem } from './list-item'
 
@@ -171,7 +172,9 @@ class FleetMoraleListImpl extends Component {
   }
 }
 
-const FleetMoraleList = connect(null, mapDispatchToProps)(FleetMoraleListImpl)
+const FleetMoraleList = connect(
+  fleetMoraleListSelector, mapDispatchToProps
+)(FleetMoraleListImpl)
 
 export {
   FleetMoraleList,

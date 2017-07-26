@@ -1,5 +1,5 @@
-import { createSelector } from 'reselect'
 import _ from 'lodash'
+import { createSelector } from 'reselect'
 import {
   stateSelector as poiStateSelector,
   extensionSelectorFactory,
@@ -265,21 +265,10 @@ const shipMoraleListSelector =
       }
     })
 
-const moraleMonitorSelector =
-  createSelector(
-    admiralIdSelector,
-    fleetMoraleListSelector,
-    shipMoraleListSelector,
-    (admiralId, fleetMoraleListData, shipMoraleListData) => ({
-      admiralId,
-      ...fleetMoraleListData,
-      ...shipMoraleListData,
-    })
-  )
-
 export {
   extSelector,
   tabSelector,
-  moraleMonitorSelector,
+  fleetMoraleListSelector,
+  shipMoraleListSelector,
   admiralIdSelector,
 }

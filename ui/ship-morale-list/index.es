@@ -13,6 +13,7 @@ import { __ } from '../../tr'
 import { SType, ShipFilter } from '../../ship-filters'
 import { ListItem } from './list-item'
 import { mapDispatchToProps } from '../../store'
+import { shipMoraleListSelector } from '../../selectors'
 
 const WrappedTd = ({content}) => (
   <td>
@@ -236,7 +237,10 @@ class ShipMoraleListImpl extends Component {
   }
 }
 
-const ShipMoraleList = connect(null, mapDispatchToProps)(ShipMoraleListImpl)
+const ShipMoraleList = connect(
+  shipMoraleListSelector,
+  mapDispatchToProps
+)(ShipMoraleListImpl)
 
 export {
   ShipMoraleList,
