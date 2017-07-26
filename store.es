@@ -1,39 +1,33 @@
-import { loadConfig, saveConfig } from './config'
+import { bindActionCreators } from 'redux'
+import { store } from 'views/create-store'
+
+import { emptyConfig } from './config'
 
 const initState = {
-  admiralId: null,
-  // we should keep "saveAdmiralConfig" always sync with admiralId.
-  saveAdmiralConfig: saveConfig(null),
-  watchlist: [],
-  filterSType: 2,
-  filterMorale: 'all',
-  sortMethod: 'level',
-  sortReverse: false,
+  ...emptyConfig,
+  ready: false,
 }
 
 const reducer = (state = initState, action) => {
-  if (action.type === '@poi-plugin-mo2@Init') {
-    const { admiralId } = action
-    const {
-      presetDeck: _ignored,
-      ...config
-    } = loadConfig(admiralId)
-
+  if (action.type === '@poi-plugin-mo2@ConfigReplace') {
+    const {config} = action
     return {
       ...state,
-      admiralId,
-      saveAdmiralConfig: saveConfig(admiralId),
       ...config,
     }
   }
 
-  if (action.type === '@poi-plugin-mo2@ModifyConfig') {
-    const { admiralId, saveAdmiralConfig, ...config } = state
+  // prevent any modification if state is not ready
+  if (! state.ready)
+    return state
 
-    if (admiralId === null) {
-      console.error("Trying to modify a config when admiral id is not available")
-      return state
-    }
+  if (action.type === '@poi-plugin-mo2@ConfigModify') {
+    const {modifier} = action
+    return modifier(state)
+
+    /* TODO rework saving
+    const { admiralId, saveAdmiralConfig, ...config } = state
+    // TODO
 
     const { modifier } = action
     const newConfig = modifier(config)
@@ -42,25 +36,43 @@ const reducer = (state = initState, action) => {
       ...state,
       ...newConfig,
     }
+    */
   }
 
   return state
 }
 
-const mapDispatchToProps = dispatch => ({
-  onInitialize: admiralId =>
-    dispatch({
-      type: '@poi-plugin-mo2@Init',
-      admiralId,
+const actionCreator = {
+  configReplace: config => ({
+    type: '@poi-plugin-mo2@ConfigReplace',
+    config,
+  }),
+  configModify: modifier => ({
+    type: '@poi-plugin-mo2@ConfigModify',
+    modifier,
+  }),
+  configInvalidate: () =>
+    actionCreator.configReplace({ready: false}),
+  configLoaded: config =>
+    actionCreator.configReplace({
+      ...config,
+      ready: true,
     }),
-  onModifyConfig: modifier =>
-    dispatch({
-      type: '@poi-plugin-mo2@ModifyConfig',
-      modifier,
-    }),
-})
+}
+
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(actionCreator, dispatch)
+
+const boundActionCreator =
+  mapDispatchToProps(store.dispatch)
+
+const asyncBoundActionCreator = (func, dispatch=store.dispatch) =>
+  dispatch(() => setTimeout(() =>
+    func(boundActionCreator)))
 
 export {
   reducer,
   mapDispatchToProps,
+  boundActionCreator,
+  asyncBoundActionCreator,
 }

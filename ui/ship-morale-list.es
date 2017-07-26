@@ -36,7 +36,7 @@ class ShipMoraleList extends Component {
     sortMethod: PTyp.SortMethod.isRequired,
     sortReverse: PTyp.bool.isRequired,
 
-    onModifyConfig: PTyp.func.isRequired,
+    configModify: PTyp.func.isRequired,
   }
 
   static defineHeader =
@@ -71,24 +71,24 @@ class ShipMoraleList extends Component {
   }
 
   handleFilterSTypeChange = stype => {
-    const { onModifyConfig } = this.props
-    onModifyConfig(config => ({
+    const { configModify } = this.props
+    configModify(config => ({
       ...config,
       filterSType: stype,
     }))
   }
 
   handleFilterMoraleChange = morale => {
-    const { onModifyConfig } = this.props
-    onModifyConfig(config => ({
+    const { configModify } = this.props
+    configModify(config => ({
       ...config,
       filterMorale: morale,
     }))
   }
 
   handleClickHeader = method => () => {
-    const { onModifyConfig } = this.props
-    onModifyConfig(config => {
+    const { configModify } = this.props
+    configModify(config => {
       const { sortMethod } = config
       if (sortMethod === method) {
         return {

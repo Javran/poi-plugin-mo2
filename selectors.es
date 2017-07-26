@@ -11,12 +11,15 @@ import {
 } from 'views/utils/selectors'
 
 import { WSubject } from './structs'
-import { emptyConfig } from './config'
 import { applyOptions } from './shiplist-ops'
+import { reducer } from './store'
 
 const extSelector = createSelector(
   extensionSelectorFactory('poi-plugin-mo2'),
-  extStore => _.isEmpty(extStore) ? emptyConfig : extStore)
+  extStore =>
+    _.isEmpty(extStore) ?
+      reducer(undefined, {type: 'INIT'}) :
+      extStore)
 
 const presetDeckSelector = createSelector(
   poiStateSelector,
@@ -260,6 +263,7 @@ const moraleMonitorSelector =
   )
 
 export {
+  extSelector,
   moraleMonitorSelector,
   admiralIdSelector,
 }

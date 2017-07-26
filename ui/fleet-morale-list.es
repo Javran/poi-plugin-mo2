@@ -19,12 +19,12 @@ class FleetMoraleList extends Component {
     availableTargets: PTyp.arrayOf(PTyp.WSubject).isRequired,
     visible: PTyp.bool.isRequired,
 
-    onModifyConfig: PTyp.func.isRequired,
+    configModify: PTyp.func.isRequired,
   }
 
   handleAddNewTarget = ws => {
-    const { onModifyConfig } = this.props
-    onModifyConfig( config => ({
+    const { configModify } = this.props
+    configModify( config => ({
       ...config,
       watchlist: [...config.watchlist, ws],
     }))
@@ -33,8 +33,8 @@ class FleetMoraleList extends Component {
   handleRemoveItem = moraleInfo => () => {
     const ws = moraleInfo.wSubject
     const id = WSubject.id(ws)
-    const { onModifyConfig } = this.props
-    onModifyConfig(config => ({
+    const { configModify } = this.props
+    configModify(config => ({
       ...config,
       watchlist:
         config.watchlist.filter(w => WSubject.id(w) !== id),
@@ -44,9 +44,9 @@ class FleetMoraleList extends Component {
   handleCloneItem = moraleInfo => () => {
     const { name } = moraleInfo
     const ships = moraleInfo.ships.map(s => s.rstId)
-    const { onModifyConfig } = this.props
+    const { configModify } = this.props
 
-    onModifyConfig(config => {
+    configModify(config => {
       const { watchlist } = config
       const customIds = watchlist
         .filter(w => w.type === 'custom')
@@ -69,8 +69,8 @@ class FleetMoraleList extends Component {
   }
 
   handleSwapItem = (ind1, ind2) => () => {
-    const { onModifyConfig } = this.props
-    onModifyConfig(config => {
+    const { configModify } = this.props
+    configModify(config => {
       const { watchlist } = config
 
       const item1 = watchlist[ind1]
@@ -88,7 +88,7 @@ class FleetMoraleList extends Component {
   }
 
   handleChangeItemName = moraleInfo => newName => {
-    const { onModifyConfig } = this.props
+    const { configModify } = this.props
     const { wSubject } = moraleInfo
     const modifyRelated = ws => {
       if (ws.type !== 'custom' ||
@@ -99,7 +99,7 @@ class FleetMoraleList extends Component {
         name: newName,
       }
     }
-    onModifyConfig(config => ({
+    configModify(config => ({
       ...config,
       watchlist: config.watchlist.map(modifyRelated),
     }))

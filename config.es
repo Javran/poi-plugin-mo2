@@ -1,3 +1,4 @@
+import _ from 'lodash'
 import { ensureDirSync, readJsonSync, writeJsonSync } from 'fs-extra'
 import { join } from 'path-extra'
 
@@ -5,7 +6,6 @@ const { APPDATA_PATH } = window
 
 const emptyConfig = {
   watchlist: [],
-  presetDeck: null,
   filterSType: 2, // DD
   filterMorale: 'all',
   sortMethod: 'level',
@@ -22,8 +22,6 @@ const getConfigFilePath = admiralId => {
 
 // loadConfig(admiralId) loads the corresponding config
 const loadConfig = admiralId => {
-  if (admiralId === null)
-    return emptyConfig
   try {
     return readJsonSync(getConfigFilePath(admiralId))
   } catch (err) {
@@ -34,20 +32,22 @@ const loadConfig = admiralId => {
   return emptyConfig
 }
 
-// saveConfig(admiralId)(config) saves the config
-const saveConfig = admiralId => {
-  if (admiralId === null) {
-    // no operation when trying to save an empty config
-    return () => {}
-  }
+const extStateToConfig = state => {
+  const keys = Object.keys(emptyConfig)
+  return _.fromPairs(
+    keys.map(key => [
+      key,
+      _.get(state, key, emptyConfig[key]),
+    ]))
+}
 
+// saveConfig(admiralId,config) saves the config
+const saveConfig = (admiralId, config) => {
   const path = getConfigFilePath(admiralId)
-  return config => {
-    try {
-      writeJsonSync(path,config)
-    } catch (err) {
-      console.error('Error while writing to config file', err)
-    }
+  try {
+    writeJsonSync(path,config)
+  } catch (err) {
+    console.error('Error while writing to config file', err)
   }
 }
 
@@ -55,4 +55,5 @@ export {
   loadConfig,
   saveConfig,
   emptyConfig,
+  extStateToConfig,
 }

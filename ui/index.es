@@ -14,7 +14,6 @@ import { ShipMoraleList } from '../ui/ship-morale-list'
 
 class MoraleMonitorImpl extends Component {
   static propTypes = {
-    admiralId: PTyp.number,
     moraleList: PTyp.array.isRequired,
     availableTargets: PTyp.array.isRequired,
     shipList: PTyp.array.isRequired,
@@ -26,8 +25,7 @@ class MoraleMonitorImpl extends Component {
     sortMethod: PTyp.SortMethod.isRequired,
     sortReverse: PTyp.bool.isRequired,
 
-    onInitialize: PTyp.func.isRequired,
-    onModifyConfig: PTyp.func.isRequired,
+    configModify: PTyp.func.isRequired,
   }
 
   static defaultProps = {
@@ -39,11 +37,6 @@ class MoraleMonitorImpl extends Component {
     this.state = {
       activeTab: 'fleet',
     }
-  }
-
-  componentWillMount() {
-    const { onInitialize, admiralId } = this.props
-    onInitialize(admiralId)
   }
 
   handleTabSwitch = activeTab =>
@@ -70,7 +63,7 @@ class MoraleMonitorImpl extends Component {
             visible={activeTab === 'fleet'}
             moraleList={this.props.moraleList}
             availableTargets={this.props.availableTargets}
-            onModifyConfig={this.props.onModifyConfig}
+            configModify={this.props.configModify}
         />
         <ShipMoraleList
             visible={activeTab === 'ship'}
@@ -81,7 +74,7 @@ class MoraleMonitorImpl extends Component {
             filterSType={this.props.filterSType}
             sortMethod={this.props.sortMethod}
             sortReverse={this.props.sortReverse}
-            onModifyConfig={this.props.onModifyConfig}
+            configModify={this.props.configModify}
         />
       </div>
     )

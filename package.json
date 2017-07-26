@@ -43,5 +43,8 @@
     "eslint-plugin-react": "^7.0.1",
     "fs-extra": "^3.0.1",
     "path-extra": "^4.1.0"
+  },
+  "dependencies": {
+    "shallowequal": "^1.0.2"
   }
 }
