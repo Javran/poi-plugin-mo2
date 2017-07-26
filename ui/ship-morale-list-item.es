@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { PTyp } from '../ptyp'
-import { __ } from '../tr'
 import { FleetMarker } from './fleet-marker'
 import { Morale } from './morale'
 
