@@ -1,6 +1,7 @@
 import { createSelector } from 'reselect'
-import { _ } from 'lodash'
+import _ from 'lodash'
 import {
+  stateSelector as poiStateSelector,
   extensionSelectorFactory,
   shipsSelector,
   basicSelector,
@@ -17,17 +18,13 @@ const extSelector = createSelector(
   extensionSelectorFactory('poi-plugin-mo2'),
   extStore => _.isEmpty(extStore) ? emptyConfig : extStore)
 
-const presetDeckSelector =
-  createSelector(
-    extSelector,
-    s => s.presetDeck)
+const presetDeckSelector = createSelector(
+  poiStateSelector,
+  s => s.info.presets)
 
-const presetDeckMaxSelector =
-  createSelector(
-    extSelector,
-    s => s.presetDeck === null ?
-      3 :
-      s.presetDeck.api_max_num)
+const presetDeckMaxSelector = createSelector(
+  presetDeckSelector,
+  presetDeck => presetDeck.api_max_num)
 
 const shipListOptionsSelector =
   createSelector(
@@ -40,10 +37,12 @@ const watchlistSelector =
     extSelector,
     s => s.watchlist)
 
-const admiralIdSelector =
-  createSelector(
-    basicSelector,
-    s => parseInt(s.api_member_id,10))
+const admiralIdSelector = createSelector(
+  basicSelector,
+  s => {
+    const parsed = Number(s.api_member_id)
+    return _.isInteger(parsed) ? parsed : null
+  })
 
 // like shipsSelector but with data fields trimed and renamed
 // for the purpose of this plugin.
@@ -262,4 +261,5 @@ const moraleMonitorSelector =
 
 export {
   moraleMonitorSelector,
+  admiralIdSelector,
 }
