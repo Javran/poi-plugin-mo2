@@ -39,6 +39,7 @@ const canEquipDLC = (stype, masterId) => {
         // Light cruisers
         200, // Abukuma K2
         487, // Kinu K2
+        488, // Yura K2
 
         // Destroyers
         418, // Satsuki K2
