@@ -21,6 +21,8 @@ const pluginWillUnload = () => {
   }
 }
 
+// TODO: subtender version bump
+
 export {
   pluginDidLoad,
   pluginWillUnload,

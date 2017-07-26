@@ -7,18 +7,16 @@ import {
   OverlayTrigger,
 } from 'react-bootstrap'
 
-import { PTyp } from '../ptyp'
-import { __ } from '../tr'
+import { PTyp } from '../../ptyp'
+import { __ } from '../../tr'
 
-import { WSubject } from '../structs'
+import { WSubject } from '../../structs'
 
-import { Morale } from './morale'
-
-// import { genRandomMorale } from '../gen'
+import { Morale } from '../morale'
 
 const { FontAwesome, isDarkTheme } = window
 
-class FleetMoraleListItem extends Component {
+class ListItem extends Component {
   static propTypes = {
     moraleInfo: PTyp.MoraleInfo.isRequired,
 
@@ -265,5 +263,5 @@ class FleetMoraleListItem extends Component {
 }
 
 export {
-  FleetMoraleListItem,
+  ListItem,
 }

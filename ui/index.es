@@ -9,8 +9,8 @@ import { moraleMonitorSelector } from '../selectors'
 
 import { PTyp } from '../ptyp'
 import { __ } from '../tr'
-import { FleetMoraleList } from '../ui/fleet-morale-list'
-import { ShipMoraleList } from '../ui/ship-morale-list'
+import { FleetMoraleList } from './fleet-morale-list'
+import { ShipMoraleList } from './ship-morale-list'
 
 class MoraleMonitorImpl extends Component {
   static propTypes = {
@@ -24,10 +24,6 @@ class MoraleMonitorImpl extends Component {
     filterMorale: PTyp.string.isRequired,
     sortMethod: PTyp.SortMethod.isRequired,
     sortReverse: PTyp.bool.isRequired,
-  }
-
-  static defaultProps = {
-    admiralId: null,
   }
 
   constructor(props) {

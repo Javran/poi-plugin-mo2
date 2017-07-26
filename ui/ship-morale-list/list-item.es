@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import { PTyp } from '../ptyp'
-import { FleetMarker } from './fleet-marker'
-import { Morale } from './morale'
+import { PTyp } from '../../ptyp'
+import { FleetMarker } from '../fleet-marker'
+import { Morale } from '../morale'
 
 const { isDarkTheme } = window
 
@@ -17,7 +17,7 @@ const WrappedTd = ({content}) => (
   </td>)
 WrappedTd.propTypes = PTyp.node.isRequired
 
-class ShipMoraleListItem extends Component {
+class ListItem extends Component {
   static propTypes = {
     ship: PTyp.ShipInfo.isRequired,
   }
@@ -57,5 +57,5 @@ class ShipMoraleListItem extends Component {
 }
 
 export {
-  ShipMoraleListItem,
+  ListItem,
 }

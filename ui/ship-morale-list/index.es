@@ -8,11 +8,11 @@ import {
 } from 'react-bootstrap'
 import { modifyObject } from 'subtender'
 
-import { PTyp } from '../ptyp'
-import { __ } from '../tr'
-import { SType, ShipFilter } from '../ship-filters'
-import { ShipMoraleListItem } from './ship-morale-list-item'
-import { mapDispatchToProps } from '../store'
+import { PTyp } from '../../ptyp'
+import { __ } from '../../tr'
+import { SType, ShipFilter } from '../../ship-filters'
+import { ListItem } from './list-item'
+import { mapDispatchToProps } from '../../store'
 
 const WrappedTd = ({content}) => (
   <td>
@@ -229,7 +229,7 @@ class ShipMoraleListImpl extends Component {
             >
               {
                 shipList.map(ship => (
-                  <ShipMoraleListItem ship={ship} />
+                  <ListItem ship={ship} />
                 ))
               }
             </tbody>

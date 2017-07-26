@@ -9,12 +9,12 @@ import {
 } from 'react-bootstrap'
 import { modifyObject } from 'subtender'
 
-import { PTyp } from '../ptyp'
-import { __ } from '../tr'
-import { WSubject } from '../structs'
-import { mapDispatchToProps } from '../store'
+import { PTyp } from '../../ptyp'
+import { __ } from '../../tr'
+import { WSubject } from '../../structs'
+import { mapDispatchToProps } from '../../store'
 
-import { FleetMoraleListItem } from './fleet-morale-list-item'
+import { ListItem } from './list-item'
 
 class FleetMoraleListImpl extends Component {
   static propTypes = {
@@ -130,7 +130,7 @@ class FleetMoraleListImpl extends Component {
               ind+1 < moraleList.length
 
             return (
-              <FleetMoraleListItem
+              <ListItem
                 key={WSubject.id(moraleInfo.wSubject)}
                 moraleInfo={moraleInfo}
                 onMoveUp={canMoveUp ? this.handleSwapItem(ind,ind-1) : null}

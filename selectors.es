@@ -92,7 +92,6 @@ const shipsInfoSelector =
       return shipsInfo
     })
 
-
 const rstIdArrayToShipsWith = shipsInfo => rstIdArr => {
   const ships = []
   rstIdArr.map(rstId => {
