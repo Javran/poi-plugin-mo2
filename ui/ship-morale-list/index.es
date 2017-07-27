@@ -27,6 +27,19 @@ const WrappedTd = ({content}) => (
   </td>)
 WrappedTd.propTypes = PTyp.node.isRequired
 
+const headerSpecs = []
+{
+  const defineHeader =
+    (name, method, width, asc = true /* whether it's ascending by default */) =>
+      headerSpecs.push({name, method, width, asc})
+
+  defineHeader('ID','rid','14%')
+  defineHeader(__('ShipList.Type'),'stype','20%')
+  defineHeader(__('ShipList.Name'),'name','auto')
+  defineHeader(__('ShipList.Level'),'level','14%',false)
+  defineHeader(__('ShipList.Morale'),'morale',`14%`)
+}
+
 class ShipMoraleListImpl extends Component {
   static propTypes = {
     shipList: PTyp.arrayOf(PTyp.ShipInfo).isRequired,
@@ -40,19 +53,6 @@ class ShipMoraleListImpl extends Component {
 
     configModify: PTyp.func.isRequired,
   }
-
-  static defineHeader =
-    (name, method, width, asc = true /* whether it's ascending by default */) => ({
-      name, method, width, asc,
-    })
-
-  static headerSpecs = [
-    ShipMoraleListImpl.defineHeader('ID','rid','14%'),
-    ShipMoraleListImpl.defineHeader(__('ShipList.Type'),'stype','20%'),
-    ShipMoraleListImpl.defineHeader(__('ShipList.Name'),'name','auto'),
-    ShipMoraleListImpl.defineHeader(__('ShipList.Level'),'level','14%',false),
-    ShipMoraleListImpl.defineHeader(__('ShipList.Morale'),'morale',`14%`),
-  ]
 
   modifyShipsConfig = modifier => this.props.configModify(
     modifyObject('ships', modifier)
@@ -198,7 +198,7 @@ class ShipMoraleListImpl extends Component {
             >
               <tr>
                 {
-                  ShipMoraleListImpl.headerSpecs.map( ({name, method, width, asc}) => {
+                  headerSpecs.map( ({name, method, width, asc}) => {
                     const isActive = sortMethod === method
                     const key = method
                     let content

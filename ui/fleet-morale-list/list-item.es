@@ -6,15 +6,15 @@ import {
   Tooltip,
   OverlayTrigger,
 } from 'react-bootstrap'
+import FontAwesome from 'react-fontawesome'
 
 import { PTyp } from '../../ptyp'
 import { __ } from '../../tr'
 
 import { WSubject } from '../../structs'
-
 import { Morale } from '../morale'
 
-const { FontAwesome, isDarkTheme } = window
+const { isDarkTheme } = window
 
 class ListItem extends Component {
   static propTypes = {

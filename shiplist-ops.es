@@ -1,6 +1,5 @@
+import _ from 'lodash'
 import { ShipFilter } from './ship-filters'
-
-const _ = require('lodash')
 
 // composing multiple comparators into one by
 // trying comparators from left to right, and return first non-zero value.
