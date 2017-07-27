@@ -41,14 +41,14 @@ const inGameShipTypeComparator =
 
 const applyOptions = (options,removeUnlocked=true) => {
   const {
-    filterSType, filterMorale,
+    stypeExt, filterMorale,
     sortMethod, sortReverse,
   } = options
 
   const lockFilter = removeUnlocked ? xs => xs.filter(s => s.locked) : xs => xs
 
   const stypeFilter = xs => xs.filter(
-    ShipFilter.prepareShipTypePredicate(filterSType))
+    ShipFilter.prepareShipTypePredicate(stypeExt))
 
   const moraleFilter = (() => {
     if (filterMorale === 'all')

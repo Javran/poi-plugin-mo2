@@ -1,3 +1,5 @@
+// TODO: Nullable requires the latest release
+import { Nullable } from 'subtender'
 import { canEquipDLC } from 'subtender/kc'
 
 const SType = {
@@ -93,29 +95,48 @@ const specialFilters = new Map()
 
 class ShipFilter {
   static specialFilters = specialFilters
-  static prepareShipTypePredicate = x =>
-    typeof x === 'number' ? s => s.stype === x :
-    specialFilters.has(x) ? specialFilters.get(x).func :
-    console.error(`Unknown filter: ${x}`)
 
-  static display = (stypeInfo=[],__=null) => filterSType => {
-    if (typeof filterSType === 'number') {
+  static destruct = ({stypeIdFilter, specialFilter}) => stypeExt => {
+    if (specialFilters.has(stypeExt)) {
+      return specialFilter(specialFilters.get(stypeExt))
+    }
+
+    return Nullable.destruct({
+      one: ([_ignored,stypeStr]) => {
+        const stype = Number(stypeStr)
+        return stypeIdFilter(stype)
+      },
+      none: () => {
+        // when RE has failed
+        console.error(`Unknown filter: ${stypeExt}`)
+        return () => false
+      },
+    })(/^stype-(\d+)$/.exec(stypeExt))
+  }
+
+  static prepareShipTypePredicate = ShipFilter.destruct({
+    stypeIdFilter: stypeId => s => s.stype === stypeId,
+    specialFilter: filterInfo => filterInfo.func,
+  })
+
+  static display = (stypeInfo=[], __=null) => ShipFilter.destruct({
+    stypeIdFilter: stypeId => {
       const typeInfo =
-        stypeInfo.find(x => x.stype === filterSType)
+        stypeInfo.find(x => x.stype === stypeId)
       if (typeInfo !== 'undefined') {
-        return `${typeInfo.name} (${filterSType})`
+        return `${typeInfo.name} (${stypeId})`
       } else {
-        return String(filterSType)
+        return `stype: ${stypeId}`
       }
-    } else {
-      const filterInfo = specialFilters.get(filterSType)
+    },
+    specialFilter: filterInfo => {
       if (typeof __ === 'function') {
         return __(`SpecialFilters.${filterInfo.id}`)
       } else {
         return filterInfo.desc
       }
-    }
-  }
+    },
+  })
 }
 
 export {

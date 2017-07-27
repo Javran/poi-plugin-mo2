@@ -33,7 +33,7 @@ class ShipMoraleListImpl extends Component {
     stypeInfo: PTyp.arrayOf(PTyp.STypeInfo).isRequired,
     layout: PTyp.Layout.isRequired,
 
-    filterSType: PTyp.FilterSType.isRequired,
+    stypeExt: PTyp.string.isRequired,
     filterMorale: PTyp.string.isRequired,
     sortMethod: PTyp.SortMethod.isRequired,
     sortReverse: PTyp.bool.isRequired,
@@ -58,9 +58,9 @@ class ShipMoraleListImpl extends Component {
     modifyObject('ships', modifier)
   )
 
-  displayFilterSType = () => {
-    const { filterSType, stypeInfo } = this.props
-    const text = ShipFilter.display(stypeInfo,__)(filterSType)
+  displaySTypeExt = () => {
+    const { stypeExt, stypeInfo } = this.props
+    const text = ShipFilter.display(stypeInfo,__)(stypeExt)
     return `${__('ShipList.Type')}: ${text}`
   }
 
@@ -76,7 +76,7 @@ class ShipMoraleListImpl extends Component {
     return `${__('ShipList.Morale')}: ${moraleValueText}`
   }
 
-  handleFilterSTypeChange = stypeExt =>
+  handleSTypeExtChange = stypeExt =>
     this.modifyShipsConfig(modifyObject(
       'filter',
       modifyObject('stypeExt', () => stypeExt))
@@ -122,24 +122,23 @@ class ShipMoraleListImpl extends Component {
     return (
       <div>
         <div
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-            }}
-        >
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+          }}>
           <ButtonGroup
               style={{width: "49%"}}
               justified>
             <DropdownButton
-              onSelect={this.handleFilterSTypeChange}
+              onSelect={this.handleSTypeExtChange}
               style={{
                 textOverflow: 'ellipsis',
                 overflow: 'hidden',
                 whiteSpace: 'nowrap',
                 maxWidth: 300,
               }}
-              title={this.displayFilterSType()} id="mo2-dropdown-stype">
+              title={this.displaySTypeExt()} id="mo2-dropdown-stype">
               {
                 [...ShipFilter.specialFilters.entries()].map( ([id]) =>
                   (
@@ -151,7 +150,7 @@ class ShipMoraleListImpl extends Component {
                   ))
               }
               {
-                stypeInfo.map( ({stype}) =>
+                stypeInfo.map(({stype}) =>
                   // hiding some ship types:
                   // - XBB: no ship of this type is ever implemented
                   // - AP: only used by abyssal ships, plus there's AO
@@ -161,7 +160,7 @@ class ShipMoraleListImpl extends Component {
                   (
                   <MenuItem key={stype} eventKey={`stype-${stype}`}>
                     {
-                      prepareSTypeText(stype)
+                      prepareSTypeText(`stype-${stype}`)
                     }
                   </MenuItem>
                   ))

@@ -15,13 +15,11 @@ const shipListOptionsSelector = createSelector(
   extSelector,
   ({ships}) => {
     const {stypeExt, moraleFilters} = ships.filter
-    const maybeSType = /^stype-(\d+)$/.exec(stypeExt)
-    const filterSType = maybeSType ? Number(maybeSType[1]) : stypeExt
     const filterMorale = moraleFilters[stypeExt] || 'all'
     const sortMethod = ships.sort.method
     const sortReverse = ships.sort.reversed
     return {
-      filterSType,
+      stypeExt,
       filterMorale,
       sortMethod,
       sortReverse,
@@ -44,7 +42,7 @@ const shipMoraleListSelector =
     configLayoutSelector,
     (shipsInfo,stypeInfo,listOptions, layout) => {
       const {
-        filterSType, filterMorale,
+        stypeExt, filterMorale,
         sortMethod, sortReverse,
       } = listOptions
       const shipList =
@@ -52,7 +50,7 @@ const shipMoraleListSelector =
       return {
         shipList,
         stypeInfo,
-        filterSType, filterMorale,
+        stypeExt, filterMorale,
         sortMethod, sortReverse,
         layout,
       }

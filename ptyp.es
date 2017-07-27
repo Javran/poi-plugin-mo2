@@ -64,12 +64,6 @@ const STypeInfo = PropTypes.shape(allRequired({
 const SortMethod = PropTypes.oneOf([
   'rid','name','stype','level','morale'])
 
-const FilterSType = PropTypes.oneOfType([
-  PropTypes.number,
-  PropTypes.oneOf(
-    [...ShipFilter.specialFilters.keys()]),
-])
-
 const Layout = PropTypes.oneOf([
   'horizontal', 'vertical'])
 
@@ -84,7 +78,6 @@ const PTyp = {
   STypeInfo,
 
   SortMethod,
-  FilterSType,
   Layout,
   Tab,
 }
