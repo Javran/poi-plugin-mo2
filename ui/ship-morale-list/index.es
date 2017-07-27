@@ -1,3 +1,4 @@
+import _ from 'lodash'
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import {
@@ -13,7 +14,10 @@ import { __ } from '../../tr'
 import { SType, ShipFilter } from '../../ship-filters'
 import { ListItem } from './list-item'
 import { mapDispatchToProps } from '../../store'
-import { shipMoraleListSelector } from './selectors'
+import {
+  shipMoraleListSelector,
+  lessThanArrSelector,
+} from './selectors'
 
 const WrappedTd = ({content}) => (
   <td>
@@ -40,6 +44,18 @@ const headerSpecs = []
   defineHeader(__('ShipList.Morale'),'morale',`14%`)
 }
 
+const destructFitlerMorale = ({all, lt}) => x => {
+  if (x === 'all')
+    return all()
+  const reResult = /^lt-(\d+)$/.exec(x)
+  if (! reResult)
+    return console.error(`unexpected filter morale: ${x}`)
+
+  const rawNum = reResult[1]
+  const num = Number(rawNum)
+  return lt(num)
+}
+
 class ShipMoraleListImpl extends Component {
   static propTypes = {
     shipList: PTyp.arrayOf(PTyp.ShipInfo).isRequired,
@@ -50,6 +66,7 @@ class ShipMoraleListImpl extends Component {
     filterMorale: PTyp.string.isRequired,
     sortMethod: PTyp.SortMethod.isRequired,
     sortReverse: PTyp.bool.isRequired,
+    lessThanArr: PTyp.arrayOf(PTyp.number).isRequired,
 
     configModify: PTyp.func.isRequired,
   }
@@ -66,13 +83,10 @@ class ShipMoraleListImpl extends Component {
 
   displayFilterMorale = () => {
     const { filterMorale } = this.props
-    const moraleValueText = (() => {
-      if (filterMorale === 'all')
-        return __('ShipList.All')
-      const rawNum = /^lt-(\d+)$/.exec(filterMorale)[1]
-      const num = parseInt(rawNum,10)
-      return `< ${num}`
-    })()
+    const moraleValueText = destructFitlerMorale({
+      all: () => __('ShipList.All'),
+      lt: n => `< ${n}`,
+    })(filterMorale)
     return `${__('ShipList.Morale')}: ${moraleValueText}`
   }
 
@@ -115,7 +129,13 @@ class ShipMoraleListImpl extends Component {
       stypeInfo,
       layout,
       sortMethod, sortReverse,
+      lessThanArr, filterMorale,
     } = this.props
+
+    const actualLessThanArr = destructFitlerMorale({
+      all: () => lessThanArr,
+      lt: n => _.uniq([...lessThanArr,n]).sort((x,y) => x-y),
+    })(filterMorale)
 
     const prepareSTypeText = ShipFilter.display(stypeInfo,__)
 
@@ -176,7 +196,7 @@ class ShipMoraleListImpl extends Component {
                 id="mo2-dropdown-morale">
               <MenuItem eventKey="all">{__('ShipList.All')}</MenuItem>
               {
-                [50,53,76,85,100].map( m => (
+                actualLessThanArr.map( m => (
                   <MenuItem key={m} eventKey={`lt-${m}`}>
                     {`< ${m}`}
                   </MenuItem>
@@ -237,7 +257,14 @@ class ShipMoraleListImpl extends Component {
 }
 
 const ShipMoraleList = connect(
-  shipMoraleListSelector,
+  state => {
+    const props = shipMoraleListSelector(state)
+    const lessThanArr = lessThanArrSelector(state)
+    return {
+      ...props,
+      lessThanArr,
+    }
+  },
   mapDispatchToProps
 )(ShipMoraleListImpl)
 
