@@ -1,6 +1,6 @@
 {
   "name": "poi-plugin-mo2",
-  "version": "0.3.1",
+  "version": "0.4.0",
   "description": "Monitoring morale for your fleets and ships",
   "main": "index.es",
   "scripts": {
