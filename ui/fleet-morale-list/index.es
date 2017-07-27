@@ -13,7 +13,7 @@ import { PTyp } from '../../ptyp'
 import { __ } from '../../tr'
 import { WSubject } from '../../structs'
 import { mapDispatchToProps } from '../../store'
-import { fleetMoraleListSelector } from '../../selectors'
+import { fleetMoraleListSelector } from './selectors'
 
 import { ListItem } from './list-item'
 
@@ -114,9 +114,9 @@ class FleetMoraleListImpl extends Component {
     const { moraleList } = this.props
     return (
       <ListGroup
-          style={{
-            marginBottom: "30px",
-          }}
+        style={{
+          marginBottom: 30,
+        }}
       >
         {
           moraleList.map( (moraleInfo,ind) => {
@@ -142,10 +142,10 @@ class FleetMoraleListImpl extends Component {
           })
         }
         <ListGroupItem
-            style={{
-              padding: "5px",
-            }}
-            key="availables"
+          style={{
+            padding: 5,
+          }}
+          key="availables"
         >
           <ButtonGroup justified>
             <DropdownButton

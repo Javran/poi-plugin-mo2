@@ -13,7 +13,7 @@ import { __ } from '../../tr'
 import { SType, ShipFilter } from '../../ship-filters'
 import { ListItem } from './list-item'
 import { mapDispatchToProps } from '../../store'
-import { shipMoraleListSelector } from '../../selectors'
+import { shipMoraleListSelector } from './selectors'
 
 const WrappedTd = ({content}) => (
   <td>

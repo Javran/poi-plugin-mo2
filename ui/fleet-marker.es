@@ -1,8 +1,20 @@
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 
 import { PTyp } from '../ptyp'
 
-class FleetMarker extends Component {
+const componentStyle = {
+  fontWeight: 'bolder',
+  color: 'white',
+  fontFamily: 'serif',
+  textShadow: [
+    '-1px -1px 0 lightseagreen',
+    '1px -1px 0 lightseagreen',
+    '-1px 1px 0 lightseagreen',
+    '1px 1px 0 lightseagreen'].join(','),
+  WebkitFontSmoothing: 'antialiased',
+}
+
+class FleetMarker extends PureComponent {
   static propTypes = {
     fleet: PTyp.number,
     formatter: PTyp.func,
@@ -15,26 +27,14 @@ class FleetMarker extends Component {
     style: {},
   }
 
-  static style = {
-    fontWeight: "bolder",
-    color: "white",
-    fontFamily: "serif",
-    textShadow: [
-      "-1px -1px 0 lightseagreen",
-      "1px -1px 0 lightseagreen",
-      "-1px 1px 0 lightseagreen",
-      "1px 1px 0 lightseagreen"].join(","),
-    WebkitFontSmoothing: "antialiased",
-  }
-
   render() {
-    const { fleet, formatter, style } = this.props
+    const {fleet, formatter, style} = this.props
     if (fleet === null)
       return false
     return (
       <span
         style={{
-          ...FleetMarker.style,
+          ...componentStyle,
           ...style,
         }}
       >

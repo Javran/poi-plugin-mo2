@@ -58,6 +58,7 @@ const asyncBoundActionCreator = (func, dispatch=store.dispatch) =>
     func(boundActionCreator)))
 
 export {
+  initState,
   reducer,
   mapDispatchToProps,
   boundActionCreator,

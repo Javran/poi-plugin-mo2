@@ -1,5 +1,4 @@
 import { join } from 'path-extra'
-import { createStructuredSelector } from 'reselect'
 import { connect } from 'react-redux'
 import React, { Component } from 'react'
 import { Tabs, Tab } from 'react-bootstrap'
@@ -8,7 +7,7 @@ import {
   mapDispatchToProps,
 } from '../store'
 import {
-  tabSelector,
+  extSelector,
 } from '../selectors'
 
 import { PTyp } from '../ptyp'
@@ -54,8 +53,8 @@ class MoraleMonitorImpl extends Component {
 }
 
 const MoraleMonitor = connect(
-  createStructuredSelector({
-    tab: tabSelector,
+  state => ({
+    tab: extSelector(state).tab,
   }),
   mapDispatchToProps,
 )(MoraleMonitorImpl)
