@@ -5,6 +5,14 @@ designed for getting morale status for your fleets and ships quickly.
 
 ## Changelog
 
+### 0.4.0 (pending)
+
+- Least poi version requirement: `7.9.0`
+- Some optimization
+- Every ship type filter now has its own morale filter state
+- Tab focus (fleets tab or ships tab) is now remembered
+- Fleets tab's Add button now pops upwards instead of downwards.
+
 ### 0.3.1
 
 - Mark Yura K2 as DLC-capable ship
