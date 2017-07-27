@@ -5,13 +5,14 @@ designed for getting morale status for your fleets and ships quickly.
 
 ## Changelog
 
-### 0.4.0 (pending)
+### 0.4.0
 
 - Least poi version requirement: `7.9.0`
 - Some optimization
 - Every ship type filter now has its own morale filter state
 - Tab focus (fleets tab or ships tab) is now remembered
 - Fleets tab's Add button now pops upwards instead of downwards.
+- Allow editing morale filters through settings
 
 ### 0.3.1
 
