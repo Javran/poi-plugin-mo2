@@ -56,11 +56,7 @@ const shipMoraleListSelector =
       }
     })
 
-const lessThanArrSelector = createSelector(
-  extSelector,
-  ext => ext.ships.filter.lessThanArr)
 
 export {
   shipMoraleListSelector,
-  lessThanArrSelector,
 }

@@ -1,4 +1,3 @@
-// TODO: Nullable requires the latest release
 import { Nullable } from 'subtender'
 import { canEquipDLC } from 'subtender/kc'
 

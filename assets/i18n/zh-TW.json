@@ -36,5 +36,7 @@
     "battleship": "戰艦系",
     "sub": "潛艇系",
     "cl-clt-ct": "CL / CLT / CT"
-  }
+  },
+
+  "CustomMoraleFilters": "定製士氣過濾器"
 }

@@ -1,6 +1,7 @@
 import { reducer } from './store'
 import { MoraleMonitor as reactClass } from './ui'
 import { observeAll } from './observers'
+import { Settings as settingsClass } from './ui/settings'
 
 // for observer
 let unsubscribe = null
@@ -21,12 +22,11 @@ const pluginWillUnload = () => {
   }
 }
 
-// TODO: subtender version bump
-
 export {
   pluginDidLoad,
   pluginWillUnload,
 
   reactClass,
   reducer,
+  settingsClass,
 }

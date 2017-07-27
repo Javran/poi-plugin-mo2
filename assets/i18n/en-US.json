@@ -36,5 +36,7 @@
     "battleship": "Battleships",
     "sub": "Submarines",
     "cl-clt-ct": "CL / CLT / CT"
-  }
+  },
+
+  "CustomMoraleFilters": "Custom Morale Filters"
 }

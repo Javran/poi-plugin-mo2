@@ -55,8 +55,13 @@ const shipsInfoSelector =
       return shipsInfo
     })
 
+const lessThanArrSelector = createSelector(
+  extSelector,
+  ext => ext.ships.filter.lessThanArr)
+
 export {
   extSelector,
   shipsInfoSelector,
   admiralIdSelector,
+  lessThanArrSelector,
 }
