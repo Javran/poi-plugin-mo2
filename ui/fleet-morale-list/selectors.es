@@ -1,3 +1,4 @@
+import _ from 'lodash'
 import { createSelector } from 'reselect'
 import {
   stateSelector as poiStateSelector,
@@ -23,17 +24,13 @@ const watchlistSelector =
     extSelector,
     s => s.fleets.watchlist)
 
-const rstIdArrayToShipsWith = shipsInfo => rstIdArr => {
-  const ships = []
+const rstIdArrayToShipsWith = shipsInfo => rstIdArr => _.compact(
   rstIdArr.map(rstId => {
-    if (typeof rstId !== 'number' || rstId <= 0)
-      return
-    const ship = shipsInfo[rstId]
-    if (typeof ship !== 'undefined')
-      ships.push(ship)
+    if (! _.isInteger(rstId) || rstId <= 0)
+      return null
+    return shipsInfo[rstId]
   })
-  return ships
-}
+)
 
 // putting info together for displaying the monitor part
 const moraleListSelector =

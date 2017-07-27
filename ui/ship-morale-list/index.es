@@ -139,7 +139,7 @@ class ShipMoraleListImpl extends Component {
                 whiteSpace: 'nowrap',
                 maxWidth: 300,
               }}
-              title={this.displayFilterSType()} id="dropdown-stype">
+              title={this.displayFilterSType()} id="mo2-dropdown-stype">
               {
                 [...ShipFilter.specialFilters.entries()].map( ([id]) =>
                   (
@@ -174,7 +174,7 @@ class ShipMoraleListImpl extends Component {
             <DropdownButton
                 onSelect={this.handleFilterMoraleChange}
                 title={this.displayFilterMorale()}
-                id="dropdown-morale">
+                id="mo2-dropdown-morale">
               <MenuItem eventKey="all">{__('ShipList.All')}</MenuItem>
               {
                 [50,53,76,85,100].map( m => (

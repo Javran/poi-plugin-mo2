@@ -65,7 +65,7 @@ class ListItem extends Component {
 
   makeTooltip = () => {
     const { moraleInfo } = this.props
-    const ttId = `tooltip-mo2-${WSubject.id(moraleInfo.wSubject)}`
+    const ttId = `mo2-tooltip-${WSubject.id(moraleInfo.wSubject)}`
     return (
       <Tooltip id={ttId}>
         {

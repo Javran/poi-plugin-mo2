@@ -113,13 +113,9 @@ class FleetMoraleListImpl extends Component {
   render() {
     const { moraleList } = this.props
     return (
-      <ListGroup
-        style={{
-          marginBottom: 30,
-        }}
-      >
+      <ListGroup style={{marginBottom: 30}}>
         {
-          moraleList.map( (moraleInfo,ind) => {
+          moraleList.map((moraleInfo,ind) => {
             // only swapping custom items are allowed
             const canMoveUp =
               ind-1 >= 0 &&
@@ -148,11 +144,11 @@ class FleetMoraleListImpl extends Component {
           key="availables"
         >
           <ButtonGroup justified>
-            <DropdownButton
+            <DropdownButton dropup
                 style={{marginTop: 0}}
                 onSelect={this.handleAddNewTarget}
                 title={__("FleetList.Add")}
-                id="dropdown-add-new-target">
+                id="mo2-dropdown-add-new-target">
               {
                 this.props.availableTargets.map( ws => (
                   <MenuItem
