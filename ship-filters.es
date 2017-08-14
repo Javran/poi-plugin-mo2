@@ -75,7 +75,7 @@ const specialFilters = new Map()
 
   defineSpecialFilter(
     'cv-cvl-cvb', 'CV / CVL / CVB',
-    isOneOfSType(CL,CVL,CVB))
+    isOneOfSType(CV,CVL,CVB))
 
   defineSpecialFilter(
     'battleship', 'Battleships',

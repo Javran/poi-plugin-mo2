@@ -5,6 +5,10 @@ designed for getting morale status for your fleets and ships quickly.
 
 ## Changelog
 
+### 0.4.1
+
+- Fix filter `CV / CVL / CVB`
+
 ### 0.4.0
 
 - Least poi version requirement: `7.9.0`
