@@ -8,6 +8,7 @@ designed for getting morale status for your fleets and ships quickly.
 ### 0.4.1
 
 - Fix filter `CV / CVL / CVB`
+- Mark Fumizuki K2 as DLC-capable
 
 ### 0.4.0
 
