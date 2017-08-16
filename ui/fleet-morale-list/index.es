@@ -144,11 +144,11 @@ class FleetMoraleListImpl extends Component {
           key="availables"
         >
           <ButtonGroup justified>
-            <DropdownButton dropup
-                style={{marginTop: 0}}
-                onSelect={this.handleAddNewTarget}
-                title={__("FleetList.Add")}
-                id="mo2-dropdown-add-new-target">
+            <DropdownButton
+              style={{marginTop: 0}}
+              onSelect={this.handleAddNewTarget}
+              title={__("FleetList.Add")}
+              id="mo2-dropdown-add-new-target">
               {
                 this.props.availableTargets.map( ws => (
                   <MenuItem

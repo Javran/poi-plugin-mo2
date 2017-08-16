@@ -5,6 +5,10 @@ designed for getting morale status for your fleets and ships quickly.
 
 ## Changelog
 
+### 0.4.2
+
+- Reverting Fleets tab's add button to pop downwards
+
 ### 0.4.1
 
 - Fix filter `CV / CVL / CVB`
