@@ -29,7 +29,7 @@ class MoraleMonitorImpl extends Component {
     const {tab} = this.props
     return (
       <div
-        style={{margin: 8}}
+        style={{margin: 8, height: '100%'}}
       >
         <link
           rel="stylesheet"
@@ -38,6 +38,7 @@ class MoraleMonitorImpl extends Component {
         <Tabs
           activeKey={tab}
           onSelect={this.handleSelectTab}
+          style={{height: '100%'}}
           animation={false}
           id="mo2-tabs">
           <Tab eventKey="fleet" title={__('Tab.Fleet')}>

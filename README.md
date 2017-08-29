@@ -5,6 +5,10 @@ designed for getting morale status for your fleets and ships quickly.
 
 ## Changelog
 
+### 0.4.3
+
+- Fix a problem where the tab isn't taking full height
+
 ### 0.4.2
 
 - Reverting Fleets tab's add button to pop downwards
