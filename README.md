@@ -5,6 +5,10 @@ designed for getting morale status for your fleets and ships quickly.
 
 ## Changelog
 
+### 0.4.4
+
+- Require confirmation before removing a fleet morale list item
+
 ### 0.4.3
 
 - Fix a problem where the tab isn't taking full height
