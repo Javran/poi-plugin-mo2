@@ -247,7 +247,7 @@ class ShipMoraleListImpl extends Component {
             >
               {
                 shipList.map(ship => (
-                  <ListItem ship={ship} />
+                  <ListItem ship={ship} key={ship.rstId} />
                 ))
               }
             </tbody>

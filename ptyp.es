@@ -1,7 +1,5 @@
 import { PropTypes } from 'prop-types'
 
-import { ShipFilter } from './ship-filters'
-
 const allRequired = shapeObj => {
   const ret = {}
   Object.keys(shapeObj).map(k => {
@@ -72,6 +70,7 @@ const Tab = PropTypes.oneOf(['fleet', 'ship'])
 const PTyp = {
   ...PropTypes,
 
+  WSubject,
   ShipInfo,
   MoraleInfo,
 
