@@ -36,6 +36,7 @@ class ListItem extends Component {
     super(props)
     this.state = {
       editing: false,
+      removalConfirming: false,
       nameText: "",
     }
   }
@@ -180,13 +181,40 @@ class ListItem extends Component {
             <FontAwesome
               name={isCustom ? (this.state.editing ? "check" : "pencil") : "save"} />
           </Button>
-          <Button
-              bsSize="xsmall"
-              style={xButtonStyle}
-              onClick={onRemoveItem}
-          >
-            <FontAwesome name="close" />
-          </Button>
+          {
+            !this.state.removalConfirming && (
+              <Button
+                bsSize="xsmall"
+                style={xButtonStyle}
+                onClick={() => this.setState({removalConfirming: true})}
+                >
+                <FontAwesome name="close" />
+              </Button>
+            )
+          }
+          {
+            this.state.removalConfirming && (
+              <Button
+                bsSize="xsmall"
+                bsStyle="danger"
+                style={xButtonStyle}
+                onClick={onRemoveItem}
+                >
+                <FontAwesome name="trash" />
+              </Button>
+            )
+          }
+          {
+            this.state.removalConfirming && (
+              <Button
+                bsSize="xsmall"
+                style={xButtonStyle}
+                onClick={() => this.setState({removalConfirming: false})}
+                >
+                <FontAwesome name="undo" />
+              </Button>
+            )
+          }
         </div>
         <div
             style={{
