@@ -43,7 +43,7 @@ const headerSpecs = []
   defineHeader(__('ShipList.Type'),'stype','20%')
   defineHeader(__('ShipList.Name'),'name','auto')
   defineHeader(__('ShipList.Level'),'level','14%',false)
-  defineHeader(__('ShipList.Morale'),'morale',`14%`)
+  defineHeader(__('ShipList.Morale'),'morale',`16%`)
 }
 
 const destructFitlerMorale = ({all, lt}) => x => {
