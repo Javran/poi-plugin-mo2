@@ -29,7 +29,7 @@ const shipsInfoSelector =
     shipsSelector,
     constSelector,
     fleetsSelector,
-    (ships, {$ships, $shipTypes},fleets) => {
+    (ships, {$ships = {}, $shipTypes = {}},fleets) => {
       const shipsInfo = {}
       Object.entries(ships)
         .map(([rstIdStr, ship]) => {
