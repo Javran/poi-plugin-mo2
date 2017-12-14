@@ -5,6 +5,11 @@ designed for getting morale status for your fleets and ships quickly.
 
 ## Changelog
 
+### 0.4.6
+
+- Tama K2 update
+- Fix a problem when `getStore().const` is empty
+
 ### 0.4.5
 
 - Fix a problem when `getStore().const` is empty
