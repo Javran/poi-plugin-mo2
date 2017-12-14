@@ -30,9 +30,9 @@ const shipListOptionsSelector = createSelector(
 const stypeInfoSelector =
   createSelector(
     constSelector,
-    ({$shipTypes} = {}) =>
+    ({$shipTypes = {}}) =>
       Object.entries($shipTypes).map(([stypeStr,typeInfo]) =>
-        ({ stype: parseInt(stypeStr,10), name: typeInfo.api_name })))
+        ({ stype: Number(stypeStr), name: typeInfo.api_name })))
 
 const shipMoraleListSelector =
   createSelector(
