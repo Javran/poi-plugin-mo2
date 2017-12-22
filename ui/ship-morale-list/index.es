@@ -142,7 +142,14 @@ class ShipMoraleListImpl extends Component {
     const prepareSTypeText = ShipFilter.display(stypeInfo,__)
 
     return (
-      <div>
+      <div
+        style={{
+          flex: 1,
+          height: 0,
+          display: 'flex',
+          flexDirection: 'column',
+        }}
+      >
         <div
           style={{
             display: 'flex',
@@ -208,11 +215,12 @@ class ShipMoraleListImpl extends Component {
           </ButtonGroup>
         </div>
         <div
-            style={{
-              marginTop: '8px',
-              height: layout === 'vertical' ? '48vh' : '85vh',
-              overflowY: 'scroll',
-            }}>
+          style={{
+            marginTop: '8px',
+            flex: 1,
+            overflowY: 'scroll',
+          }}
+        >
           <Table
             style={{tableLayout: 'fixed'}}
             striped bordered condensed hover>

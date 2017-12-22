@@ -11,3 +11,9 @@
     flex: 1;
     height: 0;
 }
+
+#poi-plugin-mo2 #mo2-tabs #mo2-tabs-pane-ship.tab-pane.active {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
