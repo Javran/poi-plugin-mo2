@@ -9,11 +9,13 @@ const reportTypeError = (cls,actualType) =>
   console.error(`Invalid ${cls.name} type: ${actualType}`)
 
 class WSubject {
+  /* eslint-disable indent */
   static destruct = ({fleet,preset,custom}) => expectObject(obj =>
-      obj.type === 'fleet' ? fleet(obj.fleetId,obj)
-    : obj.type === 'preset' ? preset(obj.presetNo, obj)
-    : obj.type === 'custom' ? custom(obj.id, obj.name, obj.ships, obj)
-    : reportTypeError(WSubject,obj.type))
+    obj.type === 'fleet' ? fleet(obj.fleetId,obj) :
+    obj.type === 'preset' ? preset(obj.presetNo, obj) :
+    obj.type === 'custom' ? custom(obj.id, obj.name, obj.ships, obj) :
+    reportTypeError(WSubject,obj.type))
+  /* eslint-enable indent */
 
   static id = WSubject.destruct({
     fleet: fleetId => `fleet-${fleetId}`,

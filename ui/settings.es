@@ -112,10 +112,16 @@ class SettingsImpl extends Component {
               bsStyle={isInputValid ? 'default' : 'danger'}
               disabled={!isInputValid}
               onClick={this.handleLessThanArrSave}
-              bsSize="small"><FontAwesome name="save" /></Button>
+              bsSize="small"
+            >
+              <FontAwesome name="save" />
+            </Button>
             <Button
               onClick={this.handleLessThanArrReset}
-              bsSize="small"><FontAwesome name="close" /></Button>
+              bsSize="small"
+            >
+              <FontAwesome name="close" />
+            </Button>
           </div>
         </FormGroup>
       </div>

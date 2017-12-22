@@ -17,6 +17,8 @@ class Morale extends Component {
 
   render() {
     const { morale, isDarkTheme, style } = this.props
+
+    /* eslint-disable indent */
     const moraleStyle =
       morale === null ? {} :
         morale <= 48 ? {} :
@@ -32,6 +34,7 @@ class Morale extends Component {
       morale === 49 ? "poi-ship-cond-49" :
       morale <= 52 ? "poi-ship-cond-50" :
       "poi-ship-cond-53"
+    /* eslint-enable indent */
 
     const darkOrLight = isDarkTheme ? 'dark' : 'light'
 

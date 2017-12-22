@@ -57,6 +57,7 @@ const applyOptions = (options,removeUnlocked=true) => {
     return xs => xs.filter(x => x.morale < num)
   })()
 
+  /* eslint-disable indent */
   const comparator =
     sortMethod === 'rid' ? rosterIdComparator :
     sortMethod === 'name' ? getter2Comparator(x => x.name) :
@@ -64,6 +65,7 @@ const applyOptions = (options,removeUnlocked=true) => {
     sortMethod === 'level' ? inGameLevelComparator :
     sortMethod === 'morale' ? getter2Comparator(x => x.morale) :
       console.error(`Unknown sorting method: ${sortMethod}`)
+  /* eslint-enable indent */
 
   // as every ship has a unique rosterId
   // we use this as the final resolver if necessary

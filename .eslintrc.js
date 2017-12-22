@@ -10,11 +10,6 @@ module.exports = {
     'es6': true,
     'node': true,
   },
-  "parserOptions": {
-    "ecmaFeatures": {
-      "jsx": true
-    }
-  },
   'parser': 'babel-eslint',
   'rules': {
     'semi': ['error', 'never'],
@@ -68,7 +63,9 @@ module.exports = {
     'react/jsx-boolean-value': 'off',
     'no-mixed-operators': 'off',
     'consistent-return': 'off',
-    'no-plusplus': 'off'
+    'no-plusplus': 'off',
+    'object-curly-newline': 'off',
+    'function-paren-newline': 'off'
   },
   'settings': {
     'import/resolver': {
