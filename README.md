@@ -5,6 +5,10 @@ designed for getting morale status for your fleets and ships quickly.
 
 ## Changelog
 
+### 0.4.7
+
+- Better scrolling
+
 ### 0.4.6
 
 - Tama K2 update
