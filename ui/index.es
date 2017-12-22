@@ -29,7 +29,7 @@ class MoraleMonitorImpl extends Component {
     const {tab} = this.props
     return (
       <div
-        style={{margin: 8, height: '100%'}}
+        style={{margin: 8, flex: 1, height: 0}}
       >
         <link
           rel="stylesheet"
