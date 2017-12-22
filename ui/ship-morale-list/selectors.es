@@ -2,7 +2,6 @@ import { createSelector } from 'reselect'
 
 import {
   constSelector,
-  configLayoutSelector,
 } from 'views/utils/selectors'
 
 import {
@@ -39,8 +38,7 @@ const shipMoraleListSelector =
     shipsInfoSelector,
     stypeInfoSelector,
     shipListOptionsSelector,
-    configLayoutSelector,
-    (shipsInfo,stypeInfo,listOptions, layout) => {
+    (shipsInfo,stypeInfo,listOptions) => {
       const {
         stypeExt, filterMorale,
         sortMethod, sortReverse,
@@ -52,10 +50,8 @@ const shipMoraleListSelector =
         stypeInfo,
         stypeExt, filterMorale,
         sortMethod, sortReverse,
-        layout,
       }
     })
-
 
 export {
   shipMoraleListSelector,

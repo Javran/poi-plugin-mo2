@@ -62,7 +62,6 @@ class ShipMoraleListImpl extends Component {
   static propTypes = {
     shipList: PTyp.arrayOf(PTyp.ShipInfo).isRequired,
     stypeInfo: PTyp.arrayOf(PTyp.STypeInfo).isRequired,
-    layout: PTyp.Layout.isRequired,
 
     stypeExt: PTyp.string.isRequired,
     filterMorale: PTyp.string.isRequired,
@@ -129,7 +128,6 @@ class ShipMoraleListImpl extends Component {
     const {
       shipList,
       stypeInfo,
-      layout,
       sortMethod, sortReverse,
       lessThanArr, filterMorale,
     } = this.props
