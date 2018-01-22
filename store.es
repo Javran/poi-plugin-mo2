@@ -18,7 +18,7 @@ const reducer = (state = initState, action) => {
   }
 
   // prevent any modification if state is not ready
-  if (! state.ready)
+  if (!state.ready)
     return state
 
   if (action.type === '@poi-plugin-mo2@ConfigModify') {
