@@ -8,12 +8,13 @@ import {
   fleetsSelector,
 } from 'views/utils/selectors'
 
-import { initState } from './store'
+import { initState } from './store/common'
 
 const extSelector = createSelector(
   extensionSelectorFactory('poi-plugin-mo2'),
   extStore =>
-    _.isEmpty(extStore) ? initState : extStore)
+    _.isEmpty(extStore) ? initState : extStore
+)
 
 const admiralIdSelector = createSelector(
   basicSelector,

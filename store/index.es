@@ -1,12 +1,7 @@
 import { bindActionCreators } from 'redux'
 import { store } from 'views/create-store'
 
-import { emptyConfig } from './config'
-
-const initState = {
-  ...emptyConfig,
-  ready: false,
-}
+import { initState } from './common'
 
 const reducer = (state = initState, action) => {
   if (action.type === '@poi-plugin-mo2@ConfigReplace') {
@@ -53,15 +48,11 @@ const mapDispatchToProps = dispatch =>
 const boundActionCreators =
   mapDispatchToProps(store.dispatch)
 
-const asyncBoundActionCreators = (func, dispatch=store.dispatch) =>
-  dispatch(() => setTimeout(() =>
-    func(boundActionCreators)))
+export * from './common'
 
 export {
-  initState,
   reducer,
   actionCreators,
   mapDispatchToProps,
   boundActionCreators,
-  asyncBoundActionCreators,
 }
