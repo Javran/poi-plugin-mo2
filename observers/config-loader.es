@@ -10,7 +10,7 @@ import { observer } from 'redux-observers'
 
 import {
   mapDispatchToProps,
-  asyncBoundActionCreator,
+  asyncBoundActionCreators,
 } from '../store'
 import { admiralIdSelector } from '../selectors'
 import { loadConfig } from '../config'
@@ -32,7 +32,7 @@ const configLoader = observer(
       // immediately invalidate the config
       mapDispatchToProps(dispatch).configInvalidate()
       // then asynchronously start a config-reloading process
-      asyncBoundActionCreator(
+      asyncBoundActionCreators(
         ({configLoaded}) =>
           configLoaded(loadConfig(admiralId)),
         dispatch,

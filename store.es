@@ -29,7 +29,7 @@ const reducer = (state = initState, action) => {
   return state
 }
 
-const actionCreator = {
+const actionCreators = {
   configReplace: config => ({
     type: '@poi-plugin-mo2@ConfigReplace',
     config,
@@ -39,28 +39,29 @@ const actionCreator = {
     modifier,
   }),
   configInvalidate: () =>
-    actionCreator.configReplace({ready: false}),
+    actionCreators.configReplace({ready: false}),
   configLoaded: config =>
-    actionCreator.configReplace({
+    actionCreators.configReplace({
       ...config,
       ready: true,
     }),
 }
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators(actionCreator, dispatch)
+  bindActionCreators(actionCreators, dispatch)
 
-const boundActionCreator =
+const boundActionCreators =
   mapDispatchToProps(store.dispatch)
 
-const asyncBoundActionCreator = (func, dispatch=store.dispatch) =>
+const asyncBoundActionCreators = (func, dispatch=store.dispatch) =>
   dispatch(() => setTimeout(() =>
-    func(boundActionCreator)))
+    func(boundActionCreators)))
 
 export {
   initState,
   reducer,
+  actionCreators,
   mapDispatchToProps,
-  boundActionCreator,
-  asyncBoundActionCreator,
+  boundActionCreators,
+  asyncBoundActionCreators,
 }
