@@ -41,13 +41,6 @@ class ListItem extends Component {
     }
   }
 
-  componentWillUpdate(_nextProps, nextState) {
-    // start editing
-    if (! this.state.editing && nextState.editing) {
-      this.setState({nameText: this.props.moraleInfo.name})
-    }
-  }
-
   handleToggleEditing = () => {
     if (this.state.editing) {
       const { onChangeItemName } = this.props
@@ -57,7 +50,10 @@ class ListItem extends Component {
       onChangeItemName(this.state.nameText)
     } else {
       // start editing
-      this.setState({editing: true})
+      this.setState({
+        editing: true,
+        nameText: this.props.moraleInfo.name,
+      })
     }
   }
 
@@ -187,7 +183,7 @@ class ListItem extends Component {
                 bsSize="xsmall"
                 style={xButtonStyle}
                 onClick={() => this.setState({removalConfirming: true})}
-                >
+              >
                 <FontAwesome name="close" />
               </Button>
             )
@@ -238,15 +234,17 @@ class ListItem extends Component {
                    onChange={this.handleEditingName}
                    value={this.state.nameText}
                />) :
-              (<div
+              (
+                <div
                   style={{
                     fontSize: "18px",
                     fontWeight: "bold",
                     marginBottom: "5px",
                   }}
-              >
-                {name}
-              </div>)
+                  >
+                  {name}
+                </div>
+              )
             }
             <div
                 style={{
@@ -259,30 +257,37 @@ class ListItem extends Component {
                     flex: 3,
                     fontSize: "15px",
                   }}
-              >{__('FleetList.Flagship')}: {fsDesc}</div>
+              >
+                {__('FleetList.Flagship')}: {fsDesc}
+              </div>
               <div
                   style={{
                     flex: 2,
                     fontSize: "15px",
                   }}
-              >{__('FleetList.ShipCount')}: {ships.length}</div>
+              >
+                {__('FleetList.ShipCount')}: {ships.length}
+              </div>
             </div>
           </div>
           {
             moraleInfo.ships.length > 0 ?
-            (<OverlayTrigger placement="left" overlay={this.makeTooltip()}>
-              <div style={{flex: 1}} >
-                <Morale
-                  morale={minMorale}
-                  isDarkTheme={isDarkTheme}
-                />
-              </div>
-            </OverlayTrigger>) :
-            (<Morale
-               style={{flex: 1}}
-               morale={minMorale}
-               isDarkTheme={isDarkTheme}
-            />)
+            (
+              <OverlayTrigger placement="left" overlay={this.makeTooltip()}>
+                <div style={{flex: 1}} >
+                  <Morale
+                    morale={minMorale}
+                    isDarkTheme={isDarkTheme}
+                  />
+                </div>
+              </OverlayTrigger>
+            ) : (
+              <Morale
+                style={{flex: 1}}
+                morale={minMorale}
+                isDarkTheme={isDarkTheme}
+              />
+            )
           }
         </div>
       </ListGroupItem>

@@ -53,7 +53,7 @@ class FleetMoraleListImpl extends Component {
         .map(w => w.id)
       const newId =
         customIds.length === 0 ? 1 :
-        Math.max(...customIds) + 1
+          Math.max(...customIds) + 1
 
       const newWS = {
         type: 'custom',
@@ -93,10 +93,12 @@ class FleetMoraleListImpl extends Component {
   }
 
   renderMenuItemContent = ws => {
+    /* eslint-disable indent */
     const basicText =
       ws.type === 'fleet' ? `${__('FleetList.Fleet')} #${ws.fleetId}` :
       ws.type === 'preset' ? `${__('FleetList.Preset')} #${ws.presetNo}` :
       console.error(`Unexpected WSubject type: ${ws.type}`)
+    /* eslint-enable indent */
 
     const { fsName, shipCount } = ws
     if (typeof fsName !== 'undefined' && typeof shipCount !== 'undefined') {
