@@ -12,10 +12,9 @@ import {
   Button,
 } from 'react-bootstrap'
 import { modifyObject } from 'subtender'
-import { mapDispatchToProps } from '../store'
+import { initState, mapDispatchToProps } from '../store'
 import { lessThanArrSelector } from '../selectors'
 import { PTyp } from '../ptyp'
-import { emptyConfig } from '../config'
 import { __ } from '../tr'
 
 const parseRawLessThanArr = s => {
@@ -71,7 +70,8 @@ class SettingsImpl extends Component {
     })
 
   handleLessThanArrResetToDefault = () => {
-    const defLessThanArr = emptyConfig.ships.filter.lessThanArr
+    const defLessThanArr =
+      initState.ships.filter.lessThanArr
     this.replaceLessThanArr(defLessThanArr)
     this.setState({lessThanArrStr: defLessThanArr.join(',')})
   }

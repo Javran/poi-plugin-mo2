@@ -2,10 +2,10 @@ import _ from 'lodash'
 import { createSelector } from 'reselect'
 import {
   extensionSelectorFactory,
-  shipsSelector,
+  shipsSelector as poiShipsSelector,
   basicSelector,
   constSelector,
-  fleetsSelector,
+  fleetsSelector as poiFleetsSelector,
 } from 'views/utils/selectors'
 
 import { initState } from './store/common'
@@ -14,6 +14,26 @@ const extSelector = createSelector(
   extensionSelectorFactory('poi-plugin-mo2'),
   extStore =>
     _.isEmpty(extStore) ? initState : extStore
+)
+
+const fleetsSelector = createSelector(
+  extSelector,
+  ext => ext.fleets
+)
+
+const shipsSelector = createSelector(
+  extSelector,
+  ext => ext.ships
+)
+
+const tabSelector = createSelector(
+  extSelector,
+  ext => ext.tab
+)
+
+const readySelector = createSelector(
+  extSelector,
+  ext => ext.ready
 )
 
 const admiralIdSelector = createSelector(
@@ -27,9 +47,9 @@ const admiralIdSelector = createSelector(
 // for the purpose of this plugin.
 const shipsInfoSelector =
   createSelector(
-    shipsSelector,
+    poiShipsSelector,
     constSelector,
-    fleetsSelector,
+    poiFleetsSelector,
     (ships, {$ships = {}, $shipTypes = {}},fleets) => {
       const shipsInfo = {}
       Object.entries(ships)
@@ -62,6 +82,11 @@ const lessThanArrSelector = createSelector(
 
 export {
   extSelector,
+  fleetsSelector,
+  shipsSelector,
+  tabSelector,
+  readySelector,
+
   shipsInfoSelector,
   admiralIdSelector,
   lessThanArrSelector,

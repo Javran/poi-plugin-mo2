@@ -7,11 +7,7 @@ import { observer } from 'redux-observers'
 import shallowEqual from 'shallowequal'
 
 import { admiralIdSelector, extSelector } from '../selectors'
-import { extStateToConfig, saveConfig } from '../config'
-
-const currentConfigSelector = createSelector(
-  extSelector,
-  extStateToConfig)
+import { saveConfig, configSelector } from '../config'
 
 const extReadySelector = createSelector(
   extSelector,
@@ -26,7 +22,7 @@ const configSaver = observer(
   createStructuredSelector({
     admiralId: admiralIdSelector,
     ready: extReadySelector,
-    config: currentConfigSelector,
+    config: configSelector,
   }),
   (_dispatch, cur, prev) => {
     if (
@@ -36,7 +32,7 @@ const configSaver = observer(
       cur.admiralId === prev.admiralId &&
       // 'ready' flag is stayed true
       (cur.ready === true && prev.ready === true) &&
-      ! shallowEqual(cur.config,prev.config)
+      !shallowEqual(cur.config,prev.config)
     ) {
       const {admiralId, config} = cur
       debouncedSaveConfig(admiralId, config)

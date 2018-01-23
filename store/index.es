@@ -37,7 +37,7 @@ const actionCreators = {
     actionCreators.configReplace({ready: false}),
   configLoaded: config =>
     actionCreators.configReplace({
-      ...config,
+      ...(config || {}),
       ready: true,
     }),
 }

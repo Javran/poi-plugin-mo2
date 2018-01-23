@@ -1,41 +1,24 @@
 import _ from 'lodash'
 import { modifyObject } from 'subtender'
+import { createSelector } from 'reselect'
 import { ensureDirSync, readJsonSync, writeJsonSync } from 'fs-extra'
 import { join } from 'path-extra'
+import {
+  fleetsSelector,
+  shipsSelector,
+  tabSelector,
+} from './selectors'
 
 const { APPDATA_PATH } = window
 
-const emptyConfig = {
-  fleets: {
-    watchlist: [
-      /* WSubject */
-    ],
-  },
-  ships: {
-    sort: {
-      method: 'level',
-      reversed: false,
-    },
-    filter: {
-      // must be sorted
-      lessThanArr: [50,53,76,85,100],
-      // current selected stype (Ext for extended)
-      stypeExt: 'stype-2',
-      moraleFilters: {
-        /*
-           if not empty:
+const latestVersion = '0.4.0'
 
-           'stype-2': 'all',
-           'stype-20': 'lt-50',
-           ...
-
-         */
-      },
-    },
-  },
-  tab: 'fleet', // fleet / ship
-  configVersion: '0.4.0',
-}
+const configSelector = createSelector(
+  fleetsSelector,
+  shipsSelector,
+  tabSelector,
+  (fleets, ships, tab) => ({fleets, ships, tab})
+)
 
 // config file is located under directory "$APPDATA_PATH/morale-monitor"
 // with admiral id being the name and ".json" extension.
@@ -45,31 +28,69 @@ const getConfigFilePath = admiralId => {
   return join(configPath,`${admiralId}.json`)
 }
 
-// saveConfig(admiralId,config) saves the config
+// saves the config
 const saveConfig = (admiralId, config) => {
   const path = getConfigFilePath(admiralId)
   try {
-    writeJsonSync(path,config)
+    const configWithVer = {
+      ...config,
+      configVersion: latestVersion,
+    }
+    writeJsonSync(path, configWithVer)
   } catch (err) {
     console.error('Error while writing to config file', err)
   }
 }
 
 const updateConfig = (admiralId, oldConfig) => {
+  let currentConfig = oldConfig
+
   // not containing a 'configVersion' prop is considered to be
   // a legacy config from <0.4.0 versions
-  if (! ('configVersion' in oldConfig)) {
-    const stypeExt = typeof oldConfig.filterSType === 'number' ?
-      `stype-${oldConfig.filterSType}` :
-      oldConfig.filterSType
+  if (!('configVersion' in currentConfig)) {
+    // emptyConfig for 0.4.0
+    const emptyConfig = {
+      fleets: {
+        watchlist: [
+          /* WSubject */
+        ],
+      },
+      ships: {
+        sort: {
+          method: 'level',
+          reversed: false,
+        },
+        filter: {
+          // must be sorted
+          lessThanArr: [50,53,76,85,100],
+          // current selected stype (Ext for extended)
+          stypeExt: 'stype-2',
+          moraleFilters: {
+            /*
+               if not empty:
 
-    const config = _.flow([
+               'stype-2': 'all',
+               'stype-20': 'lt-50',
+               ...
+
+             */
+          },
+        },
+      },
+      tab: 'fleet', // fleet / ship
+    }
+
+    const stypeExt = typeof currentConfig.filterSType === 'number' ?
+      `stype-${currentConfig.filterSType}` :
+      currentConfig.filterSType
+
+    const newConfig = _.flow([
       // walk fleets
       modifyObject(
         'fleets',
         modifyObject(
           // copying watchlist
-          'watchlist', () => oldConfig.watchlist
+          'watchlist', () => currentConfig.watchlist
         )
       ),
       // walk ships
@@ -78,8 +99,8 @@ const updateConfig = (admiralId, oldConfig) => {
           // walk sort
           modifyObject(
             'sort', _.flow([
-              modifyObject('method', () => oldConfig.sortMethod),
-              modifyObject('reversed', () => oldConfig.sortReverse),
+              modifyObject('method', () => currentConfig.sortMethod),
+              modifyObject('reversed', () => currentConfig.sortReverse),
             ])
           ),
           // walk filter
@@ -96,7 +117,7 @@ const updateConfig = (admiralId, oldConfig) => {
                    leaving all the others default values.
                  */
                 modifyObject(
-                  stypeExt, () => oldConfig.filterMorale
+                  stypeExt, () => currentConfig.filterMorale
                 )
               ),
             ])
@@ -104,14 +125,25 @@ const updateConfig = (admiralId, oldConfig) => {
         ])
       ),
     ])(emptyConfig)
-    setTimeout(() => saveConfig(admiralId,config))
-    return config
+
+    currentConfig = newConfig
   }
 
-  if (oldConfig.configVersion === emptyConfig.configVersion)
-    return oldConfig
+  if (currentConfig.configVersion === latestVersion) {
+    if (currentConfig && oldConfig === currentConfig) {
+      /*
+         schedule a save due to having some part of the config is update
+         this is not necessary but it avoids repeated work of updating
+       */
+      setTimeout(() => saveConfig(admiralId,currentConfig))
+    }
 
-  throw new Error(`cannot update current config`)
+    const {configVersion: _ignored, ...realConfig} = currentConfig
+    return realConfig
+  }
+
+  console.error(`cannot update current config`)
+  return null
 }
 
 // loadConfig(admiralId) loads the corresponding config
@@ -126,21 +158,11 @@ const loadConfig = admiralId => {
       console.error('Error while loading config', err)
     }
   }
-  return emptyConfig
-}
-
-const extStateToConfig = state => {
-  const keys = Object.keys(emptyConfig)
-  return _.fromPairs(
-    keys.map(key => [
-      key,
-      _.get(state, key, emptyConfig[key]),
-    ]))
+  return null
 }
 
 export {
   loadConfig,
   saveConfig,
-  emptyConfig,
-  extStateToConfig,
+  configSelector,
 }
