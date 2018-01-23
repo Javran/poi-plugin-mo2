@@ -5,6 +5,10 @@ designed for getting morale status for your fleets and ships quickly.
 
 ## Changelog
 
+### 0.5.0 (pending)
+
+- Improved internal mechanism
+
 ### 0.4.7
 
 - Better scrolling
