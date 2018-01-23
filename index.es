@@ -9,8 +9,6 @@ import { Settings as settingsClass } from './ui/settings'
 /*
    TODO:
 
-   - config -> p-state, let store become single source of truth
-
    - filter customization:
 
        - no longer require filters to be sorted

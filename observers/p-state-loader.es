@@ -1,6 +1,6 @@
 /*
 
-   loads config upon initialization or admiralId change
+   loads pState upon initialization or admiralId change
 
  */
 import {
@@ -12,9 +12,9 @@ import {
   boundActionCreators as bac,
 } from '../store'
 import { admiralIdSelector } from '../selectors'
-import { loadConfig } from '../config'
+import { loadPState } from '../p-state'
 
-const configLoader = observer(
+const pStateLoader = observer(
   createStructuredSelector({
     admiralId: admiralIdSelector,
   }),
@@ -28,15 +28,15 @@ const configLoader = observer(
       )
     ) {
       const {admiralId} = cur
-      // immediately invalidate the config
-      bac.configInvalidate()
-      // then asynchronously start a config-reloading process
+      // immediately invalidate the pState
+      bac.pStateInvalidate()
+      // then asynchronously start a pState-reloading process
       setTimeout(() =>
-        bac.configLoaded(loadConfig(admiralId))
+        bac.pStateLoaded(loadPState(admiralId))
       )
     }
   },
   {skipInitialCall: false}
 )
 
-export { configLoader }
+export { pStateLoader }

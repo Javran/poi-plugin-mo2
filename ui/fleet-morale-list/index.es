@@ -22,10 +22,10 @@ class FleetMoraleListImpl extends Component {
     moraleList: PTyp.array.isRequired,
     availableTargets: PTyp.arrayOf(PTyp.WSubject).isRequired,
 
-    configModify: PTyp.func.isRequired,
+    pStateModify: PTyp.func.isRequired,
   }
 
-  modifyWatchlist = modifier => this.props.configModify(
+  modifyWatchlist = modifier => this.props.pStateModify(
     modifyObject(
       'fleets',
       modifyObject('watchlist', modifier)

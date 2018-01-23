@@ -27,9 +27,6 @@ const initState = {
     },
   },
   tab: 'fleet', // fleet / ship
-
-  // configVersion: '0.4.0',
-
   ready: false,
 }
 

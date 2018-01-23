@@ -4,11 +4,11 @@ import { store } from 'views/create-store'
 import { initState } from './common'
 
 const reducer = (state = initState, action) => {
-  if (action.type === '@poi-plugin-mo2@ConfigReplace') {
-    const {config} = action
+  if (action.type === '@poi-plugin-mo2@PStateReplace') {
+    const {pState} = action
     return {
       ...state,
-      ...config,
+      ...pState,
     }
   }
 
@@ -16,7 +16,7 @@ const reducer = (state = initState, action) => {
   if (!state.ready)
     return state
 
-  if (action.type === '@poi-plugin-mo2@ConfigModify') {
+  if (action.type === '@poi-plugin-mo2@PStateModify') {
     const {modifier} = action
     return modifier(state)
   }
@@ -25,19 +25,19 @@ const reducer = (state = initState, action) => {
 }
 
 const actionCreators = {
-  configReplace: config => ({
-    type: '@poi-plugin-mo2@ConfigReplace',
-    config,
+  pStateReplace: pState => ({
+    type: '@poi-plugin-mo2@PStateReplace',
+    pState,
   }),
-  configModify: modifier => ({
-    type: '@poi-plugin-mo2@ConfigModify',
+  pStateModify: modifier => ({
+    type: '@poi-plugin-mo2@PStateModify',
     modifier,
   }),
-  configInvalidate: () =>
-    actionCreators.configReplace({ready: false}),
-  configLoaded: config =>
-    actionCreators.configReplace({
-      ...(config || {}),
+  pStateInvalidate: () =>
+    actionCreators.pStateReplace({ready: false}),
+  pStateLoaded: pState =>
+    actionCreators.pStateReplace({
+      ...(pState || {}),
       ready: true,
     }),
 }

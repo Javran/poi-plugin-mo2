@@ -30,7 +30,7 @@ const parseRawLessThanArr = s => {
 class SettingsImpl extends Component {
   static propTypes = {
     lessThanArr: PTyp.arrayOf(PTyp.number).isRequired,
-    configModify: PTyp.func.isRequired,
+    pStateModify: PTyp.func.isRequired,
   }
 
   constructor(props) {
@@ -47,7 +47,7 @@ class SettingsImpl extends Component {
   }
 
   replaceLessThanArr = lessThanArr =>
-    this.props.configModify(
+    this.props.pStateModify(
       modifyObject(
         'ships',
         modifyObject(

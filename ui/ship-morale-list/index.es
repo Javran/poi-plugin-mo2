@@ -69,10 +69,10 @@ class ShipMoraleListImpl extends Component {
     sortReverse: PTyp.bool.isRequired,
     lessThanArr: PTyp.arrayOf(PTyp.number).isRequired,
 
-    configModify: PTyp.func.isRequired,
+    pStateModify: PTyp.func.isRequired,
   }
 
-  modifyShipsConfig = modifier => this.props.configModify(
+  modifyShipsPState = modifier => this.props.pStateModify(
     modifyObject('ships', modifier)
   )
 
@@ -92,31 +92,31 @@ class ShipMoraleListImpl extends Component {
   }
 
   handleSTypeExtChange = stypeExt =>
-    this.modifyShipsConfig(modifyObject(
+    this.modifyShipsPState(modifyObject(
       'filter',
       modifyObject('stypeExt', () => stypeExt))
     )
 
   handleFilterMoraleChange = morale =>
-    this.modifyShipsConfig(modifyObject(
+    this.modifyShipsPState(modifyObject(
       'filter',
-      filterConfig => modifyObject(
+      filterPState => modifyObject(
         'moraleFilters',
         modifyObject(
-          filterConfig.stypeExt,
+          filterPState.stypeExt,
           () => morale)
-      )(filterConfig)))
+      )(filterPState)))
 
-  handleClickHeader = method => () => this.modifyShipsConfig(
-    modifyObject('sort', sortConfig => {
-      if (sortConfig.method === method) {
+  handleClickHeader = method => () => this.modifyShipsPState(
+    modifyObject('sort', sortPState => {
+      if (sortPState.method === method) {
         return {
-          ...sortConfig,
-          reversed: !sortConfig.reversed,
+          ...sortPState,
+          reversed: !sortPState.reversed,
         }
       } else {
         return {
-          ...sortConfig,
+          ...sortPState,
           method,
           reversed: false,
         }

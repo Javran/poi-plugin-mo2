@@ -18,11 +18,11 @@ import { ShipMoraleList } from './ship-morale-list'
 class MoraleMonitorImpl extends Component {
   static propTypes = {
     tab: PTyp.Tab.isRequired,
-    configModify: PTyp.func.isRequired,
+    pStateModify: PTyp.func.isRequired,
   }
 
   handleSelectTab = tab =>
-    this.props.configModify(
+    this.props.pStateModify(
       modifyObject('tab', () => tab))
 
   render() {

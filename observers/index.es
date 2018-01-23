@@ -1,7 +1,7 @@
 import { observe } from 'redux-observers'
 import { store } from 'views/create-store'
-import { configLoader } from './config-loader'
-import { configSaver } from './config-saver'
+import { pStateLoader } from './p-state-loader'
+import { pStateSaver } from './p-state-saver'
 
 let unsubscribe = null
 
@@ -16,8 +16,8 @@ const globalSubscribe = () => {
   unsubscribe = observe(
     store,
     [
-      configLoader,
-      configSaver,
+      pStateLoader,
+      pStateSaver,
     ]
   )
 }

@@ -1,14 +1,18 @@
-This document defines the config file structure of `poi-plugin-mo2`.
+This document defines the p-state file structure of `poi-plugin-mo2`.
 
 # Overview
 
+- `p-state` or `PState` stands for persisent state
+- It was named `Config` previously, but I decided `PState` is a more precise name.
 - The file is stored under `${APPDATA_PATH}/morale-monitor`
-- Every admiral (game account) should have a separated config, under file name `${admiralId}.json`
+- Every admiral (game account) should have a separated p-state, under file name `${admiralId}.json`
 - As the file extension suggests, it's a plain JSON file.
 
 # Data Structures
 
-## `Config` structure
+## `PState` structure
+
+(TODO) doc out of sync
 
 - an Object of the following shape:
 

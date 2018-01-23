@@ -7,22 +7,22 @@ import { observer } from 'redux-observers'
 import shallowEqual from 'shallowequal'
 
 import { admiralIdSelector, extSelector } from '../selectors'
-import { saveConfig, configSelector } from '../config'
+import { savePState, pStateSelector } from '../p-state'
 
 const extReadySelector = createSelector(
   extSelector,
   ext => ext.ready)
 
-const debouncedSaveConfig = _.debounce(
-  (admiralId, config) => setTimeout(() =>
-    saveConfig(admiralId, config)),
+const debouncedSavePState = _.debounce(
+  (admiralId, pState) => setTimeout(() =>
+    savePState(admiralId, pState)),
   500)
 
-const configSaver = observer(
+const pStateSaver = observer(
   createStructuredSelector({
     admiralId: admiralIdSelector,
     ready: extReadySelector,
-    config: configSelector,
+    pState: pStateSelector,
   }),
   (_dispatch, cur, prev) => {
     if (
@@ -32,12 +32,12 @@ const configSaver = observer(
       cur.admiralId === prev.admiralId &&
       // 'ready' flag is stayed true
       (cur.ready === true && prev.ready === true) &&
-      !shallowEqual(cur.config,prev.config)
+      !shallowEqual(cur.pState,prev.pState)
     ) {
-      const {admiralId, config} = cur
-      debouncedSaveConfig(admiralId, config)
+      const {admiralId, pState} = cur
+      debouncedSavePState(admiralId, pState)
     }
   }
 )
 
-export { configSaver }
+export { pStateSaver }

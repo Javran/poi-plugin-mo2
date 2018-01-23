@@ -13,43 +13,43 @@ const { APPDATA_PATH } = window
 
 const latestVersion = '0.4.0'
 
-const configSelector = createSelector(
+const pStateSelector = createSelector(
   fleetsSelector,
   shipsSelector,
   tabSelector,
   (fleets, ships, tab) => ({fleets, ships, tab})
 )
 
-// config file is located under directory "$APPDATA_PATH/morale-monitor"
+// pState file is located under directory "$APPDATA_PATH/morale-monitor"
 // with admiral id being the name and ".json" extension.
-const getConfigFilePath = admiralId => {
-  const configPath = join(APPDATA_PATH,'morale-monitor')
-  ensureDirSync(configPath)
-  return join(configPath,`${admiralId}.json`)
+const getPStateFilePath = admiralId => {
+  const pStatePath = join(APPDATA_PATH,'morale-monitor')
+  ensureDirSync(pStatePath)
+  return join(pStatePath,`${admiralId}.json`)
 }
 
-// saves the config
-const saveConfig = (admiralId, config) => {
-  const path = getConfigFilePath(admiralId)
+// saves the pState
+const savePState = (admiralId, pState) => {
+  const path = getPStateFilePath(admiralId)
   try {
-    const configWithVer = {
-      ...config,
+    const pStateWithVer = {
+      ...pState,
       configVersion: latestVersion,
     }
-    writeJsonSync(path, configWithVer)
+    writeJsonSync(path, pStateWithVer)
   } catch (err) {
-    console.error('Error while writing to config file', err)
+    console.error('Error while writing to pState file', err)
   }
 }
 
-const updateConfig = (admiralId, oldConfig) => {
-  let currentConfig = oldConfig
+const updatePState = (admiralId, oldPState) => {
+  let currentPState = oldPState
 
   // not containing a 'configVersion' prop is considered to be
-  // a legacy config from <0.4.0 versions
-  if (!('configVersion' in currentConfig)) {
-    // emptyConfig for 0.4.0
-    const emptyConfig = {
+  // a legacy pState from <0.4.0 versions
+  if (!('configVersion' in currentPState)) {
+    // emptyPState for 0.4.0
+    const emptyPState = {
       fleets: {
         watchlist: [
           /* WSubject */
@@ -80,17 +80,17 @@ const updateConfig = (admiralId, oldConfig) => {
       tab: 'fleet', // fleet / ship
     }
 
-    const stypeExt = typeof currentConfig.filterSType === 'number' ?
-      `stype-${currentConfig.filterSType}` :
-      currentConfig.filterSType
+    const stypeExt = typeof currentPState.filterSType === 'number' ?
+      `stype-${currentPState.filterSType}` :
+      currentPState.filterSType
 
-    const newConfig = _.flow([
+    const newPState = _.flow([
       // walk fleets
       modifyObject(
         'fleets',
         modifyObject(
           // copying watchlist
-          'watchlist', () => currentConfig.watchlist
+          'watchlist', () => currentPState.watchlist
         )
       ),
       // walk ships
@@ -99,8 +99,8 @@ const updateConfig = (admiralId, oldConfig) => {
           // walk sort
           modifyObject(
             'sort', _.flow([
-              modifyObject('method', () => currentConfig.sortMethod),
-              modifyObject('reversed', () => currentConfig.sortReverse),
+              modifyObject('method', () => currentPState.sortMethod),
+              modifyObject('reversed', () => currentPState.sortReverse),
             ])
           ),
           // walk filter
@@ -117,52 +117,52 @@ const updateConfig = (admiralId, oldConfig) => {
                    leaving all the others default values.
                  */
                 modifyObject(
-                  stypeExt, () => currentConfig.filterMorale
+                  stypeExt, () => currentPState.filterMorale
                 )
               ),
             ])
           ),
         ])
       ),
-    ])(emptyConfig)
+    ])(emptyPState)
 
-    currentConfig = newConfig
+    currentPState = newPState
   }
 
-  if (currentConfig.configVersion === latestVersion) {
-    if (currentConfig && oldConfig === currentConfig) {
+  if (currentPState.configVersion === latestVersion) {
+    if (currentPState && oldPState === currentPState) {
       /*
-         schedule a save due to having some part of the config is update
+         schedule a save due to having some part of the pState is update
          this is not necessary but it avoids repeated work of updating
        */
-      setTimeout(() => saveConfig(admiralId,currentConfig))
+      setTimeout(() => savePState(admiralId,currentPState))
     }
 
-    const {configVersion: _ignored, ...realConfig} = currentConfig
-    return realConfig
+    const {configVersion: _ignored, ...realPState} = currentPState
+    return realPState
   }
 
-  console.error(`cannot update current config`)
+  console.error(`cannot update current p-state`)
   return null
 }
 
-// loadConfig(admiralId) loads the corresponding config
-const loadConfig = admiralId => {
+// loadPState(admiralId) loads the corresponding pState
+const loadPState = admiralId => {
   try {
-    return updateConfig(
+    return updatePState(
       admiralId,
-      readJsonSync(getConfigFilePath(admiralId))
+      readJsonSync(getPStateFilePath(admiralId))
     )
   } catch (err) {
     if (err.syscall !== 'open' || err.code !== 'ENOENT') {
-      console.error('Error while loading config', err)
+      console.error('Error while loading p-state', err)
     }
   }
   return null
 }
 
 export {
-  loadConfig,
-  saveConfig,
-  configSelector,
+  loadPState,
+  savePState,
+  pStateSelector,
 }
