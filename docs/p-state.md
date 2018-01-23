@@ -12,14 +12,13 @@ This document defines the p-state file structure of `poi-plugin-mo2`.
 
 ## `PState` structure
 
-(TODO) doc out of sync
-
 - an Object of the following shape:
 
     ```
     {
-      presetDeck: <from game API or null>,
-      watchlist: <an Array of WSubject>,
+      fleets: {watchlist: <Array of WSubject>},
+      ships: <see store/common for this part>,
+      tab: <'fleet' or 'ship'>,
     }
     ```
 
