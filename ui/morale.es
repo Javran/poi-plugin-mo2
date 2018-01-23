@@ -5,18 +5,16 @@ import { PTyp } from '../ptyp'
 class Morale extends Component {
   static propTypes = {
     morale: PTyp.number,
-    isDarkTheme: PTyp.bool,
     style: PTyp.object,
   }
 
   static defaultProps = {
     morale: null,
-    isDarkTheme: true,
     style: {},
   }
 
   render() {
-    const { morale, isDarkTheme, style } = this.props
+    const { morale, style } = this.props
 
     /* eslint-disable indent */
     const moraleStyle =
@@ -35,21 +33,18 @@ class Morale extends Component {
       morale <= 52 ? "poi-ship-cond-50" :
       "poi-ship-cond-53"
     /* eslint-enable indent */
-
-    const darkOrLight = isDarkTheme ? 'dark' : 'light'
-
     const moraleText = morale === null ? '-' : String(morale)
 
     return (
       <div
-          className={`${moraleClasses} ${darkOrLight}`}
-          style={{
-            ...moraleStyle,
-            textAlign: "center",
-            fontSize: "20px",
-            fontWeight: "bold",
-            ...style,
-          }}
+        className={`${moraleClasses} dark`}
+        style={{
+          ...moraleStyle,
+          textAlign: "center",
+          fontSize: "20px",
+          fontWeight: "bold",
+          ...style,
+        }}
       >
         {moraleText}
       </div>

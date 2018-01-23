@@ -14,8 +14,6 @@ import { __ } from '../../tr'
 import { WSubject } from '../../structs'
 import { Morale } from '../morale'
 
-const { isDarkTheme } = window
-
 class ListItem extends Component {
   static propTypes = {
     moraleInfo: PTyp.MoraleInfo.isRequired,
@@ -76,7 +74,6 @@ class ListItem extends Component {
               <Morale
                 style={{fontSize: 'auto'}}
                 morale={morale}
-                isDarkTheme={isDarkTheme}
               />
             </div>
           ))
@@ -124,14 +121,13 @@ class ListItem extends Component {
           }}
       >
         <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              width: "100%",
-              padding: "2px 4px 5px",
-              backgroundColor:
-                isDarkTheme ? "#424242" : "#f5f5f5",
-            }}
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            width: '100%',
+            padding: '2px 4px 5px',
+            backgroundColor: '#424242',
+          }}
         >
           <div
               style={{
@@ -277,7 +273,6 @@ class ListItem extends Component {
                 <div style={{flex: 1}} >
                   <Morale
                     morale={minMorale}
-                    isDarkTheme={isDarkTheme}
                   />
                 </div>
               </OverlayTrigger>
@@ -285,7 +280,6 @@ class ListItem extends Component {
               <Morale
                 style={{flex: 1}}
                 morale={minMorale}
-                isDarkTheme={isDarkTheme}
               />
             )
           }

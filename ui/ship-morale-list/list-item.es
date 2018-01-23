@@ -3,8 +3,6 @@ import { PTyp } from '../../ptyp'
 import { FleetMarker } from '../fleet-marker'
 import { Morale } from '../morale'
 
-const { isDarkTheme } = window
-
 const WrappedTd = ({content}) => (
   <td>
     <div style={{
@@ -48,7 +46,6 @@ class ListItem extends Component {
               fontSize: 14,
             }}
             morale={ship.morale}
-            isDarkTheme={isDarkTheme}
           />
         </td>
       </tr>
