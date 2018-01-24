@@ -14,12 +14,12 @@ const shipListOptionsSelector = createSelector(
   extSelector,
   ({ships}) => {
     const {stypeExt, moraleFilters} = ships.filter
-    const filterMorale = moraleFilters[stypeExt] || 'all'
+    const moraleFilter = moraleFilters[stypeExt] || {type: 'all'}
     const sortMethod = ships.sort.method
     const sortReverse = ships.sort.reversed
     return {
       stypeExt,
-      filterMorale,
+      moraleFilter,
       sortMethod,
       sortReverse,
     }
@@ -40,7 +40,7 @@ const shipMoraleListSelector =
     shipListOptionsSelector,
     (shipsInfo,stypeInfo,listOptions) => {
       const {
-        stypeExt, filterMorale,
+        stypeExt, moraleFilter,
         sortMethod, sortReverse,
       } = listOptions
       const shipList =
@@ -48,7 +48,7 @@ const shipMoraleListSelector =
       return {
         shipList,
         stypeInfo,
-        stypeExt, filterMorale,
+        stypeExt, moraleFilter,
         sortMethod, sortReverse,
       }
     })

@@ -13,7 +13,7 @@ import {
 } from 'react-bootstrap'
 import { modifyObject } from 'subtender'
 import { initState, mapDispatchToProps } from '../store'
-import { lessThanArrSelector } from '../selectors'
+import { filterMethodsSelector } from '../selectors'
 import { PTyp } from '../ptyp'
 import { __ } from '../tr'
 
@@ -29,7 +29,7 @@ const parseRawLessThanArr = s => {
 
 class SettingsImpl extends Component {
   static propTypes = {
-    lessThanArr: PTyp.arrayOf(PTyp.number).isRequired,
+    // lessThanArr: PTyp.arrayOf(PTyp.number).isRequired,
     pStateModify: PTyp.func.isRequired,
   }
 

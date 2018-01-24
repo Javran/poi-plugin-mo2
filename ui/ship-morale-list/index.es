@@ -1,4 +1,3 @@
-import _ from 'lodash'
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import {
@@ -11,11 +10,12 @@ import { modifyObject } from 'subtender'
 
 import { PTyp } from '../../ptyp'
 import { __ } from '../../tr'
+import { IntPredRep } from '../../structs'
 import { SType, ShipFilter } from '../../ship-filters'
 import { ListItem } from './list-item'
 import { mapDispatchToProps } from '../../store'
 import {
-  lessThanArrSelector,
+  filterMethodsSelector,
 } from '../../selectors'
 import {
   shipMoraleListSelector,
@@ -46,28 +46,17 @@ const headerSpecs = []
   defineHeader(__('ShipList.Morale'),'morale',`16%`)
 }
 
-const destructFitlerMorale = ({all, lt}) => x => {
-  if (x === 'all')
-    return all()
-  const reResult = /^lt-(\d+)$/.exec(x)
-  if (! reResult)
-    return console.error(`unexpected filter morale: ${x}`)
-
-  const rawNum = reResult[1]
-  const num = Number(rawNum)
-  return lt(num)
-}
-
 class ShipMoraleListImpl extends Component {
   static propTypes = {
     shipList: PTyp.arrayOf(PTyp.ShipInfo).isRequired,
     stypeInfo: PTyp.arrayOf(PTyp.STypeInfo).isRequired,
 
     stypeExt: PTyp.string.isRequired,
-    filterMorale: PTyp.string.isRequired,
+    moraleFilter: PTyp.object.isRequired,
     sortMethod: PTyp.SortMethod.isRequired,
     sortReverse: PTyp.bool.isRequired,
-    lessThanArr: PTyp.arrayOf(PTyp.number).isRequired,
+
+    filterMethods: PTyp.arrayOf(PTyp.object).isRequired,
 
     pStateModify: PTyp.func.isRequired,
   }
@@ -82,12 +71,10 @@ class ShipMoraleListImpl extends Component {
     return `${__('ShipList.Type')}: ${text}`
   }
 
-  displayFilterMorale = () => {
-    const { filterMorale } = this.props
-    const moraleValueText = destructFitlerMorale({
-      all: () => __('ShipList.All'),
-      lt: n => `< ${n}`,
-    })(filterMorale)
+  displayMoraleFilter = () => {
+    const {moraleFilter} = this.props
+    const toString = IntPredRep.mkToString(__)
+    const moraleValueText = toString(moraleFilter)
     return `${__('ShipList.Morale')}: ${moraleValueText}`
   }
 
@@ -97,14 +84,14 @@ class ShipMoraleListImpl extends Component {
       modifyObject('stypeExt', () => stypeExt))
     )
 
-  handleFilterMoraleChange = morale =>
+  handleMoraleFilterChange = predRep =>
     this.modifyShipsPState(modifyObject(
       'filter',
       filterPState => modifyObject(
         'moraleFilters',
         modifyObject(
           filterPState.stypeExt,
-          () => morale)
+          () => predRep)
       )(filterPState)))
 
   handleClickHeader = method => () => this.modifyShipsPState(
@@ -129,14 +116,10 @@ class ShipMoraleListImpl extends Component {
       shipList,
       stypeInfo,
       sortMethod, sortReverse,
-      lessThanArr, filterMorale,
+      filterMethods,
     } = this.props
-
-    const actualLessThanArr = destructFitlerMorale({
-      all: () => lessThanArr,
-      lt: n => _.uniq([...lessThanArr,n]).sort((x,y) => x-y),
-    })(filterMorale)
-
+    // console.log(filterMethods)
+    const toString = IntPredRep.mkToString(__)
     const prepareSTypeText = ShipFilter.display(stypeInfo,__)
 
     return (
@@ -198,14 +181,16 @@ class ShipMoraleListImpl extends Component {
               style={{width: "49%"}}
               justified>
             <DropdownButton
-                onSelect={this.handleFilterMoraleChange}
-                title={this.displayFilterMorale()}
+                onSelect={this.handleMoraleFilterChange}
+                title={this.displayMoraleFilter()}
                 id="mo2-dropdown-morale">
-              <MenuItem eventKey="all">{__('ShipList.All')}</MenuItem>
               {
-                actualLessThanArr.map( m => (
-                  <MenuItem key={m} eventKey={`lt-${m}`}>
-                    {`< ${m}`}
+                filterMethods.map(predRep => (
+                  <MenuItem
+                    key={IntPredRep.toId(predRep)}
+                    eventKey={predRep}
+                  >
+                    {toString(predRep)}
                   </MenuItem>
                 ))
               }
@@ -267,10 +252,15 @@ class ShipMoraleListImpl extends Component {
 const ShipMoraleList = connect(
   state => {
     const props = shipMoraleListSelector(state)
-    const lessThanArr = lessThanArrSelector(state)
+    const filterMethods = filterMethodsSelector(state)
+    const actualFilterMethods = [
+      {type: 'all'},
+      ...filterMethods,
+    ]
+
     return {
       ...props,
-      lessThanArr,
+      filterMethods: actualFilterMethods,
     }
   },
   mapDispatchToProps

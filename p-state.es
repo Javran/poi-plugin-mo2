@@ -12,7 +12,7 @@ import {
 
 const { APPDATA_PATH } = window
 
-const latestVersion = '0.4.0'
+const latestVersion = '0.5.0'
 
 const pStateSelector = createSelector(
   fleetsSelector,
@@ -35,7 +35,7 @@ const savePState = (admiralId, pState) => {
   try {
     const pStateWithVer = {
       ...pState,
-      configVersion: latestVersion,
+      $version: latestVersion,
     }
     writeJsonSync(path, pStateWithVer)
   } catch (err) {
@@ -134,7 +134,7 @@ const updatePState = (admiralId, oldPState) => {
   // it's now changed to '$version'. (for 0.5.0)
   if (_.get(currentPState, 'configVersion') === '0.4.0') {
     /* TODO: update from 0.4.0 to 0.5.0 */
-    const newerPState = _.flow(
+    const newPState = _.flow(
       modifyObject(
         'ships',
         modifyObject(
@@ -186,11 +186,10 @@ const updatePState = (admiralId, oldPState) => {
         }
       }
     )(currentPState)
-
-    // console.log(newerPState)
+    currentPState = newPState
   }
 
-  if (currentPState.configVersion === latestVersion) {
+  if (currentPState.$version === latestVersion) {
     if (currentPState && oldPState === currentPState) {
       /*
          schedule a save due to having some part of the pState is update
@@ -199,7 +198,7 @@ const updatePState = (admiralId, oldPState) => {
       setTimeout(() => savePState(admiralId,currentPState))
     }
 
-    const {configVersion: _ignored, ...realPState} = currentPState
+    const {$version: _ignored, ...realPState} = currentPState
     return realPState
   }
 

@@ -4,7 +4,7 @@ import {
   globalSubscribe as pluginDidLoad,
   globalUnsubscribe as pluginWillUnload,
 } from './observers'
-import { Settings as settingsClass } from './ui/settings'
+// import { Settings as settingsClass } from './ui/settings'
 
 /*
    TODO:
@@ -24,5 +24,5 @@ export {
 
   reactClass,
   reducer,
-  settingsClass,
+  // settingsClass,
 }

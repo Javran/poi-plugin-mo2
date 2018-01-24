@@ -76,9 +76,10 @@ const shipsInfoSelector =
       return shipsInfo
     })
 
-const lessThanArrSelector = createSelector(
+const filterMethodsSelector = createSelector(
   extSelector,
-  ext => ext.ships.filter.lessThanArr)
+  ext => ext.ships.filter.methods
+)
 
 export {
   extSelector,
@@ -89,5 +90,5 @@ export {
 
   shipsInfoSelector,
   admiralIdSelector,
-  lessThanArrSelector,
+  filterMethodsSelector,
 }

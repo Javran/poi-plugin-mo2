@@ -1,4 +1,5 @@
 import _ from 'lodash'
+import { IntPredRep } from './structs'
 import { ShipFilter } from './ship-filters'
 
 // composing multiple comparators into one by
@@ -40,7 +41,7 @@ const inGameShipTypeComparator =
 
 const applyOptions = (options,removeUnlocked=true) => {
   const {
-    stypeExt, filterMorale,
+    stypeExt, moraleFilter,
     sortMethod, sortReverse,
   } = options
 
@@ -49,12 +50,11 @@ const applyOptions = (options,removeUnlocked=true) => {
   const stypeFilter = xs => xs.filter(
     ShipFilter.prepareShipTypePredicate(stypeExt))
 
-  const moraleFilter = (() => {
-    if (filterMorale === 'all')
-      return xs => xs
-    const rawNum = /^lt-(\d+)$/.exec(filterMorale)[1]
-    const num = parseInt(rawNum,10)
-    return xs => xs.filter(x => x.morale < num)
+  const moraleFilterFunc = (() => {
+    if (moraleFilter.type === 'all')
+      return _.identity
+    const pred = IntPredRep.toPredicate(moraleFilter)
+    return xs => xs.filter(x => pred(x.morale))
   })()
 
   /* eslint-disable indent */
@@ -81,7 +81,7 @@ const applyOptions = (options,removeUnlocked=true) => {
   return _.flow([
     lockFilter,
     stypeFilter,
-    moraleFilter,
+    moraleFilterFunc,
     sort,
     reverseOrNot,
   ])

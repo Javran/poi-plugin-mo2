@@ -31,22 +31,27 @@ const intPredRepConsts = [
   {
     type: 'lessThan',
     binary: value => input => input < value,
+    symbol: '<',
   },
   {
     type: 'lessOrEqual',
     binary: value => input => input <= value,
+    symbol: '≤',
   },
   {
     type: 'greaterThan',
     binary: value => input => input > value,
+    symbol: '>',
   },
   {
     type: 'greaterOrEqual',
     binary: value => input => input >= value,
+    symbol: '≥',
   },
   {
     type: 'equal',
     binary: value => input => input === value,
+    symbol: '=',
   },
 ]
 
@@ -109,6 +114,30 @@ class IntPredRep {
       ]
     )
   )
+
+  // toString = IntPredRep.mkToString([i18n translator])
+  static mkToString = tr /* i18n */ => {
+    let allStr
+    if (!tr) {
+      allStr = 'All'
+    } else if (typeof tr !== 'function') {
+      console.warn(`expect tr to be function while getting ${tr}`)
+      allStr = 'all'
+    } else {
+      allStr = tr('ShipList.All')
+    }
+
+    return IntPredRep.destruct(
+      _.fromPairs(
+        [
+          ...intPredRepConsts.map(({type, symbol}) =>
+            [type, value => `${symbol} ${value}`]
+          ),
+          ['all', _obj => allStr],
+        ]
+      )
+    )
+  }
 }
 
 export {
