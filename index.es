@@ -6,22 +6,6 @@ import {
 } from './observers'
 import { Settings as settingsClass } from './ui/settings'
 
-/*
-   TODO:
-
-   - filter customization:
-
-       - no longer require filters to be sorted
-       - new syntax for users: `<num`, `<=num`, `>num`, `>=num`, `=num`
-
-       - but for underlying rep, we'll use `lt-num`, `le-num`, `gt-num`, `ge-num`, `eq-num`
-         or go structural
-
-       - tooltip about syntax
-
-   - i18n
- */
-
 export {
   pluginDidLoad,
   pluginWillUnload,

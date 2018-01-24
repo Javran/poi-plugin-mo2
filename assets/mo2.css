@@ -1,3 +1,12 @@
+.mo2-pop .tooltip-inner {
+    max-width: none;
+}
+
+#mo2-settings-morale-filter-syntax-tooltip p {
+    margin: 0;
+    margin-bottom: .5em;
+}
+
 #poi-plugin-mo2.poi-plugin {
     display: flex;
     flex-direction: column;

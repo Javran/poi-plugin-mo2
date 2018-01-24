@@ -1,3 +1,4 @@
+import _ from 'lodash'
 import React, { Component } from 'react'
 import {
   createStructuredSelector,
@@ -8,9 +9,12 @@ import {
   FormGroup,
   FormControl,
   ControlLabel,
+  Tooltip, OverlayTrigger,
   Button,
 } from 'react-bootstrap'
+import Markdown from 'react-remarkable'
 import { modifyObject } from 'subtender'
+
 import { initState, mapDispatchToProps } from '../store'
 import { filterMethodsSelector } from '../selectors'
 import { PTyp } from '../ptyp'
@@ -74,7 +78,6 @@ class SettingsImpl extends Component {
   render() {
     const parsed = intPredRepsFromUserInput(this.state.filterMethodsStr)
     const isInputValid = Boolean(parsed)
-
     return (
       <div
         style={{marginBottom: '1.8em'}}
@@ -91,12 +94,29 @@ class SettingsImpl extends Component {
               bsSize="small">
               <FontAwesome name="undo" />
             </Button>
-            <FormControl
-              style={{marginLeft: '.4em', marginRight: '.4em'}}
-              onChange={this.handleFilterMethodsStrChange}
-              value={this.state.filterMethodsStr}
-              type="text"
-            />
+            <OverlayTrigger
+              placement="top"
+              overlay={
+                (
+                  <Tooltip
+                    className="mo2-pop"
+                    id="mo2-settings-morale-filter-syntax-tooltip">
+                    <Markdown
+                      source={
+                        _.join(__('CustomMoraleFiltersTooltipMD'),'\n')
+                      }
+                    />
+                  </Tooltip>
+                )
+              }
+            >
+              <FormControl
+                style={{marginLeft: '.4em', marginRight: '.4em'}}
+                onChange={this.handleFilterMethodsStrChange}
+                value={this.state.filterMethodsStr}
+                type="text"
+              />
+            </OverlayTrigger>
             <Button
               bsStyle={isInputValid ? 'default' : 'danger'}
               disabled={!isInputValid}

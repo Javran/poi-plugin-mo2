@@ -38,5 +38,17 @@
     "cl-clt-ct": "CL / CLT / CT"
   },
 
-  "CustomMoraleFilters": "Custom Morale Filters"
+  "CustomMoraleFilters": "Custom Morale Filters",
+  "CustomMoraleFiltersTooltipMD": [
+    "Example: `<50,>=40,=100,<=30,>49`",
+    "",
+    "Supported operators are `<`, `<=`, `>`, `>=`, `=`",
+    "",
+    "Filters are separated by comma (`,`).",
+    "",
+    "Duplicated filters are ignored.",
+    "",
+    "Spaces are allowed between operator and number,",
+    "and between filters."
+  ]
 }
