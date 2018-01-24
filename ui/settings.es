@@ -1,4 +1,3 @@
-import _ from 'lodash'
 import React, { Component } from 'react'
 import {
   createStructuredSelector,
@@ -16,76 +15,66 @@ import { initState, mapDispatchToProps } from '../store'
 import { filterMethodsSelector } from '../selectors'
 import { PTyp } from '../ptyp'
 import { __ } from '../tr'
-
-const parseRawLessThanArr = s => {
-  const splitted = s.trim().split(',').map(x => x.trim())
-  if (splitted.some(x => !x))
-    return null
-  const parsed = splitted.map(Number)
-  if (! parsed.every(x => _.isInteger(x) && x >= 0 && x <= 100))
-    return null
-  return _.uniq(parsed).sort((x,y) => x-y)
-}
+import { intPredRepsFromUserInput, intPredRepsToUserInput } from '../structs'
 
 class SettingsImpl extends Component {
   static propTypes = {
-    // lessThanArr: PTyp.arrayOf(PTyp.number).isRequired,
+    filterMethods: PTyp.arrayOf(PTyp.object).isRequired,
     pStateModify: PTyp.func.isRequired,
   }
 
   constructor(props) {
     super(props)
     this.state = {
-      lessThanArrStr: props.lessThanArr.join(','),
+      filterMethodsStr: intPredRepsToUserInput(props.filterMethods),
     }
   }
 
   componentWillReceiveProps(nextProps) {
     this.setState({
-      lessThanArrStr: nextProps.lessThanArr.join(','),
+      filterMethodsStr: intPredRepsToUserInput(nextProps.filterMethods),
     })
   }
 
-  replaceLessThanArr = lessThanArr =>
+  replaceFilterMethods = filterMethods =>
     this.props.pStateModify(
       modifyObject(
         'ships',
         modifyObject(
           'filter',
           modifyObject(
-            'lessThanArr', () => lessThanArr
+            'methods', () => filterMethods
           )
         )
       )
     )
 
-  handleLessThanArrStrChange = e => {
-    const lessThanArrStr = e.target.value
-    this.setState({lessThanArrStr})
+  handleFilterMethodsStrChange = e => {
+    const filterMethodsStr = e.target.value
+    this.setState({filterMethodsStr})
   }
 
-  handleLessThanArrReset = () =>
+  handleFilterMethodsReset = () =>
     this.setState({
-      lessThanArrStr: this.props.lessThanArr.join(','),
+      filterMethodsStr: intPredRepsToUserInput(this.props.filterMethods),
     })
 
-  handleLessThanArrResetToDefault = () => {
-    const defLessThanArr =
-      initState.ships.filter.lessThanArr
-    this.replaceLessThanArr(defLessThanArr)
-    this.setState({lessThanArrStr: defLessThanArr.join(',')})
+  handleFilterMethodsResetToDefault = () => {
+    const defFilterMethods =
+      initState.ships.filter.methods
+    this.replaceFilterMethods(defFilterMethods)
+    this.setState({
+      filterMethodsStr: intPredRepsToUserInput(defFilterMethods),
+    })
   }
 
-  handleLessThanArrSave = () => {
-    const parsed = parseRawLessThanArr(this.state.lessThanArrStr)
-    if (!parsed)
-      return
-    this.replaceLessThanArr(parsed)
-  }
+  handleFilterMethodsSave = parsed => () =>
+    this.replaceFilterMethods(parsed)
 
   render() {
-    const isInputValid =
-      parseRawLessThanArr(this.state.lessThanArrStr) !== null
+    const parsed = intPredRepsFromUserInput(this.state.filterMethodsStr)
+    const isInputValid = Boolean(parsed)
+
     return (
       <div
         style={{marginBottom: '1.8em'}}
@@ -98,26 +87,26 @@ class SettingsImpl extends Component {
               alignItems: 'center',
             }}>
             <Button
-              onClick={this.handleLessThanArrResetToDefault}
+              onClick={this.handleFilterMethodsResetToDefault}
               bsSize="small">
               <FontAwesome name="undo" />
             </Button>
             <FormControl
               style={{marginLeft: '.4em', marginRight: '.4em'}}
-              onChange={this.handleLessThanArrStrChange}
-              value={this.state.lessThanArrStr}
+              onChange={this.handleFilterMethodsStrChange}
+              value={this.state.filterMethodsStr}
               type="text"
             />
             <Button
               bsStyle={isInputValid ? 'default' : 'danger'}
               disabled={!isInputValid}
-              onClick={this.handleLessThanArrSave}
+              onClick={this.handleFilterMethodsSave(parsed)}
               bsSize="small"
             >
               <FontAwesome name="save" />
             </Button>
             <Button
-              onClick={this.handleLessThanArrReset}
+              onClick={this.handleFilterMethodsReset}
               bsSize="small"
             >
               <FontAwesome name="close" />
@@ -131,7 +120,7 @@ class SettingsImpl extends Component {
 
 const Settings = connect(
   createStructuredSelector({
-    lessThanArr: lessThanArrSelector,
+    filterMethods: filterMethodsSelector,
   }),
   mapDispatchToProps
 )(SettingsImpl)

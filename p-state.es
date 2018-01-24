@@ -46,9 +46,12 @@ const savePState = (admiralId, pState) => {
 const updatePState = (admiralId, oldPState) => {
   let currentPState = oldPState
 
-  // not containing a 'configVersion' prop is considered to be
+  // not containing a 'configVersion' or '$version' prop is considered to be
   // a legacy pState from <0.4.0 versions
-  if (!('configVersion' in currentPState)) {
+  if (
+    !('configVersion' in currentPState) &&
+    !('$version' in currentPState)
+  ) {
     // emptyPState for 0.4.0
     const emptyPState = {
       fleets: {
@@ -201,7 +204,6 @@ const updatePState = (admiralId, oldPState) => {
     const {$version: _ignored, ...realPState} = currentPState
     return realPState
   }
-
   console.error(`cannot update current p-state`)
   return null
 }
