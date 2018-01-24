@@ -1,4 +1,5 @@
 import _ from 'lodash'
+import fp from 'lodash/fp'
 import { modifyObject } from 'subtender'
 import { createSelector } from 'reselect'
 import { ensureDirSync, readJsonSync, writeJsonSync } from 'fs-extra'
@@ -38,7 +39,7 @@ const savePState = (admiralId, pState) => {
     }
     writeJsonSync(path, pStateWithVer)
   } catch (err) {
-    console.error('Error while writing to pState file', err)
+    console.error('Error while writing to p-state file', err)
   }
 }
 
@@ -127,6 +128,66 @@ const updatePState = (admiralId, oldPState) => {
     ])(emptyPState)
 
     currentPState = newPState
+  }
+
+  // in 0.4.0 it was called 'configVersion' but
+  // it's now changed to '$version'. (for 0.5.0)
+  if (_.get(currentPState, 'configVersion') === '0.4.0') {
+    /* TODO: update from 0.4.0 to 0.5.0 */
+    const newerPState = _.flow(
+      modifyObject(
+        'ships',
+        modifyObject(
+          'filter',
+          _.flow(
+            /*
+               modification #1:
+                 lessThanArr => Array of structured filtering methods
+             */
+            filter => {
+              const {lessThanArr, ...restFilter} = filter
+              const methods = lessThanArr.map(value =>
+                ({type: 'lessThan', value})
+              )
+              return {
+                methods,
+                ...restFilter,
+              }
+            },
+            /*
+               modification #2:
+                 moraleFilters[_] = {type: 'all'} | {type: 'lessThan', value}
+             */
+            modifyObject(
+              'moraleFilters',
+              fp.mapValues(oldVal => {
+                if (oldVal === 'all')
+                  return {type: 'all'}
+                const reResult = /^lt-(\d+)$/.exec(oldVal)
+                if (reResult) {
+                  const [_ignored, vRaw] = reResult
+                  const value = Number(vRaw)
+                  return {type: 'lessThan', value}
+                } else {
+                  console.warn(`unrecognized filter value: ${oldVal}, falling back to "all".`)
+                  return {type: 'all'}
+                }
+              })
+            )
+          )
+        )
+      ),
+      /* version string update */
+      pState => {
+        const {configVersion: _ignored, ...restPState} = pState
+        return {
+          $version: '0.5.0',
+          ...restPState,
+        }
+      }
+    )(currentPState)
+
+    // console.log(newerPState)
   }
 
   if (currentPState.configVersion === latestVersion) {
