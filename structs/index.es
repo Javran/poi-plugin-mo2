@@ -50,9 +50,28 @@ const intPredRepConsts = [
   },
 ]
 
-/* a representation of simple predicates on integers */
+/*
+   a representation of simple predicates on integers:
+
+   {
+     type: <see 'intPredRepConsts'>
+     value: an integer
+   }
+
+   additionally, the following structure is also accepted:
+
+   {
+     type: 'all'
+   }
+
+   which always return true
+
+ */
 class IntPredRep {
   static destruct = callbacks => expectObject(obj => {
+    if (obj.type === 'all') {
+      return callbacks['all'](obj)
+    }
     const tyInd = intPredRepConsts.findIndex(c => c.type === obj.type)
     if (tyInd === -1) {
       return reportTypeError(IntPredRep, obj.type)
@@ -67,11 +86,14 @@ class IntPredRep {
 
   static toPredicate = IntPredRep.destruct(
     _.fromPairs(
-      intPredRepConsts.map(({type, binary}) => {
-        // ignoring 2nd arg (obj)
-        const callback = value => binary(value)
-        return [type, callback]
-      })
+      [
+        ...intPredRepConsts.map(({type, binary}) => {
+          // ignoring 2nd arg (obj)
+          const callback = value => binary(value)
+          return [type, callback]
+        }),
+        ['all', _obj => _input => true],
+      ]
     )
   )
 }

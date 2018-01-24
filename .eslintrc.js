@@ -65,7 +65,8 @@ module.exports = {
     'consistent-return': 'off',
     'no-plusplus': 'off',
     'object-curly-newline': 'off',
-    'function-paren-newline': 'off'
+    'function-paren-newline': 'off',
+    'dot-notation': 'off',
   },
   'settings': {
     'import/resolver': {
