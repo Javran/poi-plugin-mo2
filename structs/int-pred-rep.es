@@ -171,7 +171,21 @@ class IntPredRep {
 const intPredRepsToUserInput =
   xs => xs.map(IntPredRep.toUserInput).join(',')
 
+const rawInputParser =
+  inputParser.sepBy(
+    /* comma with optional spaces */
+    P.regexp(/,\s*/)
+  ).trim(
+    P.optWhitespace
+  )
+
+const intPredRepsFromUserInput = raw => {
+  const pResult = rawInputParser.parse(raw)
+  return pResult.status ? pResult.value : null
+}
+
 export {
   IntPredRep,
   intPredRepsToUserInput,
+  intPredRepsFromUserInput,
 }

@@ -1,6 +1,10 @@
 import { enumFromTo } from 'subtender'
 import { assert, spec } from '../common'
-import { IntPredRep } from '../../structs/int-pred-rep'
+import {
+  IntPredRep,
+  intPredRepsFromUserInput,
+  intPredRepsToUserInput,
+} from '../../structs/int-pred-rep'
 
 describe('IntPredRep', () => {
   // assuming consts are correct
@@ -70,5 +74,30 @@ describe('IntPredRep', () => {
     mkSpec('<= 2', {type: 'lessOrEqual', value: 2})
     mkSpec('=4', {type: 'equal', value: 4})
     mkSpec('=5    ', {type: 'equal', value: 5})
+  })
+
+  describe('intPredRepsFromUserInput & intPredRepsToUserInput ', () => {
+    const mkSpec = (raw, expectedVal) =>
+      spec(`raw: "${raw}"`, () =>
+        assert.deepEqual(
+          intPredRepsFromUserInput(raw),
+          expectedVal
+        )
+      )
+
+    const val =
+      [
+        {type: 'lessThan', value: 1},
+        {type: 'greaterOrEqual', value: 2},
+        {type: 'lessOrEqual', value: 3},
+        {type: 'equal', value: 4},
+        {type: 'greaterThan', value: 5},
+      ]
+
+    mkSpec('  <1, >=  \t 2, <= 3, = 4\v\v, > 5   ', val)
+
+    spec('intPredRepsToUserInput', () =>
+      assert.equal(intPredRepsToUserInput(val), '<1,>=2,<=3,=4,>5')
+    )
   })
 })
