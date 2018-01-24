@@ -68,6 +68,8 @@ const intPredRepConsts = [
 
  */
 class IntPredRep {
+  static consts = intPredRepConsts
+
   static destruct = callbacks => expectObject(obj => {
     if (obj.type === 'all') {
       return callbacks['all'](obj)
@@ -93,6 +95,17 @@ class IntPredRep {
           return [type, callback]
         }),
         ['all', _obj => _input => true],
+      ]
+    )
+  )
+
+  static toId = IntPredRep.destruct(
+    _.fromPairs(
+      [
+        ...intPredRepConsts.map(({type}) =>
+          [type, value => `${type}-${value}`]
+        ),
+        ['all', _obj => 'all'],
       ]
     )
   )

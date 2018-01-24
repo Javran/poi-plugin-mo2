@@ -1,3 +1,4 @@
 .babelrc
 
-/docs/
+docs/
+test/
