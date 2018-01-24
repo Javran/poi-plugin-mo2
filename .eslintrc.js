@@ -68,6 +68,7 @@ module.exports = {
     'object-curly-newline': 'off',
     'function-paren-newline': 'off',
     'dot-notation': 'off',
+    'newline-per-chained-call': 'off'
   },
   'settings': {
     'import/resolver': {

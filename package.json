@@ -47,6 +47,7 @@
     "mocha": "^5.0.0"
   },
   "dependencies": {
+    "parsimmon": "^1.6.4",
     "shallowequal": "^1.0.2",
     "subtender": "^0.12.5"
   }
