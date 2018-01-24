@@ -181,7 +181,9 @@ const rawInputParser =
 
 const intPredRepsFromUserInput = raw => {
   const pResult = rawInputParser.parse(raw)
-  return pResult.status ? pResult.value : null
+  if (!pResult.status)
+    return null
+  return _.uniqBy(pResult.value, IntPredRep.toId)
 }
 
 export {

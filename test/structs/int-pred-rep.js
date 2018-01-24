@@ -95,6 +95,16 @@ describe('IntPredRep', () => {
       ]
 
     mkSpec('  <1, >=  \t 2, <= 3, = 4\v\v, > 5   ', val)
+    mkSpec(
+      '>1,>2,<=3,>1,<=4,=4,=4,<=3',
+      [
+        {type: 'greaterThan', value: 1},
+        {type: 'greaterThan', value: 2},
+        {type: 'lessOrEqual', value: 3},
+        {type: 'lessOrEqual', value: 4},
+        {type: 'equal', value: 4},
+      ]
+    )
 
     spec('intPredRepsToUserInput', () =>
       assert.equal(intPredRepsToUserInput(val), '<1,>=2,<=3,=4,>5')
