@@ -1,3 +1,5 @@
+import _ from 'lodash'
+
 // "expectObject(f,err)(x)" acts like "f(x)" given that "x" is indeed an object
 // error will be reported through console.error otherwise.
 const expectObject = f => x =>
@@ -24,6 +26,57 @@ class WSubject {
   })
 }
 
+// note the flip of args, which is intended as we are giving rhs first.
+const intPredRepConsts = [
+  {
+    type: 'lessThan',
+    binary: value => input => input < value,
+  },
+  {
+    type: 'lessOrEqual',
+    binary: value => input => input <= value,
+  },
+  {
+    type: 'greaterThan',
+    binary: value => input => input > value,
+  },
+  {
+    type: 'greaterOrEqual',
+    binary: value => input => input >= value,
+  },
+  {
+    type: 'equal',
+    binary: value => input => input === value,
+  },
+]
+
+/* a representation of simple predicates on integers */
+class IntPredRep {
+  static destruct = callbacks => expectObject(obj => {
+    const tyInd = intPredRepConsts.findIndex(c => c.type === obj.type)
+    if (tyInd === -1) {
+      return reportTypeError(IntPredRep, obj.type)
+    } else {
+      const {type} = obj
+      const {
+        [type]: callback,
+      } = callbacks
+      return callback(obj.value, obj)
+    }
+  })
+
+  static toPredicate = IntPredRep.destruct(
+    _.fromPairs(
+      intPredRepConsts.map(({type, binary}) => {
+        // ignoring 2nd arg (obj)
+        const callback = value => binary(value)
+        return [type, callback]
+      })
+    )
+  )
+}
+
 export {
   WSubject,
+  IntPredRep,
 }
