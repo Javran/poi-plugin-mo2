@@ -5,9 +5,13 @@ designed for getting morale status for your fleets and ships quickly.
 
 ## Changelog
 
-### 0.5.0 (pending)
+### 0.5.0
 
 - Improved internal mechanism
+
+- Making filter method more flexible
+
+    - Supported operators: `>`, `>=`, `<`, `<=`, `=`
 
 ### 0.4.7
 
