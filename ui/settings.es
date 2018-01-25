@@ -99,10 +99,12 @@ class SettingsImpl extends Component {
             style={{
               display: 'flex',
               alignItems: 'center',
-            }}>
+            }}
+          >
             <Button
               onClick={this.handleFilterMethodsResetToDefault}
-              bsSize="small">
+              bsSize="small"
+            >
               <FontAwesome name="undo" />
             </Button>
             <OverlayTrigger

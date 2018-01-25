@@ -28,16 +28,20 @@ class ListItem extends Component {
       >
         <WrappedTd content={ship.rstId} />
         <WrappedTd content={ship.typeName} />
-        <WrappedTd content={
-          <span>
-            {ship.name}
-            <FleetMarker
-              style={{marginLeft: 5}}
-                    fleet={ship.fleet}
-                    formatter={x => `/${x}`}
-            />
-          </span>
-        } />
+        <WrappedTd
+          content={
+            (
+              <span>
+                {ship.name}
+                <FleetMarker
+                  style={{marginLeft: 5}}
+                  fleet={ship.fleet}
+                  formatter={x => `/${x}`}
+                />
+              </span>
+            )
+          }
+        />
 
         <WrappedTd content={ship.level} />
         <td>

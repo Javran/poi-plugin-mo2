@@ -79,20 +79,26 @@ class ShipMoraleListImpl extends Component {
   }
 
   handleSTypeExtChange = stypeExt =>
-    this.modifyShipsPState(modifyObject(
-      'filter',
-      modifyObject('stypeExt', () => stypeExt))
+    this.modifyShipsPState(
+      modifyObject(
+        'filter',
+        modifyObject('stypeExt', () => stypeExt)
+      )
     )
 
   handleMoraleFilterChange = predRep =>
-    this.modifyShipsPState(modifyObject(
-      'filter',
-      filterPState => modifyObject(
-        'moraleFilters',
-        modifyObject(
-          filterPState.stypeExt,
-          () => predRep)
-      )(filterPState)))
+    this.modifyShipsPState(
+      modifyObject(
+        'filter',
+        filterPState => modifyObject(
+          'moraleFilters',
+          modifyObject(
+            filterPState.stypeExt,
+            () => predRep
+          )
+        )(filterPState)
+      )
+    )
 
   handleClickHeader = method => () => this.modifyShipsPState(
     modifyObject('sort', sortPState => {
@@ -118,7 +124,7 @@ class ShipMoraleListImpl extends Component {
       sortMethod, sortReverse,
       filterMethods,
     } = this.props
-    // console.log(filterMethods)
+
     const toString = IntPredRep.mkToString(__)
     const prepareSTypeText = ShipFilter.display(stypeInfo,__)
 
@@ -136,10 +142,12 @@ class ShipMoraleListImpl extends Component {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
-          }}>
+          }}
+        >
           <ButtonGroup
-              style={{width: "49%"}}
-              justified>
+            style={{width: "49%"}}
+            justified
+          >
             <DropdownButton
               onSelect={this.handleSTypeExtChange}
               style={{
@@ -148,16 +156,19 @@ class ShipMoraleListImpl extends Component {
                 whiteSpace: 'nowrap',
                 maxWidth: 300,
               }}
-              title={this.displaySTypeExt()} id="mo2-dropdown-stype">
+              title={this.displaySTypeExt()}
+              id="mo2-dropdown-stype"
+            >
               {
-                [...ShipFilter.specialFilters.entries()].map( ([id]) =>
+                [...ShipFilter.specialFilters.entries()].map(([id]) =>
                   (
                     <MenuItem key={id} eventKey={id}>
                       {
                         prepareSTypeText(id)
                       }
                     </MenuItem>
-                  ))
+                  )
+                )
               }
               {
                 stypeInfo.map(({stype}) =>
@@ -168,22 +179,23 @@ class ShipMoraleListImpl extends Component {
                   //     to avoid confusion.
                   [SType.XBB, SType.AP].indexOf(stype) === -1 &&
                   (
-                  <MenuItem key={stype} eventKey={`stype-${stype}`}>
-                    {
-                      prepareSTypeText(`stype-${stype}`)
-                    }
-                  </MenuItem>
-                  ))
+                    <MenuItem key={stype} eventKey={`stype-${stype}`}>
+                      {prepareSTypeText(`stype-${stype}`)}
+                    </MenuItem>
+                  )
+                )
               }
             </DropdownButton>
           </ButtonGroup>
           <ButtonGroup
-              style={{width: "49%"}}
-              justified>
+            style={{width: "49%"}}
+            justified
+          >
             <DropdownButton
-                onSelect={this.handleMoraleFilterChange}
-                title={this.displayMoraleFilter()}
-                id="mo2-dropdown-morale">
+              onSelect={this.handleMoraleFilterChange}
+              title={this.displayMoraleFilter()}
+              id="mo2-dropdown-morale"
+            >
               {
                 filterMethods.map(predRep => (
                   <MenuItem
@@ -206,9 +218,9 @@ class ShipMoraleListImpl extends Component {
         >
           <Table
             style={{tableLayout: 'fixed'}}
-            striped bordered condensed hover>
-            <thead
-            >
+            striped bordered condensed hover
+          >
+            <thead>
               <tr>
                 {
                   headerSpecs.map( ({name, method, width, asc}) => {
@@ -234,8 +246,7 @@ class ShipMoraleListImpl extends Component {
                 }
               </tr>
             </thead>
-            <tbody
-            >
+            <tbody>
               {
                 shipList.map(ship => (
                   <ListItem ship={ship} key={ship.rstId} />

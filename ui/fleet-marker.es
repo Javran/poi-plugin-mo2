@@ -10,7 +10,8 @@ const componentStyle = {
     '-1px -1px 0 lightseagreen',
     '1px -1px 0 lightseagreen',
     '-1px 1px 0 lightseagreen',
-    '1px 1px 0 lightseagreen'].join(','),
+    '1px 1px 0 lightseagreen',
+  ].join(','),
   WebkitFontSmoothing: 'antialiased',
 }
 
@@ -30,7 +31,7 @@ class FleetMarker extends PureComponent {
   render() {
     const {fleet, formatter, style} = this.props
     if (fleet === null)
-      return false
+      return (<span style={{display: 'none'}} />)
     return (
       <span
         style={{

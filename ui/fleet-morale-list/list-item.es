@@ -113,12 +113,12 @@ class ListItem extends Component {
     }
     return (
       <ListGroupItem
-          style={{
-            padding: 0,
-            marginBottom: "5px",
-            borderRadius: "5px",
-            overflow: "hidden",
-          }}
+        style={{
+          padding: 0,
+          marginBottom: 5,
+          borderRadius: 5,
+          overflow: 'hidden',
+        }}
       >
         <div
           style={{
@@ -130,11 +130,11 @@ class ListItem extends Component {
           }}
         >
           <div
-              style={{
-                fontSize: "14px",
-                width: "auto",
-                flex: 1,
-              }}
+            style={{
+              fontSize: 14,
+              width: 'auto',
+              flex: 1,
+            }}
           >
             {title}
           </div>
@@ -145,9 +145,8 @@ class ListItem extends Component {
                 disabled={typeof onMoveUp !== 'function'}
                 style={xButtonStyle}
                 onClick={onMoveUp}
-                >
-                <FontAwesome
-                  name="arrow-up" />
+              >
+                <FontAwesome name="arrow-up" />
               </Button>
             )
           }
@@ -158,9 +157,8 @@ class ListItem extends Component {
                 disabled={typeof onMoveDown !== 'function'}
                 style={xButtonStyle}
                 onClick={onMoveDown}
-                >
-                <FontAwesome
-                  name="arrow-down" />
+              >
+                <FontAwesome name="arrow-down" />
               </Button>
             )
           }
@@ -171,7 +169,8 @@ class ListItem extends Component {
               onClick={isCustom ? this.handleToggleEditing : onCloneItem}
           >
             <FontAwesome
-              name={isCustom ? (this.state.editing ? "check" : "pencil") : "save"} />
+              name={isCustom ? (this.state.editing ? 'check' : 'pencil') : 'save'}
+            />
           </Button>
           {
             !this.state.removalConfirming && (
@@ -191,7 +190,7 @@ class ListItem extends Component {
                 bsStyle="danger"
                 style={xButtonStyle}
                 onClick={onRemoveItem}
-                >
+              >
                 <FontAwesome name="trash" />
               </Button>
             )
@@ -202,78 +201,75 @@ class ListItem extends Component {
                 bsSize="xsmall"
                 style={xButtonStyle}
                 onClick={() => this.setState({removalConfirming: false})}
-                >
+              >
                 <FontAwesome name="undo" />
               </Button>
             )
           }
         </div>
         <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-            }}
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+          }}
         >
           <div
-              style={{
-                flex: 6,
-                display: "flex",
-                flexDirection: "column",
-                marginTop: "5px",
-                marginLeft: "5px",
-                paddingBottom: "2px",
-              }}
+            style={{
+              flex: 6,
+              display: 'flex',
+              flexDirection: 'column',
+              marginTop: 5,
+              marginLeft: 5,
+              paddingBottom: 2,
+            }}
           >
             {
-              this.state.editing ?
-              (<FormControl
-                   onChange={this.handleEditingName}
-                   value={this.state.nameText}
-               />) :
-              (
+              this.state.editing ? (
+                <FormControl
+                  onChange={this.handleEditingName}
+                  value={this.state.nameText}
+                />
+              ) : (
                 <div
                   style={{
                     fontSize: "18px",
                     fontWeight: "bold",
                     marginBottom: "5px",
                   }}
-                  >
+                >
                   {name}
                 </div>
               )
             }
             <div
-                style={{
-                  display: "flex",
-                  alignItems: "baseline",
-                }}
+              style={{
+                display: 'flex',
+                alignItems: 'baseline',
+              }}
             >
               <div
-                  style={{
-                    flex: 3,
-                    fontSize: "15px",
-                  }}
+                style={{
+                  flex: 3,
+                  fontSize: 15,
+                }}
               >
                 {__('FleetList.Flagship')}: {fsDesc}
               </div>
               <div
-                  style={{
-                    flex: 2,
-                    fontSize: "15px",
-                  }}
+                style={{
+                  flex: 2,
+                  fontSize: 15,
+                }}
               >
                 {__('FleetList.ShipCount')}: {ships.length}
               </div>
             </div>
           </div>
           {
-            moraleInfo.ships.length > 0 ?
-            (
+            moraleInfo.ships.length > 0 ? (
               <OverlayTrigger placement="left" overlay={this.makeTooltip()}>
                 <div style={{flex: 1}} >
-                  <Morale
-                    morale={minMorale}
-                  />
+                  <Morale morale={minMorale} />
                 </div>
               </OverlayTrigger>
             ) : (
