@@ -19,7 +19,11 @@ import { initState, mapDispatchToProps } from '../store'
 import { filterMethodsSelector } from '../selectors'
 import { PTyp } from '../ptyp'
 import { __ } from '../tr'
-import { intPredRepsFromUserInput, intPredRepsToUserInput } from '../structs'
+import {
+  IntPredRep,
+  intPredRepsFromUserInput,
+  intPredRepsToUserInput,
+} from '../structs'
 
 class SettingsImpl extends Component {
   static propTypes = {
@@ -76,8 +80,15 @@ class SettingsImpl extends Component {
     this.replaceFilterMethods(parsed)
 
   render() {
-    const parsed = intPredRepsFromUserInput(this.state.filterMethodsStr)
+    const {filterMethods} = this.props
+    const {filterMethodsStr} = this.state
+    const parsed = intPredRepsFromUserInput(filterMethodsStr)
     const isInputValid = Boolean(parsed)
+    const isInputChanged = isInputValid && !_.isEqual(
+      filterMethods.map(IntPredRep.toId),
+      parsed.map(IntPredRep.toId),
+    )
+
     return (
       <div
         style={{marginBottom: '1.8em'}}
@@ -118,7 +129,18 @@ class SettingsImpl extends Component {
               />
             </OverlayTrigger>
             <Button
-              bsStyle={isInputValid ? 'default' : 'danger'}
+              bsStyle={
+                isInputValid ?
+                  (
+                    /*
+                       using style as save hint: when current input passes syntax check
+                       and results in a different Array of methods, we use "sucess" style
+                       to reminder user of saving.
+                     */
+                    isInputChanged ? 'success' : 'default'
+                  ) :
+                  'danger'
+              }
               disabled={!isInputValid}
               onClick={this.handleFilterMethodsSave(parsed)}
               bsSize="small"
