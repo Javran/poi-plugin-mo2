@@ -136,7 +136,7 @@ const updatePState = (admiralId, oldPState) => {
   // in 0.4.0 it was called 'configVersion' but
   // it's now changed to '$version'. (for 0.5.0)
   if (_.get(currentPState, 'configVersion') === '0.4.0') {
-    /* TODO: update from 0.4.0 to 0.5.0 */
+    /* update from 0.4.0 to 0.5.0 */
     const newPState = _.flow(
       modifyObject(
         'ships',
@@ -193,7 +193,7 @@ const updatePState = (admiralId, oldPState) => {
   }
 
   if (currentPState.$version === latestVersion) {
-    if (currentPState && oldPState === currentPState) {
+    if (currentPState && oldPState !== currentPState) {
       /*
          schedule a save due to having some part of the pState is update
          this is not necessary but it avoids repeated work of updating

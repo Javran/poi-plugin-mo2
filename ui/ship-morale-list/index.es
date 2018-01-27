@@ -223,7 +223,7 @@ class ShipMoraleListImpl extends Component {
             <thead>
               <tr>
                 {
-                  headerSpecs.map( ({name, method, width, asc}) => {
+                  headerSpecs.map(({name, method, width, asc}) => {
                     const isActive = sortMethod === method
                     const key = method
                     let content

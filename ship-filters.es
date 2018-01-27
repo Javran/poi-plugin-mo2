@@ -1,6 +1,8 @@
 import { Nullable } from 'subtender'
 import { canEquipDLC } from 'subtender/kc'
 
+/* TODO: deprecate canEquipDLC, parametrize to have stuff working from selectors */
+
 const SType = {
   DE: 1, DD: 2, CL: 3, CLT: 4,
   CA: 5, CAV: 6, CVL: 7, FBB: 8,
