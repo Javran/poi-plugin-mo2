@@ -1,7 +1,9 @@
 import { Nullable } from 'subtender'
-import { SType, canEquipDLC } from 'subtender/kc'
+import {
+  SType,
+  canEquipDLCFuncSelector,
+} from 'subtender/poi'
 
-/* TODO: deprecate canEquipDLC, parametrize to have stuff working from selectors */
 const isOneOf = xs => x => xs.indexOf(x) !== -1
 
 // predAnd(p1,p2,...)(x)
@@ -30,10 +32,16 @@ const specialFilters = new Map()
      - desc: a string that describes what this filter does in human language
      - func: the actual filtering function:
 
-         func(<poi Store>)(<ShipInfo>) : bool
+         func(<minStore>)(<ShipInfo>) : bool
 
-     the function is curried in this way to allow using info from poi Store
-     to do the filtering
+     the function is curried in this way to allow using info from some other sources
+     to do the filtering.
+
+     minStore is a slice of interest from poi Store - as most of the time
+     we don't need the whole store to be available to us.
+
+     in our case the shape of minStore should be just {wctf}, where wctf
+     is used in subtender selector canEquipDLCFuncSelector.
 
    */
   const defineSpecialFilter = (id, desc, func) =>
@@ -52,23 +60,27 @@ const specialFilters = new Map()
     _store => isOneOfSType(DD,CL)
   )
 
-  const canShipEquipDLC = ({stype, mstId}) =>
-    canEquipDLC(stype, mstId)
-
   defineSpecialFilter(
     'dlc', 'DLC-capable',
-    _store => canShipEquipDLC
+    store => ({mstId}) =>
+      canEquipDLCFuncSelector(store)(mstId)
   )
 
   defineSpecialFilter(
     'dlc-dd', 'DLC-capable (DD only)',
-    _store => predAnd(s => s.stype === DD , canShipEquipDLC)
+    store => predAnd(
+      s => s.stype === DD,
+      ({mstId}) => canEquipDLCFuncSelector(store)(mstId)
+    )
   )
 
   defineSpecialFilter(
     'dlc-dd-cl', 'DLC-capable (DD / CL only)',
-    _store =>
-      predAnd(isOneOfSType(DD,CL), canShipEquipDLC)
+    store =>
+      predAnd(
+        isOneOfSType(DD,CL),
+        ({mstId}) => canEquipDLCFuncSelector(store)(mstId)
+      )
   )
 
   defineSpecialFilter(

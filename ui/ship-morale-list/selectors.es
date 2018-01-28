@@ -2,6 +2,7 @@ import { createSelector } from 'reselect'
 
 import {
   constSelector,
+  wctfSelector,
 } from 'views/utils/selectors'
 
 import {
@@ -38,13 +39,14 @@ const shipMoraleListSelector =
     shipsInfoSelector,
     stypeInfoSelector,
     shipListOptionsSelector,
-    (shipsInfo,stypeInfo,listOptions) => {
+    wctfSelector,
+    (shipsInfo,stypeInfo,listOptions,wctf) => {
       const {
         stypeExt, moraleFilter,
         sortMethod, sortReverse,
       } = listOptions
       const shipList =
-        applyOptions(listOptions)(Object.values(shipsInfo))
+        applyOptions(listOptions, wctf)(Object.values(shipsInfo))
       return {
         shipList,
         stypeInfo,

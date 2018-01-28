@@ -39,16 +39,18 @@ const inGameShipTypeComparator =
     flipComparator(getter2Comparator(x => x.level)),
     rosterIdComparator)
 
-const applyOptions = (options,removeUnlocked=true) => {
+const removeUnlocked = true
+const applyOptions = (options, wctf={}) => {
   const {
     stypeExt, moraleFilter,
     sortMethod, sortReverse,
   } = options
 
   const lockFilter = removeUnlocked ? xs => xs.filter(s => s.locked) : xs => xs
+  const minStore = {wctf}
 
   const stypeFilter = xs => xs.filter(
-    ShipFilter.prepareShipTypePredicate('TODO')(stypeExt)
+    ShipFilter.prepareShipTypePredicate(minStore)(stypeExt)
   )
 
   const moraleFilterFunc = (() => {
