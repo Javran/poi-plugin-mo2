@@ -7,11 +7,12 @@ import {
   Table,
 } from 'react-bootstrap'
 import { modifyObject } from 'subtender'
+import { SType } from 'subtender/kc'
 
 import { PTyp } from '../../ptyp'
 import { __ } from '../../tr'
 import { IntPredRep } from '../../structs'
-import { SType, ShipFilter } from '../../ship-filters'
+import { ShipFilter } from '../../ship-filters'
 import { ListItem } from './list-item'
 import { mapDispatchToProps } from '../../store'
 import {
