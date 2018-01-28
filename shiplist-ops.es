@@ -48,7 +48,8 @@ const applyOptions = (options,removeUnlocked=true) => {
   const lockFilter = removeUnlocked ? xs => xs.filter(s => s.locked) : xs => xs
 
   const stypeFilter = xs => xs.filter(
-    ShipFilter.prepareShipTypePredicate(stypeExt))
+    ShipFilter.prepareShipTypePredicate('TODO')(stypeExt)
+  )
 
   const moraleFilterFunc = (() => {
     if (moraleFilter.type === 'all')

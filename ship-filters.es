@@ -28,11 +28,16 @@ const specialFilters = new Map()
 
      - id: a unique string that identifies the filter being defined
      - desc: a string that describes what this filter does in human language
-     - func: the actual filtering function that accepts a ShipInfo structure
+     - func: the actual filtering function:
+
+         func(<poi Store>)(<ShipInfo>) : bool
+
+     the function is curried in this way to allow using info from poi Store
+     to do the filtering
 
    */
   const defineSpecialFilter = (id, desc, func) =>
-    specialFilters.set(id, Object.freeze({id, desc, func}))
+    specialFilters.set(id, {id, desc, func})
 
   const isOneOfSType = (...stypes) => s => isOneOf(stypes)(s.stype)
 
@@ -44,50 +49,64 @@ const specialFilters = new Map()
 
   defineSpecialFilter(
     'dd-cl', 'DD / CL',
-    isOneOfSType(DD,CL))
+    _store => isOneOfSType(DD,CL)
+  )
 
   const canShipEquipDLC = ({stype, mstId}) =>
     canEquipDLC(stype, mstId)
 
   defineSpecialFilter(
     'dlc', 'DLC-capable',
-    canShipEquipDLC)
+    _store => canShipEquipDLC
+  )
 
   defineSpecialFilter(
     'dlc-dd', 'DLC-capable (DD only)',
-    predAnd(s => s.stype === DD , canShipEquipDLC))
+    _store => predAnd(s => s.stype === DD , canShipEquipDLC)
+  )
 
   defineSpecialFilter(
     'dlc-dd-cl', 'DLC-capable (DD / CL only)',
-    predAnd(isOneOfSType(DD,CL), canShipEquipDLC))
+    _store =>
+      predAnd(isOneOfSType(DD,CL), canShipEquipDLC)
+  )
 
   defineSpecialFilter(
     'cv-cvl-av', 'CV / CVL / AV',
-    isOneOfSType(CV,CVL,AV))
+    _store =>
+      isOneOfSType(CV,CVL,AV)
+  )
 
   defineSpecialFilter(
     'cv-cvl-cvb', 'CV / CVL / CVB',
-    isOneOfSType(CV,CVL,CVB))
+    _store =>
+      isOneOfSType(CV,CVL,CVB)
+  )
 
   defineSpecialFilter(
     'battleship', 'Battleships',
-    isOneOfSType(BB,FBB,BBV,XBB))
+    _store =>
+      isOneOfSType(BB,FBB,BBV,XBB)
+  )
 
   defineSpecialFilter(
     'sub', 'Submarines',
-    isOneOfSType(SS,SSV))
+    _store =>
+      isOneOfSType(SS,SSV)
+  )
 
   defineSpecialFilter(
     'cl-clt-ct', 'CL / CLT / CT',
-    isOneOfSType(CL,CLT,CT))
-
-  Object.freeze(specialFilters)
+    _store =>
+      isOneOfSType(CL,CLT,CT)
+  )
 }
 
 class ShipFilter {
   static specialFilters = specialFilters
 
   static destruct = ({stypeIdFilter, specialFilter}) => stypeExt => {
+    // a specialFilter callback expects the first argument being one registered above.
     if (specialFilters.has(stypeExt)) {
       return specialFilter(specialFilters.get(stypeExt))
     }
@@ -95,20 +114,22 @@ class ShipFilter {
     return Nullable.destruct({
       one: ([_ignored,stypeStr]) => {
         const stype = Number(stypeStr)
+        // a regular stype filter gets the number back
         return stypeIdFilter(stype)
       },
-      none: () => {
-        // when RE has failed
-        console.error(`Unknown filter: ${stypeExt}`)
-        return () => false
-      },
+      none: () =>
+        /*
+           when RE has failed, this means the filter isn't valid
+         */
+        console.error(`Unknown filter: ${stypeExt}`),
     })(/^stype-(\d+)$/.exec(stypeExt))
   }
 
-  static prepareShipTypePredicate = ShipFilter.destruct({
-    stypeIdFilter: stypeId => s => s.stype === stypeId,
-    specialFilter: filterInfo => filterInfo.func,
-  })
+  static prepareShipTypePredicate = store =>
+    ShipFilter.destruct({
+      stypeIdFilter: stypeId => s => s.stype === stypeId,
+      specialFilter: filterInfo => filterInfo.func(store),
+    })
 
   static display = (stypeInfo=[], __=null) => ShipFilter.destruct({
     stypeIdFilter: stypeId => {
