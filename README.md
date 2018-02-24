@@ -5,6 +5,10 @@ designed for getting morale status for your fleets and ships quickly.
 
 ## Changelog
 
+### 0.5.3
+
+- Fix sorting by name
+
 ### 0.5.2
 
 - DLC-capability is now computed from WhoCallsTheFleet fcd data

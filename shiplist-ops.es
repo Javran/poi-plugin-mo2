@@ -1,43 +1,32 @@
 import _ from 'lodash'
+import {
+  chainComparators,
+  projectorToComparator,
+  flipComparator,
+} from 'subtender'
 import { IntPredRep } from './structs'
 import { ShipFilter } from './ship-filters'
 
-// composing multiple comparators into one by
-// trying comparators from left to right, and return first non-zero value.
-// if no comparator is provided or all comparator has return 0
-// the resulting comparator returns 0 as well.
-const chainComparators = (...cmps) => (x,y) => {
-  for (let i=0; i<cmps.length; ++i) {
-    const result = cmps[i](x,y)
-    if (result !== 0)
-      return result
-  }
-  return 0
-}
-
-const flipComparator = cmp => (x,y) => cmp(y,x)
-
-// create a comparator assuming the getter projects a numeric value from elements
-const getter2Comparator = getter => (x,y) => getter(x)-getter(y)
-
-const rosterIdComparator = getter2Comparator(x => x.rstId)
+const rosterIdComparator = projectorToComparator(x => x.rstId)
 
 // when supplied to sort function, the result will be like
 // sorting by ship levels in game.
 const inGameLevelComparator =
   chainComparators(
-    flipComparator(getter2Comparator(x => x.level)),
-    getter2Comparator(x => x.sortNo),
-    rosterIdComparator)
+    flipComparator(projectorToComparator(x => x.level)),
+    projectorToComparator(x => x.sortNo),
+    rosterIdComparator
+  )
 
 // when supplied to sort function, the result will be like
 // sorting by ship types in game.
 const inGameShipTypeComparator =
   chainComparators(
-    flipComparator(getter2Comparator(x => x.stype)),
-    getter2Comparator(x => x.sortNo),
-    flipComparator(getter2Comparator(x => x.level)),
-    rosterIdComparator)
+    flipComparator(projectorToComparator(x => x.stype)),
+    projectorToComparator(x => x.sortNo),
+    flipComparator(projectorToComparator(x => x.level)),
+    rosterIdComparator
+  )
 
 const removeUnlocked = true
 const applyOptions = (options, wctf={}) => {
@@ -63,10 +52,10 @@ const applyOptions = (options, wctf={}) => {
   /* eslint-disable indent */
   const comparator =
     sortMethod === 'rid' ? rosterIdComparator :
-    sortMethod === 'name' ? getter2Comparator(x => x.name) :
+    sortMethod === 'name' ? projectorToComparator(x => x.name) :
     sortMethod === 'stype' ? inGameShipTypeComparator :
     sortMethod === 'level' ? inGameLevelComparator :
-    sortMethod === 'morale' ? getter2Comparator(x => x.morale) :
+    sortMethod === 'morale' ? projectorToComparator(x => x.morale) :
       console.error(`Unknown sorting method: ${sortMethod}`)
   /* eslint-enable indent */
 
