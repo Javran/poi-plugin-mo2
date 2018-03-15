@@ -94,7 +94,10 @@ const updatePState = (admiralId, oldPState) => {
         'fleets',
         modifyObject(
           // copying watchlist
-          'watchlist', () => currentPState.watchlist
+          'watchlist', () => (
+            Array.isArray(currentPState.watchlist) ?
+              currentPState.watchlist : []
+          )
         )
       ),
       // walk ships
@@ -103,8 +106,18 @@ const updatePState = (admiralId, oldPState) => {
           // walk sort
           modifyObject(
             'sort', _.flow([
-              modifyObject('method', () => currentPState.sortMethod),
-              modifyObject('reversed', () => currentPState.sortReverse),
+              modifyObject(
+                'method', () => (
+                  typeof currentPState.sortMethod !== 'undefined' ?
+                    currentPState.sortMethod : 'level'
+                )
+              ),
+              modifyObject(
+                'reversed', () => (
+                  typeof currentPState.sortReverse !== 'undefined' ?
+                    currentPState.sortReverse : false
+                )
+              ),
             ])
           ),
           // walk filter
