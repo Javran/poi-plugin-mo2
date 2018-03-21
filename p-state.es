@@ -88,24 +88,24 @@ const updatePState = (admiralId, oldPState) => {
       `stype-${currentPState.filterSType}` :
       currentPState.filterSType
 
-    const newPState = _.flow([
-      // walk fleets
+    const newPState = _.flow(
+      // on ".fleets"
       modifyObject(
         'fleets',
         modifyObject(
           // copying watchlist
-          'watchlist', () => (
+          'watchlist', wl => (
             Array.isArray(currentPState.watchlist) ?
-              currentPState.watchlist : []
+              currentPState.watchlist : wl
           )
         )
       ),
-      // walk ships
+      // on ".ships"
       modifyObject(
-        'ships', _.flow([
-          // walk sort
+        'ships', _.flow(
+          // on ".ships.sort"
           modifyObject(
-            'sort', _.flow([
+            'sort', _.flow(
               modifyObject(
                 'method', () => (
                   typeof currentPState.sortMethod !== 'undefined' ?
@@ -115,17 +115,15 @@ const updatePState = (admiralId, oldPState) => {
               modifyObject(
                 'reversed', () => (
                   typeof currentPState.sortReverse !== 'undefined' ?
-                    currentPState.sortReverse : false
+                    Boolean(currentPState.sortReverse) : false
                 )
               ),
-            ])
+            )
           ),
-          // walk filter
+          // on ".ships.filter"
           modifyObject(
-            'filter', _.flow([
-              modifyObject(
-                'stypeExt', () => stypeExt
-              ),
+            'filter', _.flow(
+              modifyObject('stypeExt', () => stypeExt),
               modifyObject(
                 'moraleFilters',
                 /*
@@ -133,15 +131,13 @@ const updatePState = (admiralId, oldPState) => {
                    we preserve the current one
                    leaving all the others default values.
                  */
-                modifyObject(
-                  stypeExt, () => currentPState.filterMorale
-                )
+                modifyObject(stypeExt, () => currentPState.filterMorale)
               ),
-            ])
+            )
           ),
-        ])
+        )
       ),
-    ])(emptyPState)
+    )(emptyPState)
 
     currentPState = newPState
   }
