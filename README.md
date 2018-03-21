@@ -5,6 +5,10 @@ designed for getting morale status for your fleets and ships quickly.
 
 ## Changelog
 
+### 0.5.5
+
+- Another attempt fixing potential errors while updating (hopefully working this time)
+
 ### 0.5.4
 
 - Fix some potential errors while updating old config
