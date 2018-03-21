@@ -13,16 +13,21 @@ import {
 
 const presetDeckSelector = createSelector(
   poiStateSelector,
-  s => s.info.presets)
+  s => s.info.presets
+)
 
 const presetDeckMaxSelector = createSelector(
   presetDeckSelector,
-  presetDeck => presetDeck.api_max_num)
+  presetDeck => presetDeck.api_max_num
+)
 
-const watchlistSelector =
-  createSelector(
-    extSelector,
-    s => s.fleets.watchlist)
+const watchlistSelector = createSelector(
+  extSelector,
+  s =>
+    // due to mishandled updating (https://github.com/poooi/poi/issues/1793)
+    // this could be undefined therefore safer to use '_.get'
+    _.get(s, ['fleets', 'watchlist'], [])
+)
 
 const rstIdArrayToShipsWith = shipsInfo => rstIdArr => _.compact(
   rstIdArr.map(rstId => {

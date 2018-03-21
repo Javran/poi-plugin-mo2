@@ -1,3 +1,4 @@
+import _ from 'lodash'
 import { createSelector } from 'reselect'
 
 import {
@@ -16,8 +17,9 @@ const shipListOptionsSelector = createSelector(
   ({ships}) => {
     const {stypeExt, moraleFilters} = ships.filter
     const moraleFilter = moraleFilters[stypeExt] || {type: 'all'}
-    const sortMethod = ships.sort.method
-    const sortReverse = ships.sort.reversed
+    const shipsSort = _.get(ships, 'sort', {method: 'level', reversed: false})
+    const sortMethod = shipsSort.method
+    const sortReverse = shipsSort.reversed
     return {
       stypeExt,
       moraleFilter,
