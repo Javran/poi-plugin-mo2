@@ -82,6 +82,7 @@ const updatePState = (admiralId, oldPState) => {
         },
       },
       tab: 'fleet', // fleet / ship
+      configVersion: '0.4.0',
     }
 
     const stypeExt = typeof currentPState.filterSType === 'number' ?
