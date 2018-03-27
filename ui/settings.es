@@ -14,7 +14,7 @@ import {
 } from 'react-bootstrap'
 import Markdown from 'react-remarkable'
 import { modifyObject } from 'subtender'
-import { translate, Trans } from 'react-i18next'
+import { translate } from 'react-i18next'
 
 import { initState, mapDispatchToProps } from '../store'
 import { filterMethodsSelector } from '../selectors'
@@ -26,10 +26,12 @@ import {
   intPredRepsToUserInput,
 } from '../structs'
 
+@translate('poi-plugin-mo2')
 class SettingsImpl extends Component {
   static propTypes = {
     filterMethods: PTyp.arrayOf(PTyp.object).isRequired,
     pStateModify: PTyp.func.isRequired,
+    t: PTyp.func.isRequired,
   }
 
   constructor(props) {
@@ -117,7 +119,7 @@ class SettingsImpl extends Component {
                     id="mo2-settings-morale-filter-syntax-tooltip">
                     <Markdown
                       source={
-                        _.join(__('CustomMoraleFiltersTooltipMD'),'\n')
+                        _.join(this.props.t('CustomMoraleFiltersTooltipMD'),'\n')
                       }
                     />
                   </Tooltip>
