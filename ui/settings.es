@@ -14,6 +14,7 @@ import {
 } from 'react-bootstrap'
 import Markdown from 'react-remarkable'
 import { modifyObject } from 'subtender'
+import { translate, Trans } from 'react-i18next'
 
 import { initState, mapDispatchToProps } from '../store'
 import { filterMethodsSelector } from '../selectors'
