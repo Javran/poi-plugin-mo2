@@ -5,6 +5,10 @@ designed for getting morale status for your fleets and ships quickly.
 
 ## Changelog
 
+### 0.5.6
+
+- Fix a problem with tooltip
+
 ### 0.5.5
 
 - Another attempt fixing potential errors while updating (hopefully working this time)
