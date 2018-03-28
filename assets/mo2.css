@@ -7,21 +7,26 @@
     margin-bottom: .5em;
 }
 
-#poi-plugin-mo2.poi-plugin {
+#poi-plugin-mo2.poi-plugin,
+#plugin-mountpoint > .poi-app-tabpane {
     display: flex;
     flex-direction: column;
 }
 
-#poi-plugin-mo2 #mo2-tabs > ul[role="tablist"] {
+#poi-plugin-mo2 #mo2-tabs > ul[role="tablist"],
+#plugin-mountpoint #mo2-tabs > ul[role="tablist"] {
+    display: flex;
     margin-bottom: .4em;
 }
 
-#poi-plugin-mo2 #mo2-tabs > .tab-content {
+#poi-plugin-mo2 #mo2-tabs > .tab-content,
+#plugin-mountpoint #mo2-tabs > .tab-content {
     flex: 1;
     height: 0;
 }
 
-#poi-plugin-mo2 #mo2-tabs #mo2-tabs-pane-ship.tab-pane.active {
+#poi-plugin-mo2 #mo2-tabs #mo2-tabs-pane-ship.tab-pane.active,
+#plugin-mountpoint #mo2-tabs #mo2-tabs-pane-ship.tab-pane.active {
     height: 100%;
     display: flex;
     flex-direction: column;
