@@ -19,6 +19,18 @@
     margin-bottom: .4em;
 }
 
+#plugin-mountpoint #mo2-tabs > ul[role="tablist"] > li {
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+#plugin-mountpoint #mo2-tabs > ul[role="tablist"] > li > a {
+    margin: 0;
+    text-align: center;
+}
+
 #poi-plugin-mo2 #mo2-tabs > .tab-content,
 #plugin-mountpoint #mo2-tabs > .tab-content {
     flex: 1;
