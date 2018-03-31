@@ -139,76 +139,70 @@ class ShipMoraleListImpl extends Component {
         }}
       >
         <div
+          id="mo2-ship-control-bar"
           style={{
             display: 'flex',
             alignItems: 'center',
-            justifyContent: 'space-between',
+            justifyContent: 'space-around',
           }}
         >
-          <ButtonGroup
-            style={{width: "49%"}}
-            justified
+          <DropdownButton
+            onSelect={this.handleSTypeExtChange}
+            style={{
+              textOverflow: 'ellipsis',
+              overflow: 'hidden',
+              whiteSpace: 'nowrap',
+              width: '100%',
+            }}
+            title={this.displaySTypeExt()}
+            id="mo2-dropdown-stype"
           >
-            <DropdownButton
-              onSelect={this.handleSTypeExtChange}
-              style={{
-                textOverflow: 'ellipsis',
-                overflow: 'hidden',
-                whiteSpace: 'nowrap',
-                maxWidth: 300,
-              }}
-              title={this.displaySTypeExt()}
-              id="mo2-dropdown-stype"
-            >
-              {
-                [...ShipFilter.specialFilters.entries()].map(([id]) =>
-                  (
-                    <MenuItem key={id} eventKey={id}>
-                      {
-                        prepareSTypeText(id)
-                      }
-                    </MenuItem>
-                  )
-                )
-              }
-              {
-                stypeInfo.map(({stype}) =>
-                  // hiding some ship types:
-                  // - XBB: no ship of this type is ever implemented
-                  // - AP: only used by abyssal ships, plus there's AO
-                  //     which shares the same ship type name, we'd better hide AP
-                  //     to avoid confusion.
-                  [SType.XBB, SType.AP].indexOf(stype) === -1 &&
-                  (
-                    <MenuItem key={stype} eventKey={`stype-${stype}`}>
-                      {prepareSTypeText(`stype-${stype}`)}
-                    </MenuItem>
-                  )
-                )
-              }
-            </DropdownButton>
-          </ButtonGroup>
-          <ButtonGroup
-            style={{width: "49%"}}
-            justified
-          >
-            <DropdownButton
-              onSelect={this.handleMoraleFilterChange}
-              title={this.displayMoraleFilter()}
-              id="mo2-dropdown-morale"
-            >
-              {
-                filterMethods.map(predRep => (
-                  <MenuItem
-                    key={IntPredRep.toId(predRep)}
-                    eventKey={predRep}
-                  >
-                    {toString(predRep)}
+            {
+              [...ShipFilter.specialFilters.entries()].map(([id]) =>
+                (
+                  <MenuItem key={id} eventKey={id}>
+                    {
+                      prepareSTypeText(id)
+                    }
                   </MenuItem>
-                ))
-              }
-            </DropdownButton>
-          </ButtonGroup>
+                )
+              )
+            }
+            {
+              stypeInfo.map(({stype}) =>
+                // hiding some ship types:
+                // - XBB: no ship of this type is ever implemented
+                // - AP: only used by abyssal ships, plus there's AO
+                //     which shares the same ship type name, we'd better hide AP
+                //     to avoid confusion.
+                [SType.XBB, SType.AP].indexOf(stype) === -1 &&
+                                       (
+                                         <MenuItem key={stype} eventKey={`stype-${stype}`}>
+                                           {prepareSTypeText(`stype-${stype}`)}
+                                         </MenuItem>
+                                       )
+              )
+            }
+          </DropdownButton>
+          <DropdownButton
+            onSelect={this.handleMoraleFilterChange}
+            title={this.displayMoraleFilter()}
+            id="mo2-dropdown-morale"
+            style={{
+              width: '100%',
+            }}
+          >
+            {
+              filterMethods.map(predRep => (
+                <MenuItem
+                  key={IntPredRep.toId(predRep)}
+                  eventKey={predRep}
+                  >
+                  {toString(predRep)}
+                </MenuItem>
+              ))
+            }
+          </DropdownButton>
         </div>
         <div
           style={{
