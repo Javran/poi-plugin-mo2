@@ -3,7 +3,6 @@ import { connect } from 'react-redux'
 import {
   DropdownButton,
   MenuItem,
-  ButtonGroup,
   Table,
 } from 'react-bootstrap'
 import { modifyObject } from 'subtender'
@@ -170,17 +169,17 @@ class ShipMoraleListImpl extends Component {
             }
             {
               stypeInfo.map(({stype}) =>
+                // TODO: derive from selectors
                 // hiding some ship types:
                 // - XBB: no ship of this type is ever implemented
                 // - AP: only used by abyssal ships, plus there's AO
                 //     which shares the same ship type name, we'd better hide AP
                 //     to avoid confusion.
-                [SType.XBB, SType.AP].indexOf(stype) === -1 &&
-                                       (
-                                         <MenuItem key={stype} eventKey={`stype-${stype}`}>
-                                           {prepareSTypeText(`stype-${stype}`)}
-                                         </MenuItem>
-                                       )
+                [SType.XBB, SType.AP].indexOf(stype) === -1 && (
+                  <MenuItem key={stype} eventKey={`stype-${stype}`}>
+                    {prepareSTypeText(`stype-${stype}`)}
+                  </MenuItem>
+                )
               )
             }
           </DropdownButton>
