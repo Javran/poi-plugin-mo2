@@ -16,6 +16,7 @@ import { ListItem } from './list-item'
 import { mapDispatchToProps } from '../../store'
 import {
   filterMethodsSelector,
+  availableShipTypesSelector,
 } from '../../selectors'
 import {
   shipMoraleListSelector,
@@ -50,6 +51,7 @@ class ShipMoraleListImpl extends Component {
   static propTypes = {
     shipList: PTyp.arrayOf(PTyp.ShipInfo).isRequired,
     stypeInfo: PTyp.arrayOf(PTyp.STypeInfo).isRequired,
+
 
     stypeExt: PTyp.string.isRequired,
     moraleFilter: PTyp.object.isRequired,
@@ -124,7 +126,6 @@ class ShipMoraleListImpl extends Component {
       sortMethod, sortReverse,
       filterMethods,
     } = this.props
-
     const toString = IntPredRep.mkToString(__)
     const prepareSTypeText = ShipFilter.display(stypeInfo,__)
 
@@ -168,19 +169,11 @@ class ShipMoraleListImpl extends Component {
               )
             }
             {
-              stypeInfo.map(({stype}) =>
-                // TODO: derive from selectors
-                // hiding some ship types:
-                // - XBB: no ship of this type is ever implemented
-                // - AP: only used by abyssal ships, plus there's AO
-                //     which shares the same ship type name, we'd better hide AP
-                //     to avoid confusion.
-                [SType.XBB, SType.AP].indexOf(stype) === -1 && (
-                  <MenuItem key={stype} eventKey={`stype-${stype}`}>
-                    {prepareSTypeText(`stype-${stype}`)}
-                  </MenuItem>
-                )
-              )
+              stypeInfo.map(({stype}) => (
+                <MenuItem key={stype} eventKey={`stype-${stype}`}>
+                  {prepareSTypeText(`stype-${stype}`)}
+                </MenuItem>
+              ))
             }
           </DropdownButton>
           <DropdownButton

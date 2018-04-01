@@ -9,6 +9,7 @@ import {
 import {
   extSelector,
   shipsInfoSelector,
+  availableShipTypesSelector,
 } from '../../selectors'
 import { applyOptions } from '../../shiplist-ops'
 
@@ -29,12 +30,13 @@ const shipListOptionsSelector = createSelector(
   }
 )
 
-const stypeInfoSelector =
-  createSelector(
-    constSelector,
-    ({$shipTypes = {}}) =>
-      Object.entries($shipTypes).map(([stypeStr,typeInfo]) =>
-        ({ stype: Number(stypeStr), name: typeInfo.api_name })))
+const stypeInfoSelector = createSelector(
+  constSelector,
+  availableShipTypesSelector,
+  ({$shipTypes = {}}, avaShipTypes) =>
+    avaShipTypes.map(stype =>
+      ({stype, name: $shipTypes[stype].api_name}))
+)
 
 const shipMoraleListSelector =
   createSelector(
