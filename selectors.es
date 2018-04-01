@@ -81,6 +81,25 @@ const filterMethodsSelector = createSelector(
   ext => ext.ships.filter.methods
 )
 
+/*
+   derive the list of available ship types from store const
+
+   a ship type is available if ally ships of that category exists
+ */
+const availableShipTypesSelector = createSelector(
+  constSelector,
+  ({$ships}) =>
+    _.sortedUniq(
+      _.sortBy(
+        _.flatMap(
+          _.values($ships),
+          x => x.api_id <= 1500 && _.isInteger(x.api_id) ? [x.api_stype] : []
+        ),
+        _.identity
+      )
+    )
+)
+
 export {
   extSelector,
   fleetsSelector,
@@ -91,4 +110,5 @@ export {
   shipsInfoSelector,
   admiralIdSelector,
   filterMethodsSelector,
+  availableShipTypesSelector,
 }
