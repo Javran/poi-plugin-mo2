@@ -63,7 +63,7 @@ const shipsInfoSelector =
           const stype = masterInfo.api_stype
           const stypeInfo = $shipTypes[stype]
           const typeName = stypeInfo.api_name
-          const sortNo = masterInfo.api_sortno
+          const sortNo = masterInfo.api_sort_id
           const fleetInd = fleets.findIndex(fleet => fleet.api_ship.indexOf(rstId) !== -1)
           const fleet = fleetInd === -1 ? null : fleets[fleetInd].api_id
           const locked = ship.api_locked === 1

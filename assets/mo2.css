@@ -7,7 +7,11 @@
     margin-bottom: .5em;
 }
 
-#poi-plugin-mo2.poi-plugin,
+#poi-plugin-mo2.poi-plugin {
+    display: flex;
+    flex-direction: column;
+}
+
 #plugin-mountpoint > .poi-app-tabpane {
     display: flex;
     flex-direction: column;
