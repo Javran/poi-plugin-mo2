@@ -5,6 +5,11 @@ designed for getting morale status for your fleets and ships quickly.
 
 ## Changelog
 
+### 0.5.7
+
+- Adapted to use phase 2 new sorting method
+- Few minor updates
+
 ### 0.5.6
 
 - Fix a problem with tooltip
