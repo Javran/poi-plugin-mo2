@@ -9,6 +9,8 @@ import { WSubject } from '../../structs'
 import {
   extSelector,
   shipsInfoSelector,
+  lbasWorldsSelector,
+  getLbasInfoFuncSelector,
 } from '../../selectors'
 
 const presetDeckSelector = createSelector(
@@ -44,7 +46,8 @@ const moraleListSelector =
     shipsInfoSelector,
     fleetsSelector,
     presetDeckSelector,
-    (watchlist, shipsInfo, fleets, presetDeck) => {
+    getLbasInfoFuncSelector,
+    (watchlist, shipsInfo, fleets, presetDeck, getLbasInfo) => {
       // for marking some piece of info unavailable
       // (unavailable if `ships.length` === 0)
       const unavailable = wSubject => ({
@@ -86,6 +89,14 @@ const moraleListSelector =
             ships,
           }
         },
+        lbas: (world, wSubject) => {
+          const squadrons = [1,2,3].map(x => getLbasInfo(world,x))
+          return {
+            wSubject,
+            world,
+            squadrons,
+          }
+        },
       })
 
       return watchlist.map(buildFromWSubject)
@@ -98,9 +109,10 @@ const fleetMoraleListSelector =
     presetDeckMaxSelector,
     presetDeckSelector,
     fleetsSelector,
+    lbasWorldsSelector,
     (
       shipsInfo, moraleList, presetDeckMax,
-      presetDeck,fleets
+      presetDeck, fleets, lbasWorlds
     ) => {
       // those missing in morale list
       const availableTargets = []
@@ -122,6 +134,15 @@ const fleetMoraleListSelector =
           availableTargets.push({type: 'preset',presetNo})
         }
       }
+
+      lbasWorlds.forEach(world => {
+        if (
+          moraleList.findIndex(m =>
+            m.wSubject.type === 'lbas' &&
+            m.wSubject.world === world) === -1) {
+          availableTargets.push({type: 'lbas', world})
+        }
+      })
 
       // try filling some extra info for a target if possible.
       const fillInfo = target => {

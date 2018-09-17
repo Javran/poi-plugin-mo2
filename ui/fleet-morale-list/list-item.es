@@ -95,7 +95,17 @@ class ListItem extends Component {
       fleet: fleetId => `${__('FleetList.Fleet')} #${fleetId}`,
       preset: presetNo => `${__('FleetList.Preset')} #${presetNo}`,
       custom: id => `${__('FleetList.Custom')} #${id}`,
+      lbas: world => `${__('FleetList.Lbas')} #${world}`,
     })(wSubject)
+
+    // TODO
+    if (wSubject.type === 'lbas') {
+      return (
+        <div>
+          {JSON.stringify(wSubject)}
+        </div>
+      )
+    }
 
     const minMorale =
       ships.length > 0 ?

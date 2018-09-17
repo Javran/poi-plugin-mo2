@@ -97,6 +97,8 @@ class FleetMoraleListImpl extends Component {
     const basicText =
       ws.type === 'fleet' ? `${__('FleetList.Fleet')} #${ws.fleetId}` :
       ws.type === 'preset' ? `${__('FleetList.Preset')} #${ws.presetNo}` :
+      /* TODO */
+      ws.type === 'lbas' ? `${__('FleetList.Lbas')} #${ws.world}` :
       console.error(`Unexpected WSubject type: ${ws.type}`)
     /* eslint-enable indent */
 
