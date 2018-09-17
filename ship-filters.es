@@ -27,7 +27,6 @@ const predAnd = (...predicates) => x => {
 /*
    TODO:
 
-   - CVE filter (store involved)
    - whale filter
 
  */
