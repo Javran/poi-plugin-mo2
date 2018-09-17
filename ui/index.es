@@ -1,13 +1,16 @@
 import { join } from 'path-extra'
+import { modifyObject } from 'subtender'
+
 import { connect } from 'react-redux'
 import React, { Component } from 'react'
 import { Tabs, Tab } from 'react-bootstrap'
-import { modifyObject } from 'subtender'
+import { createStructuredSelector } from 'reselect'
+
 import {
   mapDispatchToProps,
 } from '../store'
 import {
-  extSelector,
+  tabSelector,
 } from '../selectors'
 
 import { PTyp } from '../ptyp'
@@ -23,7 +26,8 @@ class MoraleMonitorImpl extends Component {
 
   handleSelectTab = tab =>
     this.props.pStateModify(
-      modifyObject('tab', () => tab))
+      modifyObject('tab', () => tab)
+    )
 
   render() {
     const {tab} = this.props
@@ -60,9 +64,11 @@ class MoraleMonitorImpl extends Component {
 }
 
 const MoraleMonitor = connect(
-  state => ({
-    tab: extSelector(state).tab,
-  }),
+  createStructuredSelector(
+    {
+      tab: tabSelector,
+    }
+  ),
   mapDispatchToProps,
 )(MoraleMonitorImpl)
 
