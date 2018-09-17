@@ -71,3 +71,12 @@ This document defines the p-state file structure of `poi-plugin-mo2`.
 
     `id` is just an integer that requires to be unique among
     all `WSubject`s of `custom` type.
+
+- (TODO) when `type` is `lbas`
+
+    ```
+    {
+      type: "lbas",
+      world: <an int>,
+    }
+    ```
