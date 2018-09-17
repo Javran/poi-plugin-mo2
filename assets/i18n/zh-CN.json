@@ -36,7 +36,8 @@
     "cve": "护卫空母",
     "battleship": "战舰系",
     "sub": "潜艇系",
-    "cl-clt-ct": "CL / CLT / CT"
+    "cl-clt-ct": "CL / CLT / CT",
+    "whales": "大鲸 / 龙凤 / 龙凤改"
   },
 
   "CustomMoraleFilters": "定制士气过滤器",

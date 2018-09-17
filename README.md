@@ -10,6 +10,7 @@ designed for getting morale status for your fleets and ships quickly.
 - Now items in fleet morale list can move up and down freely
 - New filter for escort carriers
 - Some UI tweaks
+- A easter egg for "whaly"-admirals :)
 
 ### 0.5.7
 

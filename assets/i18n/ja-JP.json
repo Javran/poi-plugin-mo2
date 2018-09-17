@@ -36,7 +36,8 @@
     "cve": "Escort Carriers",
     "battleship": "Battleships",
     "sub": "Submarines",
-    "cl-clt-ct": "CL / CLT / CT"
+    "cl-clt-ct": "CL / CLT / CT",
+    "whales": "Whales"
   },
 
   "CustomMoraleFilters": "Custom Morale Filters",

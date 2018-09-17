@@ -15,6 +15,7 @@ import { ListItem } from './list-item'
 import { mapDispatchToProps } from '../../store'
 import {
   filterMethodsSelector,
+  isKingOfWhalesSelector,
 } from '../../selectors'
 import {
   shipMoraleListSelector,
@@ -58,6 +59,7 @@ class ShipMoraleListImpl extends Component {
     sortReverse: PTyp.bool.isRequired,
 
     filterMethods: PTyp.arrayOf(PTyp.object).isRequired,
+    isKingOfWhales: PTyp.bool.isRequired,
 
     pStateModify: PTyp.func.isRequired,
   }
@@ -123,10 +125,15 @@ class ShipMoraleListImpl extends Component {
       shipList,
       stypeInfo,
       sortMethod, sortReverse,
+      isKingOfWhales,
       filterMethods,
     } = this.props
     const toString = IntPredRep.mkToString(__)
     const prepareSTypeText = ShipFilter.display(stypeInfo,__)
+
+    const specialFilterEntries = [
+      ...ShipFilter.specialFilters.entries(),
+    ].filter(([_k, v]) => v.id !== 'whales' || isKingOfWhales)
 
     return (
       <div
@@ -157,7 +164,7 @@ class ShipMoraleListImpl extends Component {
             id="mo2-dropdown-stype"
           >
             {
-              [...ShipFilter.specialFilters.entries()].map(([id]) =>
+              specialFilterEntries.map(([id]) =>
                 (
                   <MenuItem key={id} eventKey={id}>
                     {
@@ -250,6 +257,7 @@ const ShipMoraleList = connect(
   state => {
     const props = shipMoraleListSelector(state)
     const filterMethods = filterMethodsSelector(state)
+    const isKingOfWhales = isKingOfWhalesSelector(state)
     const actualFilterMethods = [
       {type: 'all'},
       ...filterMethods,
@@ -258,6 +266,7 @@ const ShipMoraleList = connect(
     return {
       ...props,
       filterMethods: actualFilterMethods,
+      isKingOfWhales,
     }
   },
   mapDispatchToProps

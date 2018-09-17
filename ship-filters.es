@@ -6,6 +6,7 @@ import {
 
 import {
   allCVEIdsSelector,
+  shipRemodelInfoSelector,
 } from 'views/utils/selectors'
 
 const isOneOf = xs => x => xs.indexOf(x) !== -1
@@ -132,6 +133,19 @@ const specialFilters = new Map()
     'cl-clt-ct', 'CL / CLT / CT',
     _store =>
       isOneOfSType(CL,CLT,CT)
+  )
+
+  defineSpecialFilter(
+    'whales', 'Whales',
+    store => {
+      const {remodelChains} = shipRemodelInfoSelector(store)
+      if (184 in remodelChains) {
+        const whaleMstIds = remodelChains[184]
+        return shipInfo => whaleMstIds.includes(shipInfo.mstId)
+      } else {
+        return () => false
+      }
+    }
   )
 }
 
