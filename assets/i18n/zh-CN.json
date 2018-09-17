@@ -21,7 +21,7 @@
   "ShipList": {
     "Type": "舰种",
     "Name": "舰名",
-    "Level": "等级",
+    "Level": "Lv.",
     "Morale": "士气",
     "All": "全部"
   },

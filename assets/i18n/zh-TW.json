@@ -21,7 +21,7 @@
   "ShipList": {
     "Type": "艦種",
     "Name": "艦名",
-    "Level": "等級",
+    "Level": "Lv.",
     "Morale": "士氣",
     "All": "全部"
   },

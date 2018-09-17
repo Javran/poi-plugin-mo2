@@ -21,7 +21,7 @@
   "ShipList": {
     "Type": "Type",
     "Name": "Name",
-    "Level": "Level",
+    "Level": "Lv.",
     "Morale": "Morale",
     "All": "All"
   },
