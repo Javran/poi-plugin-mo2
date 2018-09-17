@@ -44,13 +44,14 @@ const shipMoraleListSelector =
     stypeInfoSelector,
     shipListOptionsSelector,
     wctfSelector,
-    (shipsInfo,stypeInfo,listOptions,wctf) => {
+    constSelector,
+    (shipsInfo,stypeInfo,listOptions,wctf,constData) => {
       const {
         stypeExt, moraleFilter,
         sortMethod, sortReverse,
       } = listOptions
       const shipList =
-        applyOptions(listOptions, wctf)(Object.values(shipsInfo))
+        applyOptions(listOptions, wctf, constData)(Object.values(shipsInfo))
       return {
         shipList,
         stypeInfo,

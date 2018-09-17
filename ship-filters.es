@@ -4,6 +4,10 @@ import {
   canEquipDLCFuncSelector,
 } from 'subtender/poi'
 
+import {
+  allCVEIdsSelector,
+} from 'views/utils/selectors'
+
 const isOneOf = xs => x => xs.indexOf(x) !== -1
 
 // predAnd(p1,p2,...)(x)
@@ -19,6 +23,14 @@ const predAnd = (...predicates) => x => {
   }
   return ret
 }
+
+/*
+   TODO:
+
+   - CVE filter (store involved)
+   - whale filter
+
+ */
 
 // special ship type categories
 // defined as a Map so that insertion order can be preserved
@@ -40,8 +52,10 @@ const specialFilters = new Map()
      minStore is a slice of interest from poi Store - as most of the time
      we don't need the whole store to be available to us.
 
-     in our case the shape of minStore should be just {wctf}, where wctf
-     is used in subtender selector canEquipDLCFuncSelector.
+     in our case the shape of minStore should be just {wctf, const},
+     where:
+     - wctf is used in subtender selector canEquipDLCFuncSelector.
+     - const is used for allCVEIdsSelector from poi main app
 
    */
   const defineSpecialFilter = (id, desc, func) =>
@@ -93,6 +107,14 @@ const specialFilters = new Map()
     'cv-cvl-cvb', 'CV / CVL / CVB',
     _store =>
       isOneOfSType(CV,CVL,CVB)
+  )
+
+  defineSpecialFilter(
+    'cve', 'CVE',
+    store => {
+      const allCVEIds = allCVEIdsSelector(store)
+      return shipInfo => allCVEIds.includes(shipInfo.mstId)
+    }
   )
 
   defineSpecialFilter(

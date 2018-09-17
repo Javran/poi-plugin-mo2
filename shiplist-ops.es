@@ -29,14 +29,14 @@ const inGameShipTypeComparator =
   )
 
 const removeUnlocked = true
-const applyOptions = (options, wctf={}) => {
+const applyOptions = (options, wctf={}, constData={}) => {
   const {
     stypeExt, moraleFilter,
     sortMethod, sortReverse,
   } = options
 
   const lockFilter = removeUnlocked ? xs => xs.filter(s => s.locked) : xs => xs
-  const minStore = {wctf}
+  const minStore = {wctf, const: constData}
 
   const stypeFilter = xs => xs.filter(
     ShipFilter.prepareShipTypePredicate(minStore)(stypeExt)
