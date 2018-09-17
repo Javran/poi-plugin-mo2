@@ -118,14 +118,8 @@ class FleetMoraleListImpl extends Component {
       <ListGroup style={{marginBottom: 30}}>
         {
           moraleList.map((moraleInfo,ind) => {
-            // only swapping custom items are allowed
-            const canMoveUp =
-              ind-1 >= 0 &&
-              moraleList[ind-1].wSubject.type === 'custom'
-
-            const canMoveDown =
-              ind+1 < moraleList.length
-
+            const canMoveUp = ind-1 >= 0
+            const canMoveDown = ind+1 < moraleList.length
             return (
               <ListItem
                 key={WSubject.id(moraleInfo.wSubject)}
@@ -171,7 +165,8 @@ class FleetMoraleListImpl extends Component {
 }
 
 const FleetMoraleList = connect(
-  fleetMoraleListSelector, mapDispatchToProps
+  fleetMoraleListSelector,
+  mapDispatchToProps
 )(FleetMoraleListImpl)
 
 export {

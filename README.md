@@ -7,7 +7,7 @@ designed for getting morale status for your fleets and ships quickly.
 
 ### 0.6.0 (pending)
 
-- pending
+- Now items in fleet morale list can move up and down freely
 
 ### 0.5.7
 

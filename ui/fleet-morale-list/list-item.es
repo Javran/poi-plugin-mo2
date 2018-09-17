@@ -138,34 +138,26 @@ class ListItem extends Component {
           >
             {title}
           </div>
-          {
-            isCustom && (
-              <Button
-                bsSize="xsmall"
-                disabled={typeof onMoveUp !== 'function'}
-                style={xButtonStyle}
-                onClick={onMoveUp}
-              >
-                <FontAwesome name="arrow-up" />
-              </Button>
-            )
-          }
-          {
-            isCustom && (
-              <Button
-                bsSize="xsmall"
-                disabled={typeof onMoveDown !== 'function'}
-                style={xButtonStyle}
-                onClick={onMoveDown}
-              >
-                <FontAwesome name="arrow-down" />
-              </Button>
-            )
-          }
           <Button
-              bsSize="xsmall"
-              style={xButtonStyle}
-              disabled={moraleInfo.ships.length === 0}
+            bsSize="xsmall"
+            disabled={typeof onMoveUp !== 'function'}
+            style={xButtonStyle}
+            onClick={onMoveUp}
+          >
+            <FontAwesome name="arrow-up" />
+          </Button>
+          <Button
+            bsSize="xsmall"
+            disabled={typeof onMoveDown !== 'function'}
+            style={xButtonStyle}
+            onClick={onMoveDown}
+          >
+            <FontAwesome name="arrow-down" />
+          </Button>
+          <Button
+            bsSize="xsmall"
+            style={xButtonStyle}
+            disabled={moraleInfo.ships.length === 0}
               onClick={isCustom ? this.handleToggleEditing : onCloneItem}
           >
             <FontAwesome
