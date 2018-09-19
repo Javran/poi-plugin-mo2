@@ -8,11 +8,11 @@ import {
 } from 'react-bootstrap'
 import FontAwesome from 'react-fontawesome'
 
-import { PTyp } from '../../ptyp'
-import { __ } from '../../tr'
+import { PTyp } from '../../../ptyp'
+import { __ } from '../../../tr'
 
-import { WSubject } from '../../structs'
-import { Morale } from '../morale'
+import { WSubject } from '../../../structs'
+import { Morale } from '../../morale'
 
 class ListItem extends Component {
   static propTypes = {
@@ -85,117 +85,122 @@ class ListItem extends Component {
   renderLbasItem() {
     const {
       moraleInfo,
-      onRemoveItem,
-      onMoveUp,
-      onMoveDown,
     } = this.props
-    const { wSubject } = moraleInfo
-    const title = `${__('FleetList.Lbas')} #${wSubject.world}`
-    const xButtonStyle = {
-      paddingTop: 0,
-      marginLeft: 16,
-    }
-
     return (
-      <ListGroupItem
+      <div
         style={{
-          padding: 0,
-          marginBottom: 5,
-          borderRadius: 5,
-          overflow: 'hidden',
+          display: 'flex',
+          alignItems: 'center',
         }}
       >
         <div
           style={{
+            flex: 6,
             display: 'flex',
-            alignItems: 'center',
-            width: '100%',
-            padding: '2px 4px 5px',
-            backgroundColor: '#424242',
+            flexDirection: 'column',
+            marginTop: 5,
+            marginLeft: 5,
+            paddingBottom: 2,
           }}
         >
-          <div
-            style={{
-              fontSize: 14,
-              width: 'auto',
-              flex: 1,
-            }}
-          >
-            {title}
-          </div>
-          <Button
-            bsSize="xsmall"
-            disabled={typeof onMoveUp !== 'function'}
-            style={xButtonStyle}
-            onClick={onMoveUp}
-          >
-            <FontAwesome name="arrow-up" />
-          </Button>
-          <Button
-            bsSize="xsmall"
-            disabled={typeof onMoveDown !== 'function'}
-            style={xButtonStyle}
-            onClick={onMoveDown}
-          >
-            <FontAwesome name="arrow-down" />
-          </Button>
           {
-            !this.state.removalConfirming && (
-              <Button
-                bsSize="xsmall"
-                style={xButtonStyle}
-                onClick={() => this.setState({removalConfirming: true})}
-              >
-                <FontAwesome name="close" />
-              </Button>
-            )
-          }
-          {
-            this.state.removalConfirming && (
-              <Button
-                bsSize="xsmall"
-                bsStyle="danger"
-                style={xButtonStyle}
-                onClick={onRemoveItem}
-              >
-                <FontAwesome name="trash" />
-              </Button>
-            )
-          }
-          {
-            this.state.removalConfirming && (
-              <Button
-                bsSize="xsmall"
-                style={xButtonStyle}
-                onClick={() => this.setState({removalConfirming: false})}
-              >
-                <FontAwesome name="undo" />
-              </Button>
-            )
+            JSON.stringify(moraleInfo)
           }
         </div>
+      </div>
+    )
+  }
+
+  renderFleetItem() {
+    const {
+      moraleInfo,
+    } = this.props
+    const { name, ships } = moraleInfo
+
+    const minMorale =
+      ships.length > 0 ?
+        Math.min(...ships.map(s => s.morale)) :
+        null
+
+    const fsDesc =
+      ships.length > 0 ?
+        `${ships[0].name} Lv.${ships[0].level} (${ships[0].rstId})` :
+        "-"
+
+    return (
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+        }}
+      >
         <div
           style={{
+            flex: 6,
             display: 'flex',
-            alignItems: 'center',
+            flexDirection: 'column',
+            marginTop: 5,
+            marginLeft: 5,
+            paddingBottom: 2,
           }}
         >
+          {
+            this.state.editing ? (
+              <FormControl
+                onChange={this.handleEditingName}
+                value={this.state.nameText}
+              />
+            ) : (
+              <div
+                style={{
+                  fontSize: "18px",
+                  fontWeight: "bold",
+                  marginBottom: "5px",
+                }}
+                >
+                {name}
+              </div>
+            )
+          }
           <div
             style={{
-              flex: 6,
               display: 'flex',
-              flexDirection: 'column',
-              marginTop: 5,
-              marginLeft: 5,
-              paddingBottom: 2,
+              alignItems: 'baseline',
             }}
           >
-            {
-              JSON.stringify(moraleInfo)
-            }
+            <div
+              style={{
+                flex: 3,
+                fontSize: 15,
+              }}
+            >
+              {__('FleetList.Flagship')}: {fsDesc}
+            </div>
+            <div
+              style={{
+                flex: 2,
+                fontSize: 15,
+              }}
+            >
+              {__('FleetList.ShipCount')}: {ships.length}
+            </div>
           </div>
         </div>
-      </ListGroupItem>
+        {
+          moraleInfo.ships.length > 0 ? (
+            <OverlayTrigger placement="left" overlay={this.makeTooltip()}>
+              <div style={{flex: 1}} >
+                <Morale morale={minMorale} />
+              </div>
+            </OverlayTrigger>
+          ) : (
+            <Morale
+              style={{flex: 1}}
+              morale={minMorale}
+            />
+          )
+        }
+      </div>
     )
   }
 
@@ -207,12 +212,7 @@ class ListItem extends Component {
       onMoveUp,
       onMoveDown,
     } = this.props
-    const { wSubject, name, ships } = moraleInfo
-
-    // TODO
-    if (wSubject.type === 'lbas') {
-      return this.renderLbasItem()
-    }
+    const { wSubject } = moraleInfo
 
     const title = WSubject.destruct({
       fleet: fleetId => `${__('FleetList.Fleet')} #${fleetId}`,
@@ -221,16 +221,9 @@ class ListItem extends Component {
       lbas: world => `${__('FleetList.Lbas')} #${world}`,
     })(wSubject)
 
-    const minMorale =
-      ships.length > 0 ?
-        Math.min(...ships.map(s => s.morale)) :
-        null
-
-    const fsDesc =
-      ships.length > 0 ?
-        `${ships[0].name} Lv.${ships[0].level} (${ships[0].rstId})` :
-        "-"
+    const isLbasItem = wSubject.type === 'lbas'
     const isCustom = wSubject.type === 'custom'
+
     const xButtonStyle = {
       paddingTop: 0,
       marginLeft: 16,
@@ -280,9 +273,14 @@ class ListItem extends Component {
           </Button>
           <Button
             bsSize="xsmall"
-            style={xButtonStyle}
-            disabled={moraleInfo.ships.length === 0}
-              onClick={isCustom ? this.handleToggleEditing : onCloneItem}
+            style={
+              {
+                ...xButtonStyle,
+                ...(isLbasItem ? {visibility: 'hidden'} : null),
+              }
+            }
+            disabled={isLbasItem || moraleInfo.ships.length === 0}
+            onClick={isCustom ? this.handleToggleEditing : onCloneItem}
           >
             <FontAwesome
               name={isCustom ? (this.state.editing ? 'check' : 'pencil') : 'save'}
@@ -323,79 +321,11 @@ class ListItem extends Component {
             )
           }
         </div>
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-          }}
-        >
-          <div
-            style={{
-              flex: 6,
-              display: 'flex',
-              flexDirection: 'column',
-              marginTop: 5,
-              marginLeft: 5,
-              paddingBottom: 2,
-            }}
-          >
-            {
-              this.state.editing ? (
-                <FormControl
-                  onChange={this.handleEditingName}
-                  value={this.state.nameText}
-                />
-              ) : (
-                <div
-                  style={{
-                    fontSize: "18px",
-                    fontWeight: "bold",
-                    marginBottom: "5px",
-                  }}
-                >
-                  {name}
-                </div>
-              )
-            }
-            <div
-              style={{
-                display: 'flex',
-                alignItems: 'baseline',
-              }}
-            >
-              <div
-                style={{
-                  flex: 3,
-                  fontSize: 15,
-                }}
-              >
-                {__('FleetList.Flagship')}: {fsDesc}
-              </div>
-              <div
-                style={{
-                  flex: 2,
-                  fontSize: 15,
-                }}
-              >
-                {__('FleetList.ShipCount')}: {ships.length}
-              </div>
-            </div>
-          </div>
-          {
-            moraleInfo.ships.length > 0 ? (
-              <OverlayTrigger placement="left" overlay={this.makeTooltip()}>
-                <div style={{flex: 1}} >
-                  <Morale morale={minMorale} />
-                </div>
-              </OverlayTrigger>
-            ) : (
-              <Morale
-                style={{flex: 1}}
-                morale={minMorale}
-              />
-            )
-          }
-        </div>
+        {
+          wSubject.type === 'lbas' ?
+            this.renderLbasItem() :
+            this.renderFleetItem()
+        }
       </ListGroupItem>
     )
   }

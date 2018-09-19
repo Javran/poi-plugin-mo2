@@ -14,7 +14,7 @@ class WSubject {
     fleet: fleetId => `fleet-${fleetId}`,
     preset: presetNo => `preset-${presetNo}`,
     custom: id => `custom-${id}`,
-    lbas: id => `lbas-${id}`,
+    lbas: world => `lbas-${world}`,
   })
 }
 
