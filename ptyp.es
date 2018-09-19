@@ -40,6 +40,10 @@ const WSubjectAlts = {
     name: PropTypes.string,
     ships: PropTypes.arrayOf(PropTypes.number),
   })),
+  Lbas: PropTypes.shape(allRequired({
+    type: PropTypes.oneOf(['lbas']),
+    world: PropTypes.number,
+  })),
 }
 
 const WSubject = PropTypes.oneOfType([

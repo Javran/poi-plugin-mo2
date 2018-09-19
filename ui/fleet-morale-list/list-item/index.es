@@ -3,7 +3,6 @@ import {
   ListGroupItem,
   Button,
   FormControl,
-  Tooltip,
   OverlayTrigger,
 } from 'react-bootstrap'
 import FontAwesome from 'react-fontawesome'
@@ -13,6 +12,9 @@ import { __ } from '../../../tr'
 
 import { WSubject } from '../../../structs'
 import { Morale } from '../../morale'
+
+import { FleetView } from './fleet-view'
+import { LbasView } from './lbas-view'
 
 class ListItem extends Component {
   static propTypes = {
@@ -58,29 +60,6 @@ class ListItem extends Component {
   handleEditingName = e =>
     this.setState({nameText: e.target.value})
 
-  makeTooltip = () => {
-    const { moraleInfo } = this.props
-    const ttId = `mo2-tooltip-${WSubject.id(moraleInfo.wSubject)}`
-    return (
-      <Tooltip id={ttId}>
-        {
-          moraleInfo.ships.map(({rstId,name,level,morale}) => (
-            <div key={rstId} style={{display: 'flex'}}>
-              <div style={{flex: 1, marginRight: 4}}>
-                {
-                  `${name} Lv.${level}`
-                }
-              </div>
-              <Morale
-                style={{fontSize: 'auto'}}
-                morale={morale}
-              />
-            </div>
-          ))
-        }
-      </Tooltip>
-    )
-  }
 
   renderLbasItem() {
     const {
@@ -323,8 +302,15 @@ class ListItem extends Component {
         </div>
         {
           wSubject.type === 'lbas' ?
-            this.renderLbasItem() :
-            this.renderFleetItem()
+            (<LbasView moraleInfo={moraleInfo} />) :
+            (
+              <FleetView
+                moraleInfo={moraleInfo}
+                editing={this.state.editing}
+                nameText={this.state.nameText}
+                handleEditingName={this.handleEditingName}
+              />
+            )
         }
       </ListGroupItem>
     )
