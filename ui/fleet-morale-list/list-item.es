@@ -82,6 +82,123 @@ class ListItem extends Component {
     )
   }
 
+  renderLbasItem() {
+    const {
+      moraleInfo,
+      onRemoveItem,
+      onMoveUp,
+      onMoveDown,
+    } = this.props
+    const { wSubject } = moraleInfo
+    const title = `${__('FleetList.Lbas')} #${wSubject.world}`
+    const xButtonStyle = {
+      paddingTop: 0,
+      marginLeft: 16,
+    }
+
+    return (
+      <ListGroupItem
+        style={{
+          padding: 0,
+          marginBottom: 5,
+          borderRadius: 5,
+          overflow: 'hidden',
+        }}
+      >
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            width: '100%',
+            padding: '2px 4px 5px',
+            backgroundColor: '#424242',
+          }}
+        >
+          <div
+            style={{
+              fontSize: 14,
+              width: 'auto',
+              flex: 1,
+            }}
+          >
+            {title}
+          </div>
+          <Button
+            bsSize="xsmall"
+            disabled={typeof onMoveUp !== 'function'}
+            style={xButtonStyle}
+            onClick={onMoveUp}
+          >
+            <FontAwesome name="arrow-up" />
+          </Button>
+          <Button
+            bsSize="xsmall"
+            disabled={typeof onMoveDown !== 'function'}
+            style={xButtonStyle}
+            onClick={onMoveDown}
+          >
+            <FontAwesome name="arrow-down" />
+          </Button>
+          {
+            !this.state.removalConfirming && (
+              <Button
+                bsSize="xsmall"
+                style={xButtonStyle}
+                onClick={() => this.setState({removalConfirming: true})}
+              >
+                <FontAwesome name="close" />
+              </Button>
+            )
+          }
+          {
+            this.state.removalConfirming && (
+              <Button
+                bsSize="xsmall"
+                bsStyle="danger"
+                style={xButtonStyle}
+                onClick={onRemoveItem}
+              >
+                <FontAwesome name="trash" />
+              </Button>
+            )
+          }
+          {
+            this.state.removalConfirming && (
+              <Button
+                bsSize="xsmall"
+                style={xButtonStyle}
+                onClick={() => this.setState({removalConfirming: false})}
+              >
+                <FontAwesome name="undo" />
+              </Button>
+            )
+          }
+        </div>
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+          }}
+        >
+          <div
+            style={{
+              flex: 6,
+              display: 'flex',
+              flexDirection: 'column',
+              marginTop: 5,
+              marginLeft: 5,
+              paddingBottom: 2,
+            }}
+          >
+            {
+              JSON.stringify(moraleInfo)
+            }
+          </div>
+        </div>
+      </ListGroupItem>
+    )
+  }
+
   render() {
     const {
       moraleInfo,
@@ -91,21 +208,18 @@ class ListItem extends Component {
       onMoveDown,
     } = this.props
     const { wSubject, name, ships } = moraleInfo
+
+    // TODO
+    if (wSubject.type === 'lbas') {
+      return this.renderLbasItem()
+    }
+
     const title = WSubject.destruct({
       fleet: fleetId => `${__('FleetList.Fleet')} #${fleetId}`,
       preset: presetNo => `${__('FleetList.Preset')} #${presetNo}`,
       custom: id => `${__('FleetList.Custom')} #${id}`,
       lbas: world => `${__('FleetList.Lbas')} #${world}`,
     })(wSubject)
-
-    // TODO
-    if (wSubject.type === 'lbas') {
-      return (
-        <div>
-          {JSON.stringify(wSubject)}
-        </div>
-      )
-    }
 
     const minMorale =
       ships.length > 0 ?
