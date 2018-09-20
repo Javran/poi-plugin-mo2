@@ -31,7 +31,6 @@ class LbasSquadronView extends PureComponent {
        - info.actionKind
        - planeInfo:
          + .cond
-         + .state
      */
     return (
       <div
@@ -62,6 +61,7 @@ class LbasSquadronView extends PureComponent {
               style={{
                 display: 'flex',
                 marginTop: 4,
+                ...(pi.state === 2 ? {opacity: 0.4} : {}),
               }}
             >
               <div
@@ -117,13 +117,13 @@ class LbasSquadronView extends PureComponent {
                   style={{fontSize: '110%', fontWeight: 'bold'}}
                   className={pi.count.now !== pi.count.max ? 'poi-ship-cond-20' : ''}
                 >
-                  {pi.count.now}
+                  {pi.state === 2 ? '-' : pi.count.now}
                 </div>
                 <div
                   className="text-muted"
                   style={{fontSize: '80%', marginLeft: '.2em'}}
                 >
-                  /{pi.count.max}
+                  /{pi.state === 2 ? '-' : pi.count.max}
                 </div>
               </div>
             </div>
