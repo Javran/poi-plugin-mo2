@@ -71,7 +71,7 @@ const getLbasInfoFuncSelector = createSelector(
       Math.max(...validPlanes.map(x => x.api_cond))
     )
 
-    const allPlaneInfo = [0,1,2,3].map(pInd => {
+    const planeInfo = [0,1,2,3].map(pInd => {
       const infoRaw = rawPlaneInfo[pInd]
       if (_.isEmpty(infoRaw) || infoRaw.api_state === 0) {
         return null
@@ -96,10 +96,7 @@ const getLbasInfoFuncSelector = createSelector(
       }
     })
 
-    const planeInfo =
-      allPlaneInfo.filter(pi => pi !== null)
-
-    if (planeInfo.length === 0)
+    if (planeInfo.every(pi => pi === null))
       return null
 
     return {
