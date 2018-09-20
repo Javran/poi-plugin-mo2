@@ -10,7 +10,7 @@ import {
   extSelector,
   shipsInfoSelector,
   lbasWorldsSelector,
-  getLbasInfoFuncSelector,
+  getWorldLbasInfoFuncSelector,
 } from '../../selectors'
 
 const presetDeckSelector = createSelector(
@@ -46,8 +46,8 @@ const moraleListSelector =
     shipsInfoSelector,
     fleetsSelector,
     presetDeckSelector,
-    getLbasInfoFuncSelector,
-    (watchlist, shipsInfo, fleets, presetDeck, getLbasInfo) => {
+    getWorldLbasInfoFuncSelector,
+    (watchlist, shipsInfo, fleets, presetDeck, getWorldLbasInfo) => {
       // for marking some piece of info unavailable
       // (unavailable if `ships.length` === 0)
       const unavailable = wSubject => ({
@@ -89,14 +89,10 @@ const moraleListSelector =
             ships,
           }
         },
-        lbas: (world, wSubject) => {
-          const squadrons = [1,2,3].map(x => getLbasInfo(world,x))
-          return {
-            wSubject,
-            world,
-            squadrons,
-          }
-        },
+        lbas: (world, wSubject) => ({
+          wSubject,
+          info: getWorldLbasInfo(world),
+        }),
       })
 
       return watchlist.map(buildFromWSubject)
