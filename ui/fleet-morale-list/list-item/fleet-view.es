@@ -8,7 +8,6 @@ import {
 import FontAwesome from 'react-fontawesome'
 
 import { PTyp } from '../../../ptyp'
-import { __ } from '../../../tr'
 import { WSubject } from '../../../structs'
 import { Morale } from '../../morale'
 

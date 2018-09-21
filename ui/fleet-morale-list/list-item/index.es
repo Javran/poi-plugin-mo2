@@ -2,8 +2,6 @@ import React, { Component } from 'react'
 import {
   ListGroupItem,
   Button,
-  FormControl,
-  OverlayTrigger,
 } from 'react-bootstrap'
 import FontAwesome from 'react-fontawesome'
 
@@ -11,7 +9,6 @@ import { PTyp } from '../../../ptyp'
 import { __ } from '../../../tr'
 
 import { WSubject } from '../../../structs'
-import { Morale } from '../../morale'
 
 import { FleetView } from './fleet-view'
 import { LbasView } from './lbas-view'
