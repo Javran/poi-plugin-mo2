@@ -105,8 +105,8 @@ class FleetMoraleListImpl extends Component {
     if (typeof fsName !== 'undefined' && typeof shipCount !== 'undefined') {
       return [
         basicText,
-        `${__('FleetList.Flagship')}: ${fsName}`,
-        `${__('FleetList.ShipCount')}: ${shipCount}`,
+        `${fsName}`,
+        `${shipCount} ${__('FleetList.NShips')}`,
       ].join(', ')
     } else {
       return basicText
