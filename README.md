@@ -5,7 +5,7 @@ designed for getting morale status for your fleets and ships quickly.
 
 ## Changelog
 
-### 0.6.0 (pending)
+### 0.6.0
 
 - Now items in fleet morale list can move up and down freely
 - New filter for escort carriers
