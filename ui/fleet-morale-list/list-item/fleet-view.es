@@ -5,6 +5,8 @@ import {
   OverlayTrigger,
 } from 'react-bootstrap'
 
+import FontAwesome from 'react-fontawesome'
+
 import { PTyp } from '../../../ptyp'
 import { __ } from '../../../tr'
 import { WSubject } from '../../../structs'
@@ -46,38 +48,27 @@ class FleetView extends PureComponent {
   render() {
     const {
       moraleInfo,
-
       editing,
       nameText,
       handleEditingName,
     } = this.props
     const { name, ships } = moraleInfo
 
-    const minMorale =
-      ships.length > 0 ?
-        Math.min(...ships.map(s => s.morale)) :
-        null
-
-    const fsDesc =
-      ships.length > 0 ?
-        `${ships[0].name} Lv.${ships[0].level} (${ships[0].rstId})` :
-        "-"
-
+    const isEmpty = ships.length === 0
+    const minMorale = isEmpty ? null : Math.min(...ships.map(s => s.morale))
     return (
       <div
         style={{
           display: 'flex',
           alignItems: 'center',
+          padding: '5px 10px',
         }}
       >
         <div
           style={{
-            flex: 6,
             display: 'flex',
             flexDirection: 'column',
-            marginTop: 5,
-            marginLeft: 5,
-            paddingBottom: 2,
+            width: '85%',
           }}
         >
           {
@@ -89,9 +80,9 @@ class FleetView extends PureComponent {
             ) : (
               <div
                 style={{
-                  fontSize: "18px",
-                  fontWeight: "bold",
-                  marginBottom: "5px",
+                  fontSize: 18,
+                  fontWeight: 'bold',
+                  marginBottom: 5,
                 }}
                 >
                 {name}
@@ -101,24 +92,60 @@ class FleetView extends PureComponent {
           <div
             style={{
               display: 'flex',
-              alignItems: 'baseline',
+              alignItems: 'flex-end',
+              fontSize: '120%',
             }}
           >
+            {
+              isEmpty ? (
+                <div style={{flex: 1}} />
+              ) : (
+                <div
+                  style={{
+                    flex: 1,
+                    display: 'flex',
+                    alignItems: 'flex-end',
+                    minWidth: 0,
+                  }}
+                >
+                  <FontAwesome
+                    name="flag"
+                    style={{
+                      height: '1em',
+                      alignSelf: 'center',
+                    }}
+                  />
+                  <div
+                    style={{
+                      marginLeft: '.2em',
+                      minWidth: 1,
+                      textOverflow: 'ellipsis',
+                      overflow: 'hidden',
+                      whiteSpace: 'nowrap',
+                      fontSize: 'bold',
+                    }}
+                  >
+                    {ships[0].name}
+                  </div>
+                  <div
+                    style={{
+                      fontSize: '70%',
+                      marginLeft: '.2em',
+                    }}
+                  >
+                    ({ships[0].rstId})
+                  </div>
+                </div>
+              )
+            }
             <div
               style={{
-                flex: 3,
-                fontSize: 15,
+                width: '4.8em',
+                paddingRight: '.2em',
+                textAlign: 'right',
               }}
             >
-              {__('FleetList.Flagship')}: {fsDesc}
-            </div>
-            <div
-              style={{
-                flex: 2,
-                fontSize: 15,
-              }}
-            >
-              {__('FleetList.ShipCount')}: {ships.length}
+              {ships.length} ship(s)
             </div>
           </div>
         </div>
@@ -131,7 +158,7 @@ class FleetView extends PureComponent {
             </OverlayTrigger>
           ) : (
             <Morale
-              style={{flex: 1}}
+              style={{width: '15%'}}
               morale={minMorale}
             />
           )
