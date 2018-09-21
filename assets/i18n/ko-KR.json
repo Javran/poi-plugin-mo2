@@ -13,9 +13,9 @@
     "Fleet": "Fleet",
     "Preset": "Preset",
     "Custom": "Custom",
+    "Lbas": "World %d LBAS",
     "Add": "Add...",
-    "Flagship": "Flagship",
-    "ShipCount": "Ship Count"
+    "NShips": "ship(s)"
   },
 
   "ShipList": {

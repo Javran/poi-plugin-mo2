@@ -13,9 +13,9 @@
     "Fleet": "当前舰队",
     "Preset": "编成记录",
     "Custom": "定制舰队",
+    "Lbas": "World %d 基地航空队",
     "Add": "添加…",
-    "Flagship": "旗舰",
-    "ShipCount": "舰娘数"
+    "NShips": "舰"
   },
 
   "ShipList": {

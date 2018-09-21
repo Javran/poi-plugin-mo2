@@ -13,9 +13,9 @@
     "Fleet": "當前艦隊",
     "Preset": "編成記錄",
     "Custom": "定製艦隊",
+    "Lbas": "World %d 基地航空隊",
     "Add": "添加…",
-    "Flagship": "旗艦",
-    "ShipCount": "艦娘數"
+    "NShips": "艦"
   },
 
   "ShipList": {

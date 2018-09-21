@@ -74,7 +74,7 @@ class ListItem extends Component {
       fleet: fleetId => `${__('FleetList.Fleet')} #${fleetId}`,
       preset: presetNo => `${__('FleetList.Preset')} #${presetNo}`,
       custom: id => `${__('FleetList.Custom')} #${id}`,
-      lbas: world => `${__('FleetList.Lbas')} #${world}`,
+      lbas: world => `${__('FleetList.Lbas', world)}`,
     })(wSubject)
 
     const isLbasItem = wSubject.type === 'lbas'
