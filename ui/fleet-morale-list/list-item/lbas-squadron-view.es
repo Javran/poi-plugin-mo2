@@ -2,6 +2,8 @@ import React, { PureComponent } from 'react'
 import { join } from 'path-extra'
 import { PTyp } from '../../../ptyp'
 
+import { LbasActionLabel } from './lbas-action-label'
+
 /* eslint-disable indent */
 const condToClassName = cond =>
   cond === 1 ? 'poi-ship-cond-49' :
@@ -25,13 +27,6 @@ class LbasSquadronView extends PureComponent {
 
   render() {
     const {info} = this.props
-    /*
-       TODO:
-
-       - info.actionKind
-       - planeInfo:
-         + .cond
-     */
     return (
       <div
         style={{
@@ -54,6 +49,13 @@ class LbasSquadronView extends PureComponent {
         >
           {info.name}
         </div>
+        <LbasActionLabel
+          actionKind={info.actionKind}
+          style={{
+            alignSelf: 'center',
+            width: '6em',
+          }}
+        />
         {
           info.planeInfo.map(pi => pi ? (
             <div
