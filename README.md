@@ -5,6 +5,10 @@ designed for getting morale status for your fleets and ships quickly.
 
 ## Changelog
 
+### 0.6.1
+
+- Bug fix to a problem that would occur when const data is not available
+
 ### 0.6.0
 
 - Now items in fleet morale list can move up and down freely
