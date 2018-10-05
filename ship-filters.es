@@ -182,7 +182,7 @@ class ShipFilter {
     stypeIdFilter: stypeId => {
       const typeInfo =
         stypeInfo.find(x => x.stype === stypeId)
-      if (typeInfo !== 'undefined') {
+      if (typeof typeInfo !== 'undefined') {
         return `${typeInfo.name} (${stypeId})`
       } else {
         return `stype: ${stypeId}`
