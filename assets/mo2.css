@@ -54,35 +54,35 @@
     margin-right: 5px;
 }
 
-#poi-plugin-mo2 .dark .poi-ship-cond-0 {
+#mo2-tabs.dark .poi-ship-cond-0 {
     color: #dd514c;
 }
 
 /* cond 20~29 */
-#poi-plugin-mo2 .dark .poi-ship-cond-20 {
+#mo2-tabs.dark .poi-ship-cond-20 {
     color: #f37b1d;
 }
 
 /* cond 30~39 */
-#poi-plugin-mo2 .dark .poi-ship-cond-30 {
+#mo2-tabs.dark .poi-ship-cond-30 {
     color: #ffc880;
 }
 
 /* cond 40~48 */
-#poi-plugin-mo2 .dark .poi-ship-cond-40 {
+#mo2-tabs.dark .poi-ship-cond-40 {
     color: #fff;
 }
 
 /* cond 49 */
-#poi-plugin-mo2 .dark .poi-ship-cond-49 {
+#mo2-tabs.dark .poi-ship-cond-49 {
     color: #fff;
 }
 
 /* cond 50~52 */
-#poi-plugin-mo2 .dark .poi-ship-cond-50 {
+#mo2-tabs.dark .poi-ship-cond-50 {
     color: #fe0;
 }
 
-#poi-plugin-mo2 .dark .poi-ship-cond-53 {
+#mo2-tabs.dark .poi-ship-cond-53 {
     color: #ffff40;
 }
