@@ -58,9 +58,17 @@
     color: #dd514c;
 }
 
+#mo2-tabs.light .poi-ship-cond-0 {
+    color: #22aeb3;
+}
+
 /* cond 20~29 */
 #mo2-tabs.dark .poi-ship-cond-20 {
     color: #f37b1d;
+}
+
+#mo2-tabs.light .poi-ship-cond-20 {
+    color: #0c84e2;
 }
 
 /* cond 30~39 */
@@ -68,9 +76,17 @@
     color: #ffc880;
 }
 
+#mo2-tabs.light .poi-ship-cond-30 {
+    color: #00377f;
+}
+
 /* cond 40~48 */
 #mo2-tabs.dark .poi-ship-cond-40 {
     color: #fff;
+}
+
+#mo2-tabs.light .poi-ship-cond-40 {
+    color: #000;
 }
 
 /* cond 49 */
@@ -78,11 +94,23 @@
     color: #fff;
 }
 
+#mo2-tabs.light .poi-ship-cond-49 {
+    color: #000;
+}
+
 /* cond 50~52 */
 #mo2-tabs.dark .poi-ship-cond-50 {
     color: #fe0;
 }
 
+#mo2-tabs.light .poi-ship-cond-50 {
+    color: #01f;
+}
+
 #mo2-tabs.dark .poi-ship-cond-53 {
     color: #ffff40;
+}
+
+#mo2-tabs.light .poi-ship-cond-53 {
+    color: #0000bf;
 }

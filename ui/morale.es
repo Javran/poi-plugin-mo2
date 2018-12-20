@@ -17,6 +17,7 @@ class Morale extends Component {
     const { morale, style } = this.props
 
     /* eslint-disable indent */
+    // TODO: deal with light theme.
     const moraleStyle =
       morale === null ? {} :
       morale <= 48 ? {} :
