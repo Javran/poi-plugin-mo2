@@ -5,9 +5,9 @@ designed for getting morale status for your fleets and ships quickly.
 
 ## Changelog
 
-### 0.7.0 (pending)
+### 0.7.0
 
-- TODO: Adjust for poi 10
+- Fix color issue for poi 10 dark theme
 
 ### 0.6.1
 
