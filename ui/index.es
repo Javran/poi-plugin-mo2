@@ -11,6 +11,7 @@ import {
 } from '../store'
 import {
   tabSelector,
+  isDarkThemeSelector,
 } from '../selectors'
 
 import { PTyp } from '../ptyp'
@@ -21,6 +22,7 @@ import { ShipMoraleList } from './ship-morale-list'
 class MoraleMonitorImpl extends Component {
   static propTypes = {
     tab: PTyp.Tab.isRequired,
+    isDarkTheme: PTyp.bool.isRequired,
     pStateModify: PTyp.func.isRequired,
   }
 
@@ -30,7 +32,7 @@ class MoraleMonitorImpl extends Component {
     )
 
   render() {
-    const {tab} = this.props
+    const {tab, isDarkTheme} = this.props
     return (
       <div
         style={{
@@ -43,6 +45,13 @@ class MoraleMonitorImpl extends Component {
           href={join(__dirname, '..', 'assets', 'mo2.css')}
         />
         <Tabs
+          className={
+            /*
+               while selector ensures that we'll only have two themes to deal with,
+               it makes sense that we'll still use theme names here.
+             */
+            isDarkTheme ? 'dark' : 'light'
+          }
           activeKey={tab}
           onSelect={this.handleSelectTab}
           style={{
@@ -67,6 +76,7 @@ const MoraleMonitor = connect(
   createStructuredSelector(
     {
       tab: tabSelector,
+      isDarkTheme: isDarkThemeSelector,
     }
   ),
   mapDispatchToProps,

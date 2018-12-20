@@ -6,6 +6,7 @@ import {
   basicSelector,
   constSelector,
   fleetsSelector as poiFleetsSelector,
+  configSelector,
 } from 'views/utils/selectors'
 
 import { initState } from '../store/common'
@@ -100,6 +101,18 @@ const availableShipTypesSelector = createSelector(
     )
 )
 
+const isDarkThemeSelector = createSelector(
+  configSelector,
+  conf => {
+    const theme = _.get(conf, ['poi', 'appearance', 'theme'], 'dark')
+    if (theme === 'dark' || theme === 'light') {
+      return theme === 'dark'
+    }
+    console.error(`unexpected theme: ${theme}, assuming dark`)
+    return true
+  }
+)
+
 export {
   extSelector,
   fleetsSelector,
@@ -111,4 +124,5 @@ export {
   admiralIdSelector,
   filterMethodsSelector,
   availableShipTypesSelector,
+  isDarkThemeSelector,
 }

@@ -5,6 +5,10 @@ designed for getting morale status for your fleets and ships quickly.
 
 ## Changelog
 
+### 0.7.0 (pending)
+
+- TODO: Adjust for poi 10
+
 ### 0.6.1
 
 - Bug fix to a problem that would occur when const data is not available
