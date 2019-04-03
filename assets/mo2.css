@@ -114,3 +114,12 @@
 #mo2-tabs.light .poi-ship-cond-53 {
     color: #0000bf;
 }
+
+#mo2-tabs-pane-fleet {
+    overflow: auto;
+    height: 100%;
+}
+
+#mo2-tabs > .tab-content {
+    flex: 1;
+}
