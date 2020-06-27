@@ -5,6 +5,10 @@ designed for getting morale status for your fleets and ships quickly.
 
 ## Changelog
 
+### 0.7.1
+
+- New whale!
+
 ### 0.7.0
 
 - Fix color issue for poi 10 dark theme
