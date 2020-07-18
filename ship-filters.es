@@ -139,8 +139,12 @@ const specialFilters = new Map()
     'whales', 'Whales',
     store => {
       const {remodelChains} = shipRemodelInfoSelector(store)
+      // TODO: unify with selector.
+      // Taigei = 184, Jingei = 634
+      const taigeiMstIds = (184 in remodelChains) ? remodelChains[184] : []
+      const jingeiMstIds = (634 in remodelChains) ? remodelChains[634] : []
+      const whaleMstIds = [...taigeiMstIds, ...jingeiMstIds]
       if (184 in remodelChains) {
-        const whaleMstIds = remodelChains[184]
         return shipInfo => whaleMstIds.includes(shipInfo.mstId)
       } else {
         return () => false
