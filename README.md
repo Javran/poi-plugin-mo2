@@ -5,6 +5,10 @@ designed for getting morale status for your fleets and ships quickly.
 
 ## Changelog
 
+### 0.8.0
+
+- Partially migrated to Blueprint3, this should fix the dropdown menu issue.
+
 ### 0.7.1
 
 - New whale!

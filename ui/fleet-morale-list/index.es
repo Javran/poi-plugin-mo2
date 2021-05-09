@@ -3,10 +3,17 @@ import { connect } from 'react-redux'
 import {
   ListGroup,
   ListGroupItem,
-  ButtonGroup,
-  DropdownButton,
-  MenuItem,
 } from 'react-bootstrap'
+import {
+  Button,
+  Menu,
+  MenuItem,
+  Position,
+  ButtonGroup as ButtonGroup2,
+} from '@blueprintjs/core'
+import { Popover } from 'views/components/etc/overlay'
+import styled from 'styled-components'
+
 import { modifyObject } from 'subtender'
 
 import { PTyp } from '../../ptyp'
@@ -16,6 +23,12 @@ import { mapDispatchToProps } from '../../store'
 import { fleetMoraleListSelector } from './selectors'
 
 import { ListItem } from './list-item'
+
+const FPopover = styled(Popover)`
+  & > span.bp3-popover-target {
+    width: 100%
+  }
+`
 
 class FleetMoraleListImpl extends Component {
   static propTypes = {
@@ -32,7 +45,7 @@ class FleetMoraleListImpl extends Component {
     )
   )
 
-  handleAddNewTarget = ws =>
+  handleAddNewTarget = ws => () =>
     this.modifyWatchlist(watchlist =>
       [...watchlist, ws])
 
@@ -115,6 +128,20 @@ class FleetMoraleListImpl extends Component {
 
   render() {
     const { moraleList } = this.props
+    const fleetSelectionMenuContent = (
+      <Menu>
+        {
+          this.props.availableTargets.map( ws => (
+            <MenuItem
+              key={WSubject.id(ws)}
+              text={this.renderMenuItemContent(ws)}
+              onClick={this.handleAddNewTarget(ws)}
+            />
+          ))
+        }
+      </Menu>
+    )
+
     return (
       <ListGroup style={{marginBottom: 30}}>
         {
@@ -140,25 +167,19 @@ class FleetMoraleListImpl extends Component {
           }}
           key="availables"
         >
-          <ButtonGroup justified>
-            <DropdownButton
-              style={{marginTop: 0}}
-              onSelect={this.handleAddNewTarget}
-              title={__("FleetList.Add")}
-              id="mo2-dropdown-add-new-target">
-              {
-                this.props.availableTargets.map( ws => (
-                  <MenuItem
-                    eventKey={ws}
-                    key={WSubject.id(ws)}>
-                    {
-                      this.renderMenuItemContent(ws)
-                    }
-                  </MenuItem>
-                ))
-              }
-            </DropdownButton>
-          </ButtonGroup>
+          <FPopover
+            content={fleetSelectionMenuContent}
+            position={Position.BOTTOM}
+            style={{width: '100%'}}
+          >
+            <ButtonGroup2
+              fill
+            >
+              <Button>
+                {__("FleetList.Add")}
+              </Button>
+            </ButtonGroup2>
+          </FPopover>
         </ListGroupItem>
       </ListGroup>
     )

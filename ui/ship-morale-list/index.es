@@ -1,11 +1,19 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import {
-  DropdownButton,
-  MenuItem,
   Table,
 } from 'react-bootstrap'
 import { modifyObject } from 'subtender'
+
+import {
+  Button,
+  Menu,
+  MenuItem,
+  Position,
+  ButtonGroup,
+} from '@blueprintjs/core'
+import { Popover } from 'views/components/etc/overlay'
+import styled from 'styled-components'
 
 import { PTyp } from '../../ptyp'
 import { __ } from '../../tr'
@@ -33,6 +41,12 @@ const WrappedTd = ({content}) => (
   </td>
 )
 WrappedTd.propTypes = PTyp.node.isRequired
+
+const CompactMenu = styled(Menu)`
+  & .bp3-menu-item {
+    padding: 2px 6px
+  }
+`
 
 const headerSpecs = []
 {
@@ -81,7 +95,7 @@ class ShipMoraleListImpl extends Component {
     return `${__('ShipList.Morale')}: ${moraleValueText}`
   }
 
-  handleSTypeExtChange = stypeExt =>
+  handleSTypeExtChange = stypeExt => () =>
     this.modifyShipsPState(
       modifyObject(
         'filter',
@@ -89,7 +103,7 @@ class ShipMoraleListImpl extends Component {
       )
     )
 
-  handleMoraleFilterChange = predRep =>
+  handleMoraleFilterChange = predRep => () =>
     this.modifyShipsPState(
       modifyObject(
         'filter',
@@ -135,6 +149,47 @@ class ShipMoraleListImpl extends Component {
       ...ShipFilter.specialFilters.entries(),
     ].filter(([_k, v]) => v.id !== 'whales' || isKingOfWhales)
 
+
+    const stypeMenuContent = (
+      <CompactMenu>
+        {
+          specialFilterEntries.map(([id]) =>
+            (
+              <MenuItem
+                key={id}
+                text={prepareSTypeText(id)}
+                onClick={this.handleSTypeExtChange(id)}
+                style={{fontWeight: '50%'}}
+              />
+            )
+          )
+        }
+        {
+          stypeInfo.map(({stype}) => (
+            <MenuItem
+              key={stype}
+              text={prepareSTypeText(`stype-${stype}`)}
+              onClick={this.handleSTypeExtChange(`stype-${stype}`)}
+            />
+          ))
+        }
+      </CompactMenu>
+    )
+
+    const moraleMenuContent = (
+      <Menu>
+        {
+          filterMethods.map(predRep => (
+            <MenuItem
+              key={IntPredRep.toId(predRep)}
+              text={toString(predRep)}
+              onClick={this.handleMoraleFilterChange(predRep)}
+            />
+          ))
+        }
+      </Menu>
+    )
+
     return (
       <div
         style={{
@@ -144,64 +199,24 @@ class ShipMoraleListImpl extends Component {
           flexDirection: 'column',
         }}
       >
-        <div
-          id="mo2-ship-control-bar"
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-around',
-          }}
-        >
-          <DropdownButton
-            onSelect={this.handleSTypeExtChange}
-            style={{
-              textOverflow: 'ellipsis',
-              overflow: 'hidden',
-              whiteSpace: 'nowrap',
-              width: '100%',
-            }}
-            title={this.displaySTypeExt()}
-            id="mo2-dropdown-stype"
+        <ButtonGroup fill>
+          <Popover
+            content={stypeMenuContent}
+            position={Position.BOTTOM}
           >
-            {
-              specialFilterEntries.map(([id]) =>
-                (
-                  <MenuItem key={id} eventKey={id}>
-                    {
-                      prepareSTypeText(id)
-                    }
-                  </MenuItem>
-                )
-              )
-            }
-            {
-              stypeInfo.map(({stype}) => (
-                <MenuItem key={stype} eventKey={`stype-${stype}`}>
-                  {prepareSTypeText(`stype-${stype}`)}
-                </MenuItem>
-              ))
-            }
-          </DropdownButton>
-          <DropdownButton
-            onSelect={this.handleMoraleFilterChange}
-            title={this.displayMoraleFilter()}
-            id="mo2-dropdown-morale"
-            style={{
-              width: '100%',
-            }}
+            <Button>
+              {this.displaySTypeExt()}
+            </Button>
+          </Popover>
+          <Popover
+            content={moraleMenuContent}
+            position={Position.BOTTOM}
           >
-            {
-              filterMethods.map(predRep => (
-                <MenuItem
-                  key={IntPredRep.toId(predRep)}
-                  eventKey={predRep}
-                >
-                  {toString(predRep)}
-                </MenuItem>
-              ))
-            }
-          </DropdownButton>
-        </div>
+            <Button>
+              {this.displayMoraleFilter()}
+            </Button>
+          </Popover>
+        </ButtonGroup>
         <div
           style={{
             marginTop: '8px',

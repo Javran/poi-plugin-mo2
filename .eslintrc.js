@@ -40,7 +40,7 @@ module.exports = {
     'jsx-a11y/no-static-element-interactions': 'off',
     'arrow-parens': ['error', 'as-needed'],
     'no-underscore-dangle': ['error', { allow: ['__','__r','__n'] }],
-    'no-console': ['error', { allow: ['warn', 'error', 'info'] }],
+    'no-console': ['error', { allow: ['warn', 'error', 'info', 'assert'] }],
     'no-continue': 'off',
     'space-in-parens': 'off',
     'object-curly-spacing': 'off',
