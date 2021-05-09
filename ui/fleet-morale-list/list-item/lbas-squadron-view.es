@@ -102,7 +102,7 @@ class LbasSquadronView extends PureComponent {
                      assuming alvX.png are all of the same dimension size,
                      we want ace to take space without actually showing it,
                    */
-                 ...(pi.ace === 0 ? {visibility: 'hidden'} : null),
+                  ...(pi.ace === 0 ? {visibility: 'hidden'} : null),
                 }}
                 alt={`ace-${info.ace}`}
                 src={join('assets', 'img', 'airplane', `alv${pi.ace > 0 ? pi.ace : 1}.png`)}

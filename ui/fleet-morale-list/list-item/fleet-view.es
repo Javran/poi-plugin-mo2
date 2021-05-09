@@ -83,7 +83,7 @@ class FleetView extends PureComponent {
                   fontWeight: 'bold',
                   marginBottom: 5,
                 }}
-                >
+              >
                 {name}
               </div>
             )

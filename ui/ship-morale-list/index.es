@@ -195,7 +195,7 @@ class ShipMoraleListImpl extends Component {
                 <MenuItem
                   key={IntPredRep.toId(predRep)}
                   eventKey={predRep}
-                  >
+                >
                   {toString(predRep)}
                 </MenuItem>
               ))

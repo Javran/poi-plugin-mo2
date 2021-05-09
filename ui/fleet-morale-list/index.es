@@ -53,7 +53,7 @@ class FleetMoraleListImpl extends Component {
         .map(w => w.id)
       const newId =
         customIds.length === 0 ? 1 :
-          Math.max(...customIds) + 1
+        Math.max(...customIds) + 1
 
       const newWS = {
         type: 'custom',
@@ -149,8 +149,8 @@ class FleetMoraleListImpl extends Component {
               {
                 this.props.availableTargets.map( ws => (
                   <MenuItem
-                      eventKey={ws}
-                      key={WSubject.id(ws)}>
+                    eventKey={ws}
+                    key={WSubject.id(ws)}>
                     {
                       this.renderMenuItemContent(ws)
                     }

@@ -118,7 +118,7 @@ const updatePState = (admiralId, oldPState) => {
                   typeof currentPState.sortReverse !== 'undefined' ?
                     Boolean(currentPState.sortReverse) : false
                 )
-              ),
+              )
             )
           ),
           // on ".ships.filter"
@@ -133,11 +133,11 @@ const updatePState = (admiralId, oldPState) => {
                    leaving all the others default values.
                  */
                 modifyObject(stypeExt, () => currentPState.filterMorale)
-              ),
+              )
             )
-          ),
+          )
         )
-      ),
+      )
     )(emptyPState)
 
     currentPState = newPState

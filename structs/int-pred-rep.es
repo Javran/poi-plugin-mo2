@@ -48,9 +48,10 @@ let inputParser
       P.regexp(/[0-9]+/).map(Number)
     ).map(
       value => ({type, value})
-    ).skip(
-      P.optWhitespace
     )
+      .skip(
+        P.optWhitespace
+      )
 
   inputParser = P.alt(
     ...[

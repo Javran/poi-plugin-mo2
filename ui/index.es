@@ -79,7 +79,7 @@ const MoraleMonitor = connect(
       isDarkTheme: isDarkThemeSelector,
     }
   ),
-  mapDispatchToProps,
+  mapDispatchToProps
 )(MoraleMonitorImpl)
 
 export { MoraleMonitor }

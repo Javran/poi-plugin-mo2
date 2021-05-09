@@ -89,7 +89,7 @@ class SettingsImpl extends Component {
     const isInputValid = Boolean(parsed)
     const isInputChanged = isInputValid && !_.isEqual(
       filterMethods.map(IntPredRep.toId),
-      parsed.map(IntPredRep.toId),
+      parsed.map(IntPredRep.toId)
     )
 
     return (
