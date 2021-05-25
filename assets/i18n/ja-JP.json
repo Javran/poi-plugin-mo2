@@ -1,56 +1,56 @@
 {
   "Package": {
-    "Title": "Morale Monitor",
-    "Desc": "Monitoring morale for your fleets and ships"
+    "Title": "キラキラ",
+    "Desc": "艦隊や艦娘の疲労度を表示します"
   },
 
   "Tab": {
-    "Fleet": "Fleets",
-    "Ship": "Ships"
+    "Fleet": "艦隊",
+    "Ship": "艦娘"
   },
 
   "FleetList": {
-    "Fleet": "Fleet",
-    "Preset": "Preset",
-    "Custom": "Custom",
+    "Fleet": "艦隊",
+    "Preset": "編成記録",
+    "Custom": "カスタム",
     "Lbas": "World %d LBAS",
-    "Add": "Add...",
-    "NShips": "ship(s)"
+    "Add": "追加",
+    "NShips": "隻"
   },
 
   "ShipList": {
-    "Type": "Type",
-    "Name": "Name",
+    "Type": "種類",
+    "Name": "艦名",
     "Level": "Lv.",
-    "Morale": "Morale",
-    "All": "All"
+    "Morale": "疲労度",
+    "All": "全て"
   },
 
   "SpecialFilters": {
-    "dd-cl": "DD / CL",
-    "dlc": "DLC-capable",
-    "dlc-dd-cl": "DLC-capable (DD / CL only)",
-    "dlc-dd": "DLC-capable (DD only)",
-    "cv-cvl-av": "CV / CVL / AV",
-    "cv-cvl-cvb": "CV / CVL / CVB",
-    "cve": "Escort Carriers",
-    "battleship": "Battleships",
-    "sub": "Submarines",
-    "cl-clt-ct": "CL / CLT / CT",
-    "whales": "Whales"
+    "dd-cl": "駆逐艦 / 軽巡洋艦",
+    "dlc": "大発系が装備できる（すべての艦娘）",
+    "dlc-dd-cl": "大発系が装備できる（駆逐艦 / 軽巡洋艦）",
+    "dlc-dd": "大発系が装備できる（駆逐艦）",
+    "cv-cvl-av": "空母 / 軽空母 / 水蒸気母艦",
+    "cv-cvl-cvb": "空母 / 軽空母 / 装甲空母",
+    "cve": "護衛空母",
+    "battleship": "すべての戦艦",
+    "sub": "すべての潜水艦",
+    "cl-clt-ct": "軽巡洋艦 / 重雷装巡洋艦 / 練習巡洋艦",
+    "whales": "大鯨 / 龍鳳 / 龍鳳改 / 龍鳳改二戊 / 龍鳳改二"
   },
 
-  "CustomMoraleFilters": "Custom Morale Filters",
+  "CustomMoraleFilters": "カスタム疲労度フィルター",
   "CustomMoraleFiltersTooltipMD": [
-    "Example: `<50,>=40,=100,<=30,>49`",
+    "例: `<50,>=40,=100,<=30,>49`",
     "",
-    "Supported operators are `<`, `<=`, `>`, `>=`, `=`",
+    "利用できる演算子 `<`, `<=`, `>`, `>=`, `=`",
     "",
-    "Filters are separated by comma (`,`).",
+    "フィルターはコンマ (`,`) 区切りで入力します",
     "",
-    "Duplicated filters are ignored.",
+    "重複したフィルターは無視されます",
     "",
-    "Spaces are allowed between operator and number,",
-    "and between filters."
+    "演算子、数値、フィルタの間にスペースを入れると見やすくなります",
+    ""
   ]
 }
