@@ -14,7 +14,7 @@ import {
 } from 'react-bootstrap'
 import Markdown from 'react-remarkable'
 import { modifyObject } from 'subtender'
-import { translate } from 'react-i18next'
+import { withTranslation } from 'react-i18next'
 
 import { initState, mapDispatchToProps } from '../store'
 import { filterMethodsSelector } from '../selectors'
@@ -26,7 +26,7 @@ import {
   intPredRepsToUserInput,
 } from '../structs'
 
-@translate('poi-plugin-mo2')
+@withTranslation('poi-plugin-mo2')
 class SettingsImpl extends Component {
   static propTypes = {
     filterMethods: PTyp.arrayOf(PTyp.object).isRequired,

@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react'
 import { Label } from 'react-bootstrap'
-import { translate } from 'react-i18next'
+import { withTranslation } from 'react-i18next'
 
 import { PTyp } from '../../../ptyp'
 
@@ -19,7 +19,7 @@ const actions = new Map();
   def(4, 'main:Rest', 'success')
 })()
 
-@translate(['main'])
+@withTranslation(['main'])
 class LbasActionLabel extends PureComponent {
   static propTypes = {
     actionKind: PTyp.number.isRequired,
