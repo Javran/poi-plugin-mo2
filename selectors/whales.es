@@ -58,7 +58,8 @@ const isKingOfWhalesSelector = createSelector(
     // Taigei = 184, Jingei = 634
     const taigeiMstIds = (184 in remodelChains) ? remodelChains[184] : []
     const jingeiMstIds = (634 in remodelChains) ? remodelChains[634] : []
-    const whaleMstIds = [...taigeiMstIds, ...jingeiMstIds]
+    const chougeiMstIds = (635 in remodelChains) ? remodelChains[635] : []
+    const whaleMstIds = [...taigeiMstIds, ...jingeiMstIds, ...chougeiMstIds]
     // selector only from all locked ships
     const whales = _.values(shipsInfo).filter(s =>
       whaleMstIds.includes(s.mstId) && s.locked
