@@ -51,15 +51,24 @@ mmmmmmmmmmdyoymNNmdhydNdddhddmdmN+-.    `. /` .````````.:os/:/++++:``:+/+smmmdhh
 mmmmmmmmmmmmmdNNNNdysymdhyhhmdmmds-:-...` `/  -`  `:/-` . .- `:/+:-.``/++odhhhysyyymdmmmmmmmmmmmmmmm
 mmmmmmmmmmmmmhNNmNNmddmmhhddmmmdm+.       -:  --//++/  ``  /yyhh+++++//o+ommdyydmmdmhmmmmmmmmmmmmmmm
  */
+
+
+const mkWhaleMstIds = remodelChains => {
+  const taigeiMstIds =
+    (184 in remodelChains) ? remodelChains[184] : []
+  const jingeiMstIds =
+    (634 in remodelChains) ? remodelChains[634] : []
+  const chougeiMstIds =
+    (635 in remodelChains) ? remodelChains[635] : []
+  return [...taigeiMstIds, ...jingeiMstIds, ...chougeiMstIds]
+}
+
+
 const isKingOfWhalesSelector = createSelector(
   shipsInfoSelector,
   shipRemodelInfoSelector,
   (shipsInfo, {remodelChains}) => {
-    // Taigei = 184, Jingei = 634
-    const taigeiMstIds = (184 in remodelChains) ? remodelChains[184] : []
-    const jingeiMstIds = (634 in remodelChains) ? remodelChains[634] : []
-    const chougeiMstIds = (635 in remodelChains) ? remodelChains[635] : []
-    const whaleMstIds = [...taigeiMstIds, ...jingeiMstIds, ...chougeiMstIds]
+    const whaleMstIds = mkWhaleMstIds(remodelChains)
     // selector only from all locked ships
     const whales = _.values(shipsInfo).filter(s =>
       whaleMstIds.includes(s.mstId) && s.locked
@@ -121,5 +130,6 @@ const isKingOfWhalesSelector = createSelector(
 )
 
 export {
+  mkWhaleMstIds,
   isKingOfWhalesSelector,
 }

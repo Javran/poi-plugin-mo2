@@ -9,6 +9,10 @@ import {
   shipRemodelInfoSelector,
 } from 'views/utils/selectors'
 
+import {
+  mkWhaleMstIds
+} from './selectors/whales'
+
 const isOneOf = xs => x => xs.indexOf(x) !== -1
 
 // predAnd(p1,p2,...)(x)
@@ -139,11 +143,7 @@ const specialFilters = new Map()
     'whales', 'Whales',
     store => {
       const {remodelChains} = shipRemodelInfoSelector(store)
-      // TODO: unify with selector.
-      // Taigei = 184, Jingei = 634
-      const taigeiMstIds = (184 in remodelChains) ? remodelChains[184] : []
-      const jingeiMstIds = (634 in remodelChains) ? remodelChains[634] : []
-      const whaleMstIds = [...taigeiMstIds, ...jingeiMstIds]
+      const whaleMstIds = mkWhaleMstIds(remodelChains)
       if (184 in remodelChains) {
         return shipInfo => whaleMstIds.includes(shipInfo.mstId)
       } else {
