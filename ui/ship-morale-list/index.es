@@ -43,7 +43,7 @@ const WrappedTd = ({content}) => (
 WrappedTd.propTypes = PTyp.node.isRequired
 
 const CompactMenu = styled(Menu)`
-  & .bp3-menu-item {
+  & .bp4-menu-item {
     padding: 2px 6px
   }
 `
