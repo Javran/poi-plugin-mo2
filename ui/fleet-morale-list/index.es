@@ -10,6 +10,7 @@ import {
   MenuItem,
   Position,
   ButtonGroup as ButtonGroup2,
+  Classes,
 } from '@blueprintjs/core'
 import { Popover } from 'views/components/etc/overlay'
 import styled from 'styled-components'
@@ -25,7 +26,7 @@ import { fleetMoraleListSelector } from './selectors'
 import { ListItem } from './list-item'
 
 const FPopover = styled(Popover)`
-  & > span.bp4-popover-target {
+  & > span.${Classes.POPOVER_TARGET} {
     width: 100%
   }
 `

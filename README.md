@@ -5,6 +5,10 @@ designed for getting morale status for your fleets and ships quickly.
 
 ## Changelog
 
+### 0.8.3
+
+- Fix style for both blueprint 3 and blueprint 4.
+
 ### 0.8.2
 
 - Bug fixes.

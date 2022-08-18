@@ -11,6 +11,7 @@ import {
   MenuItem,
   Position,
   ButtonGroup,
+  Classes,
 } from '@blueprintjs/core'
 import { Popover } from 'views/components/etc/overlay'
 import styled from 'styled-components'
@@ -43,7 +44,7 @@ const WrappedTd = ({content}) => (
 WrappedTd.propTypes = PTyp.node.isRequired
 
 const CompactMenu = styled(Menu)`
-  & .bp4-menu-item {
+  & .${Classes.MENU_ITEM} {
     padding: 2px 6px
   }
 `
