@@ -26,7 +26,7 @@ import { fleetMoraleListSelector } from './selectors'
 import { ListItem } from './list-item'
 
 const FPopover = styled(Popover)`
-  & > span.${Classes.POPOVER_TARGET} {
+  & > span.${Classes.POPOVER_TARGET}, &.bp4-popover2-target {
     width: 100%
   }
 `
