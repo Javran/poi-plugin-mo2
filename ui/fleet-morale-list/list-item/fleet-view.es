@@ -8,6 +8,7 @@ import {
 import FontAwesome from 'react-fontawesome'
 
 import { PTyp } from '../../../ptyp'
+import { __ } from '../../../tr'
 import { WSubject } from '../../../structs'
 import { Morale } from '../../morale'
 
@@ -144,7 +145,7 @@ class FleetView extends PureComponent {
                 textAlign: 'right',
               }}
             >
-              {ships.length} ship(s)
+              {ships.length} {__("FleetList.NShips")}
             </div>
           </div>
         </div>
