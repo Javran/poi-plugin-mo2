@@ -62,7 +62,26 @@ const headerSpecs = []
   defineHeader(__('ShipList.Morale'),'morale',`16%`)
 }
 
-class ShipMoraleListImpl extends Component {
+
+@connect(
+  state => {
+    const props = shipMoraleListSelector(state)
+    const filterMethods = filterMethodsSelector(state)
+    const isKingOfWhales = isKingOfWhalesSelector(state)
+    const actualFilterMethods = [
+      {type: 'all'},
+      ...filterMethods,
+    ]
+
+    return {
+      ...props,
+      filterMethods: actualFilterMethods,
+      isKingOfWhales,
+    }
+  },
+  mapDispatchToProps
+)
+class ShipMoraleList extends Component {
   static propTypes = {
     shipList: PTyp.arrayOf(PTyp.ShipInfo).isRequired,
     stypeInfo: PTyp.arrayOf(PTyp.STypeInfo).isRequired,
@@ -269,24 +288,6 @@ class ShipMoraleListImpl extends Component {
   }
 }
 
-const ShipMoraleList = connect(
-  state => {
-    const props = shipMoraleListSelector(state)
-    const filterMethods = filterMethodsSelector(state)
-    const isKingOfWhales = isKingOfWhalesSelector(state)
-    const actualFilterMethods = [
-      {type: 'all'},
-      ...filterMethods,
-    ]
-
-    return {
-      ...props,
-      filterMethods: actualFilterMethods,
-      isKingOfWhales,
-    }
-  },
-  mapDispatchToProps
-)(ShipMoraleListImpl)
 
 export {
   ShipMoraleList,

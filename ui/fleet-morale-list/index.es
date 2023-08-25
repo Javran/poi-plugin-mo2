@@ -31,7 +31,11 @@ const FPopover = styled(Popover)`
   }
 `
 
-class FleetMoraleListImpl extends Component {
+@connect(
+  fleetMoraleListSelector,
+  mapDispatchToProps
+)
+class FleetMoraleList extends Component {
   static propTypes = {
     moraleList: PTyp.array.isRequired,
     availableTargets: PTyp.arrayOf(PTyp.WSubject).isRequired,
@@ -187,10 +191,6 @@ class FleetMoraleListImpl extends Component {
   }
 }
 
-const FleetMoraleList = connect(
-  fleetMoraleListSelector,
-  mapDispatchToProps
-)(FleetMoraleListImpl)
 
 export {
   FleetMoraleList,

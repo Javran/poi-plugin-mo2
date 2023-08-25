@@ -26,8 +26,14 @@ import {
   intPredRepsToUserInput,
 } from '../structs'
 
+@connect(
+  createStructuredSelector({
+    filterMethods: filterMethodsSelector,
+  }),
+  mapDispatchToProps
+)
 @translate('poi-plugin-mo2')
-class SettingsImpl extends Component {
+class Settings extends Component {
   static propTypes = {
     filterMethods: PTyp.arrayOf(PTyp.object).isRequired,
     pStateModify: PTyp.func.isRequired,
@@ -164,12 +170,5 @@ class SettingsImpl extends Component {
     )
   }
 }
-
-const Settings = connect(
-  createStructuredSelector({
-    filterMethods: filterMethodsSelector,
-  }),
-  mapDispatchToProps
-)(SettingsImpl)
 
 export { Settings }

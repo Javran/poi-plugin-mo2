@@ -19,7 +19,16 @@ import { __ } from '../tr'
 import { FleetMoraleList } from './fleet-morale-list'
 import { ShipMoraleList } from './ship-morale-list'
 
-class MoraleMonitorImpl extends Component {
+@connect(
+  createStructuredSelector(
+    {
+      tab: tabSelector,
+      isDarkTheme: isDarkThemeSelector,
+    }
+  ),
+  mapDispatchToProps
+)
+class MoraleMonitor extends Component {
   static propTypes = {
     tab: PTyp.Tab.isRequired,
     isDarkTheme: PTyp.bool.isRequired,
@@ -71,15 +80,5 @@ class MoraleMonitorImpl extends Component {
     )
   }
 }
-
-const MoraleMonitor = connect(
-  createStructuredSelector(
-    {
-      tab: tabSelector,
-      isDarkTheme: isDarkThemeSelector,
-    }
-  ),
-  mapDispatchToProps
-)(MoraleMonitorImpl)
 
 export { MoraleMonitor }
