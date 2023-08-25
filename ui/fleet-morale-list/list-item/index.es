@@ -1,8 +1,5 @@
 import React, { Component } from 'react'
-import {
-  ListGroupItem,
-  Button,
-} from 'react-bootstrap'
+import { ListGroupItem, Button } from 'react-bootstrap'
 import FontAwesome from 'react-fontawesome'
 
 import { PTyp } from '../../../ptyp'

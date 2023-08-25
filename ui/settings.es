@@ -5,13 +5,7 @@ import {
 } from 'reselect'
 import { connect } from 'react-redux'
 import FontAwesome from 'react-fontawesome'
-import {
-  FormGroup,
-  FormControl,
-  ControlLabel,
-  Tooltip, OverlayTrigger,
-  Button,
-} from 'react-bootstrap'
+import { FormGroup, FormControl, ControlLabel, Tooltip, OverlayTrigger, Button } from 'react-bootstrap'
 import Markdown from 'react-remarkable'
 import { modifyObject } from 'subtender'
 import { translate } from 'react-i18next'

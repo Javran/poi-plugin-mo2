@@ -1,9 +1,5 @@
 import React, { PureComponent } from 'react'
-import {
-  FormControl,
-  Tooltip,
-  OverlayTrigger,
-} from 'react-bootstrap'
+import { FormControl, Tooltip, OverlayTrigger } from 'react-bootstrap'
 
 import FontAwesome from 'react-fontawesome'
 

@@ -1,9 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import {
-  ListGroup,
-  ListGroupItem,
-} from 'react-bootstrap'
+import { ListGroup, ListGroupItem } from 'react-bootstrap'
 import {
   Button,
   Menu,
