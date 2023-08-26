@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react'
-import { Label } from 'react-bootstrap'
+import { Tag, Intent } from '@blueprintjs/core'
 import { translate } from 'react-i18next'
 
 import { PTyp } from '../../../ptyp'
@@ -7,16 +7,16 @@ import { PTyp } from '../../../ptyp'
 const actions = new Map();
 
 (() => {
-  const def = (actionKind, desc, bsStyle) => {
-    actions.set(actionKind, {desc, bsStyle})
+  const def = (actionKind, desc, intent) => {
+    actions.set(actionKind, {desc, intent})
   }
 
   // 行動指示 0=待機, 1=出撃, 2=防空, 3=退避, 4=休息
-  def(0, 'main:Standby', 'default')
-  def(1, 'main:Sortie', 'danger')
-  def(2, 'main:Defense', 'warning')
-  def(3, 'main:Retreat', 'primary')
-  def(4, 'main:Rest', 'success')
+  def(0, 'main:Standby', Intent.NONE)
+  def(1, 'main:Sortie', Intent.DANGER)
+  def(2, 'main:Defense', Intent.WARNING)
+  def(3, 'main:Retreat', Intent.PRIMARY)
+  def(4, 'main:Rest', Intent.SUCCESS)
 })()
 
 @translate(['main'])
@@ -30,19 +30,23 @@ class LbasActionLabel extends PureComponent {
 
   render() {
     const {actionKind, style, t} = this.props
-    let bsStyle
+    let intent
     let content
     if (actions.has(actionKind)) {
-      const info = actions.get(actionKind);
-      ({bsStyle} = info)
-      content = t(info.desc)
+      const {intent: i, desc} = actions.get(actionKind)
+      intent = i
+      content = t(desc)
     } else {
-      bsStyle = 'default'
+      intent = Intent.NONE
       content = `Unknown(${actionKind})`
     }
 
     return (
-      <Label bsStyle={bsStyle} style={style}>{content}</Label>
+      <Tag intent={intent} style={style}>
+        <div style={{textAlign: 'center'}}>
+          {content}
+        </div>
+      </Tag>
     )
   }
 }
