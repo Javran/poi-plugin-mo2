@@ -4,11 +4,10 @@ import { translate } from 'react-i18next'
 
 import { PTyp } from '../../../ptyp'
 
-const actions = new Map();
-
-(() => {
+const actions = (() => {
+  const m = new Map()
   const def = (actionKind, desc, intent) => {
-    actions.set(actionKind, {desc, intent})
+    m.set(actionKind, {desc, intent})
   }
 
   // 行動指示 0=待機, 1=出撃, 2=防空, 3=退避, 4=休息
@@ -17,6 +16,8 @@ const actions = new Map();
   def(2, 'main:Defense', Intent.WARNING)
   def(3, 'main:Retreat', Intent.PRIMARY)
   def(4, 'main:Rest', Intent.SUCCESS)
+
+  return m
 })()
 
 @translate(['main'])
