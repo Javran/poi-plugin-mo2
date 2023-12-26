@@ -18,12 +18,13 @@ import { PTyp } from '../../ptyp'
 import { __ } from '../../tr'
 import { WSubject } from '../../structs'
 import { mapDispatchToProps } from '../../store'
+import { CompatClasses } from '../compat'
 import { fleetMoraleListSelector } from './selectors'
 
 import { ListItem } from './list-item'
 
 const FPopover = styled(Popover)`
-  & > span.${Classes.POPOVER_TARGET}, &.bp4-popover2-target {
+  & > span.${Classes.POPOVER_TARGET}, &.${CompatClasses.POPOVER_TARGET} {
     width: 100%
   }
 `

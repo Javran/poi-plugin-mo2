@@ -26,6 +26,7 @@ class LbasActionLabel extends PureComponent {
     actionKind: PTyp.number.isRequired,
     style: PTyp.object.isRequired,
 
+    // connected
     t: PTyp.func.isRequired,
   }
 
